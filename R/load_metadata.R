@@ -20,6 +20,8 @@ load_metadata <- function(webaddress = "https://raw.githubusercontent.com/Semant
 
   metadata <- read.csv(url(webaddress), stringsAsFactors = F)
 
+  colnames(metadata)[1] <- "included"
+
   metadata <- subset(metadata, included == "yes")
 
   return(metadata)
