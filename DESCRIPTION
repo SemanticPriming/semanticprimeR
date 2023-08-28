@@ -1,17 +1,23 @@
 Package: semanticprimeR
 Type: Package
-Title: F
+Title: Semantic Priming Across Many Languages and Related Projects
 Version: 0.1.0
 Authors@R: c(person("Erin M.", "Buchanan", role = c("aut", "cre"),
                      email = "buchananlab@gmail.com",
                      comment = c(ORCID = "0000-0002-9689-4189")))
 Depends: R (>= 3.1.0)
 Imports: 
+Suggests: knitr, rmarkdown, data.table, dplyr, flextable, 
+    ggplot2, psych, reshape, reshape2, rio, tidyr, tibble
 Maintainer: Erin M. Buchanan <buchananlab@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: This package supports the SPAML (Semantic Priming 
+    Across Many Languages) project and associated papers that are 
+    connected to that project. The package currently includes 
+    information on how to calculate sample size by using AIPE, 
+    bootstrapping, and simulation. More coming soon!
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
+VignetteBuilder: knitr
 URL: https://semanticpriming.github.io/semanticprimeR/
