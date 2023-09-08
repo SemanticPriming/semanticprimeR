@@ -41,6 +41,7 @@ The diversity of human faces and the contexts in which they appear gives rise to
 
 In sum, the dataset contains 1.14 million ratings across 1000 items and 34 traits by 5,000 participants. NOTE: The trait trustworthy in the dataset is collected twice, so the trait column has 35 traits.
 
+
 ### Methods Description: 
 
 For the attribute model studies, we used a between-subjects design where participants evaluated faces with respect to each attribute. Participants first consented. Then they completed a preinstruction agreement to answer open-ended questions at the end of the study. In the instructions, participants were given 25 examples of face images in order to provide a sense of the diversity they would encounter during the experiment. Participants were instructed to rate a series of faces on a continuous slider scale where extremes were bipolar descriptors such as “trustworthy” to “not trustworthy.” We did not supply definitions of each attribute to participants and instead relied on participants’ intuitive notions for each. 

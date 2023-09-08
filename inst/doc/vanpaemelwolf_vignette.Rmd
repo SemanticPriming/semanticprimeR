@@ -179,7 +179,6 @@ final_sample <-
 
 flextable(final_sample) %>% autofit()
 ```
-
 #### Minimum Sample Size
 
 Based on these simulations, we can decide our minimum sample size is likely close to `r min(final_sample$new_sample)`.

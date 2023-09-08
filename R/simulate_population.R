@@ -1,5 +1,11 @@
 #' Simulate Normal Population Scores for Multiple Items
 #'
+#' This function allows you to create normal populations
+#' for data that would include repeated measures items.
+#' Additionally, the data can be rounded and/or truncated
+#' to ensure it matches a target scale - for example, a
+#' 1-7 type rating scale.
+#'
 #' @param mu The population mean for the items.
 #' @param mu_sigma The amount of variability for each of the
 #' means (i.e., the standard deviation of the item's means)
@@ -50,7 +56,6 @@ simulate_population <- function (
   if(is.null(sigma_sigma)){ stop("You must include a variability for the standard deviations (i.e., the standard deviation of standard deviations.") }
   if(is.null(number_items)){ stop("You must include the number of items to simulate.") }
   if(is.null(number_scores)){ stop("You must include the number of scores to simulate.") }
-  if(is.null(mu)){ stop("You must include a mean value for mu.") }
 
   if(is.null(smallest_sigma)){ smallest_sigma <- sigma_sigma/10 }
 
@@ -83,5 +88,5 @@ simulate_population <- function (
   }
 
   # return populations
-  return(list(population = population))
+  return(population)
 }

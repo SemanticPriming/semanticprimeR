@@ -52,7 +52,11 @@ and scores specified}
 }
 }
 \description{
-Simulate Normal Population Scores for Multiple Items
+This function allows you to create normal populations
+for data that would include repeated measures items.
+Additionally, the data can be rounded and/or truncated
+to ensure it matches a target scale - for example, a
+1-7 type rating scale.
 }
 \examples{
 simulate_population(mu = 4, mu_sigma = .2, sigma = 2,
