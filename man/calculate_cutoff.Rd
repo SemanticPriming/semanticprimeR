@@ -4,7 +4,7 @@
 \alias{calculate_cutoff}
 \title{Calculate the Cutoff Score for SE of Items}
 \usage{
-calculate_cutoff(population, grouping_items, score_column, minimum, maximum)
+calculate_cutoff(population, grouping_items, score, minimum, maximum)
 }
 \arguments{
 \item{population}{The population data set or the pilot dataset}
@@ -12,14 +12,14 @@ calculate_cutoff(population, grouping_items, score_column, minimum, maximum)
 \item{grouping_items}{The names of columns to group your data
 by for the cutoff calculation, usually this column is the item column}
 
+\item{score}{The column of the score you wish to calculate for your
+cutoff score SE}
+
 \item{minimum}{The minimum possible value for your score, used to
 calculate the proportion of variability in your items}
 
 \item{maximum}{The maximum possible value for your score, used to
 calculate the proportion of variability in your items}
-
-\item{score}{The column of the score you wish to calculate for your
-cutoff score SE}
 }
 \value{
 \itemize{
