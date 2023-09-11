@@ -69,7 +69,7 @@ calculate_proportion <- function(samples, cutoff, grouping_items = NULL,
   for (i in 1:length(samples)){
 
     summary_list[[i]] <- samples[[i]] %>%
-      group_by(across(grouping_items)) %>%
+      group_by(.data[[grouping_items]]) %>%
       summarize(se = sd(score)/sqrt(n())) %>%
       ungroup() %>%
       summarize(percent_below = sum(se <= cutoff) / length(se),

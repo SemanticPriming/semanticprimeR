@@ -67,7 +67,7 @@ bootstrap_samples <- function(
     if (!is.null(grouping_items)){
 
       boot.samples[[i]] <- population %>%
-        group_by(across(grouping_items)) %>%
+        group_by(.data[[grouping_items]]) %>%
         slice_sample(n = sizes[i], replace = replace)
 
     } else {

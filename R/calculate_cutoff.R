@@ -47,20 +47,20 @@
 #' cutoff$cutoff
 #' cutoff$prop_var
 calculate_cutoff <- function(population, grouping_items,
-                             score, minimum, maximum){
+                             score_column, minimum, maximum){
 
   if(is.null(population)){ stop("You must include the population or pilot data.") }
   if(is.null(grouping_items)){ stop("You must include name of the column for items.") }
-  if(is.null(score)){ stop("You must include name of the column for the score.") }
+  if(is.null(score_column)){ stop("You must include name of the column for the score.") }
   if(is.null(minimum)){ stop("You must include the minimum value for the possible score.") }
   if(is.null(maximum)){ stop("You must include the maximum value for the possible score.") }
 
-  score <- sym(score)
+  score_column <- sym(score_column)
 
   se_item <- population %>%
-    filter(!is.na(score)) %>%
-    group_by(across(grouping_items)) %>%
-    summarize(se = sd(score)/sqrt(n())) %>%
+    filter(!is.na(score_column)) %>%
+    group_by(.data[[grouping_items]]) %>%
+    summarize(se = sd(score_column)/sqrt(n())) %>%
     pull(se)
   cutoff <- quantile(se_item, probs = .4, na.rm = T)
   sd_items <- sd(se_item)
