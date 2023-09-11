@@ -50,7 +50,7 @@ The typicality data were collected as part of a larger data collection. Here we 
 
 https://static-content.springer.com/esm/art%3A10.3758%2FBRM.40.4.1030/MediaObjects/DeDeyne-BRM-2008b.zip and included here. 
 
-```{r data read-in, eval = F}
+```{r data read-in, eval = T}
 ### for typicality data -- cleaning and processing
 typicality_fnames <- list.files(path = "data/vanpaemel_data",
                                 full.names = TRUE)
@@ -78,7 +78,7 @@ head(typicality_all_df_v3)
 ```
 
 
-```{r data read-in-temp, eval = T, echo = F}
+```{r data read-in-temp, eval = F, echo = F}
 ### for typicality data -- cleaning and processing
 typicality_fnames <- list.files(path = "vignettes/data/vanpaemel_data",
                                 full.names = TRUE)
@@ -129,13 +129,13 @@ University of Leuven, Belgium
 
 ### Column Metadata: 
 
-```{r eval = F}
+```{r eval = T}
 metadata <- import("data/vanpaemel_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
 ```
 
-```{r eval = T, echo = F}
+```{r eval = F, echo = F}
 metadata <- import("vignettes/data/vanpaemel_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
