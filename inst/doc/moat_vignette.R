@@ -7,16 +7,13 @@ knitr::opts_chunk$set(
 ## ----vignette-setup--------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
-# Set a random seed
-set.seed(5989320)
-
 # Libraries necessary for this vignette
 library(rio)
 library(flextable)
 library(dplyr)
 library(tidyr)
-library(psych)
 library(semanticprimeR)
+set.seed(92747)
 
 # Function for simulation
 item_power <- function(data, # name of data frame
@@ -28,8 +25,8 @@ item_power <- function(data, # name of data frame
                        decile = .5){
   
   DF <- cbind.data.frame(
-    "dv" = data[ , dv_col],
-    "items" = data[ , item_col]
+    dv = data[ , dv_col],
+    items = data[ , item_col]
   )
   
   # just in case
@@ -72,7 +69,7 @@ item_power <- function(data, # name of data frame
   # figure out cut off
   final_sample <- sim_table %>% 
     pivot_longer(cols = -c(sample_size)) %>% 
-    rename(item = name, se = value) %>% 
+    dplyr::rename(item = name, se = value) %>% 
     group_by(sample_size) %>% 
     summarize(percent_below = sum(se <= cutoff)/length(unique(DF$items))) 
   
@@ -90,52 +87,56 @@ item_power <- function(data, # name of data frame
 }
 
 ## --------------------------------------------------
-DF <- import("data/batres_data.sav")
-
+DF <- import("data/moat_data.csv") 
+  
 str(DF)
 
 ## --------------------------------------------------
-metadata <- import("data/batres_metadata.xlsx")
+metadata <- tibble::tribble(
+             ~Variable.Name,                                                                                                       ~Variable.Description, ~`Type.(numeric,.character,.logical,.etc.)`,
+                      "Id",                                                                                                            "Participant ID",                                   "numeric",
+                   "Domain",                                                    "Whether the trial is a claim about COVID ('covid') or TRIVIA ('trivia)",                                 "character",
+                   "Medium", "Whether the trial appears as text alone ('claim'), text alongside an image ('photo'), or text alongside a video ('video')",                                 "character",
+               "Trial_type",                                        "Whether the trial presents a claim that is TRUE ('target') or FALSE ('distractor')",                                 "character",
+                   "Rating",                           "Paritcipant’s truth rating of the claim ranging from 1 (definitely false) to 6 (definitely tue)",                                   "numeric"
+             )
 
 flextable(metadata) %>% autofit()
 
 ## --------------------------------------------------
-# Reformat the data
-DF_long <- pivot_longer(DF, cols = -c(Participant_Number)) %>% 
-  rename(item = name, score = value)
-
-flextable(head(DF_long)) %>% autofit()
-
-## --------------------------------------------------
 # Function for simulation
-var1 <- item_power(data = DF_long, # name of data frame
-            dv_col = "score", # name of DV column as a character
-            item_col = "item", # number of items column as a character
+var1 <- item_power(data = DF, # name of data frame
+            dv_col = "rating", # name of DV column as a character
+            item_col = "question_type", # number of items column as a character
             sample_start = 20, 
             sample_stop = 300, 
             sample_increase = 5,
             decile = .4)
 
 ## --------------------------------------------------
-# individual SEs
 var1$SE
-
 var1$cutoff
 
-## --------------------------------------------------
-cutoff <- calculate_cutoff(population = DF_long, 
-                           grouping_items = "item",
-                           score = "score",
-                           minimum = 1,
-                           maximum = 7)
-# showing how this is the same as the person calculated version versus semanticprimeR's function
-cutoff$cutoff
+cutoff <- var1$cutoff
+
+# we can also use semanticprimer's function
+cutoff_score <- calculate_cutoff(population = DF,
+                                 grouping_items = "question_type",
+                                 score = "rating",
+                                 minimum = min(DF$rating),
+                                 maximum = max(DF$rating))
+cutoff_score$cutoff
 
 ## --------------------------------------------------
+flextable(var1$final_sample %>% head()) %>% 
+  autofit()
+
 final_table <- calculate_correction(
   proportion_summary = var1$final_sample,
-  pilot_sample_size = nrow(DF),
-  proportion_variability = cutoff$prop_var
+  pilot_sample_size = DF %>% group_by(question_type) %>% 
+    summarize(sample_size = n()) %>% ungroup() %>% 
+    summarize(avg_sample = mean(sample_size)) %>% pull(avg_sample),
+  proportion_variability = cutoff_score$prop_var
   )
 
 flextable(final_table) %>% 

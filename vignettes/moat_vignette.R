@@ -4,7 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----vignette_setup, include = FALSE---------------
+## ----vignette-setup--------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -12,6 +12,8 @@ library(rio)
 library(flextable)
 library(dplyr)
 library(tidyr)
+library(semanticprimeR)
+set.seed(92747)
 
 # Function for simulation
 item_power <- function(data, # name of data frame
@@ -69,7 +71,7 @@ item_power <- function(data, # name of data frame
     pivot_longer(cols = -c(sample_size)) %>% 
     dplyr::rename(item = name, se = value) %>% 
     group_by(sample_size) %>% 
-    summarize(Percent_Below = sum(se <= cutoff)/length(unique(DF$items))) 
+    summarize(percent_below = sum(se <= cutoff)/length(unique(DF$items))) 
   
   # multiply by correction 
   final_sample$new_sample <- round(39.369 + 0.700*final_sample$sample_size + 0.003*cutoff - 0.694*length(unique(DF$items)))
@@ -85,7 +87,7 @@ item_power <- function(data, # name of data frame
 }
 
 ## --------------------------------------------------
-DF <- import("data/ribeiro_data.csv")
+DF <- import("data/moat_data.csv") 
   
 str(DF)
 
@@ -109,7 +111,7 @@ var1 <- item_power(data = DF, # name of data frame
             sample_start = 20, 
             sample_stop = 300, 
             sample_increase = 5,
-            decile = .5)
+            decile = .4)
 
 ## --------------------------------------------------
 var1$SE
@@ -117,9 +119,26 @@ var1$cutoff
 
 cutoff <- var1$cutoff
 
+# we can also use semanticprimer's function
+cutoff_score <- calculate_cutoff(population = DF,
+                                 grouping_items = "question_type",
+                                 score = "rating",
+                                 minimum = min(DF$rating),
+                                 maximum = max(DF$rating))
+cutoff_score$cutoff
+
 ## --------------------------------------------------
-flextable(var1$final_sample %>% 
-            filter(Percent_Below >= .80) %>% 
-            arrange(Percent_Below, new_sample)) %>% 
+flextable(var1$final_sample %>% head()) %>% 
+  autofit()
+
+final_table <- calculate_correction(
+  proportion_summary = var1$final_sample,
+  pilot_sample_size = DF %>% group_by(question_type) %>% 
+    summarize(sample_size = n()) %>% ungroup() %>% 
+    summarize(avg_sample = mean(sample_size)) %>% pull(avg_sample),
+  proportion_variability = cutoff_score$prop_var
+  )
+
+flextable(final_table) %>% 
   autofit()
 

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Mahmoud M.Elsherif" />
+
+<meta name="date" content="2023-09-18" />
+
+<title>Power and Sample Size Simulatio: Online search trends and word-related emotional response during COVID-19 lockdown in Italy</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<style type="text/css">.tabwid {
+font-size: initial;
+padding-bottom: 1em;
+}
+.tabwid table{
+border-spacing:0px !important;
+border-collapse:collapse;
+line-height:1;
+margin-left:auto;
+margin-right:auto;
+border-width: 0;
+border-color: transparent;
+caption-side: top;
+}
+.tabwid-caption-bottom table{
+caption-side: bottom;
+}
+.tabwid_left table{
+margin-left:0;
+}
+.tabwid_right table{
+margin-right:0;
+}
+.tabwid td, .tabwid th {
+padding: 0;
+}
+.tabwid a {
+text-decoration: none;
+}
+.tabwid thead {
+background-color: transparent;
+}
+.tabwid tfoot {
+background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+margin: 0 0 !important;
+}
+</style>
+<script>document.addEventListener("DOMContentLoaded", function(event) {
+  var els = document.querySelectorAll(".tabwid");
+  var tabwid_link = document.querySelector('link[href*="tabwid.css"]')
+  if (tabwid_link === null) {
+    const tabwid_styles = document.evaluate("//style[contains(., 'tabwid')]", document, null, XPathResult.ANY_TYPE, null );
+    tabwid_link = tabwid_styles.iterateNext();
+  }
+
+  Array.prototype.forEach.call(els, function(template) {
+      const dest = document.createElement("div");
+      template.parentNode.insertBefore(dest, template.nextSibling)
+      dest.setAttribute("class", "flextable-shadow-host");
+      const fantome = dest.attachShadow({mode: 'open'});
+      fantome.appendChild(template);
+      if (tabwid_link !== null) {
+        fantome.appendChild(tabwid_link.cloneNode(true));
+      }
+  });
+});
+
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Power and Sample Size Simulatio: Online
+search trends and word-related emotional response during COVID-19
+lockdown in Italy</h1>
+<h4 class="author">Mahmoud M.Elsherif</h4>
+<h4 class="date">2023-09-18</h4>
+
+
+
+<div id="vignette-setup" class="section level3">
+<h3>Vignette Setup:</h3>
+</div>
+<div id="projectdata-title" class="section level3">
+<h3>Project/Data Title:</h3>
+<p>Online search trends and word-related emotional response during
+COVID-19 lockdown in Italy</p>
+<p>Data provided by: Maria Montefinese</p>
+</div>
+<div id="projectdata-description" class="section level3">
+<h3>Project/Data Description:</h3>
+<p>The strong and long lockdown adopted by the Italian government to
+limit the spread of the COVID-19 represents the first threat-related
+mass isolation in history that scientists can study in depth to
+understand the emotional response of individuals to a pandemic.
+Perception of a pandemic threat through invasive media communication,
+such as that related to COVID-19, can induce fear-related emotions (Van
+Bavel et al., 2020). The dimension theory of emotions (Osgood &amp;
+Suci, 1955) assumes that emotive space is defined along three
+dimensions: valence (indicating the way an individual judges a stimulus;
+from unpleasant to pleasant), arousal (indicating the degree of
+activation an individual feels towards a stimulus; from calm to excited)
+and dominance (indicating the degree of control an individual feels over
+a given stimulus; from out of control to in control). Fear is
+characterized as a negatively valenced emotion, accompanied by a high
+level of arousal (Witte, 1992; Witte, 1998) and a low dominance
+(Stevenson, Mikel &amp; James, 2007). This is generally in line with
+previous results showing that participants judged stimuli related to the
+most feared medical conditions as the most negative, the most
+anxiety-provoking, and the least controllable (Warriner, Kuperman &amp;
+Brysbaert, 2013). Fear is also characterized by extreme levels of
+emotional avoidance of specific stimuli (Perin et al., 2015) and may be
+considered a unidirectional precursor to psychopathological responses
+within the current context (Ahorsu et al., 2020). dealing with fear in a
+pandemic situation could be easier for some people than others. Indeed,
+individual differences have been associated with behavioral responses to
+pandemic status (Carvalho Pianowski &amp; Gonçalves, 2020).</p>
+<p>To mitigate the effects of the COVID-19 on the mental health of
+individuals, it is imperative to evaluate their emotional response to
+this emergency. The internet searches are a direct tool to address this
+problem. In fact, COVID-19 has been reported to affect the content that
+people explore online (Effenberger et al., 2020), and online media and
+platforms offer essential channels where people express their feelings
+and emotions and seek health-related information (Kalichman et al.,
+2003; Reeves, 2001). In particular, Google Trends is an available data
+source of real-time internet search patterns, which has been shown to be
+a valid indicator of people’s desires and intentions (Payne,
+Brown-Iannuzzi &amp; Hannay, 2017; Pelham et al., 2018). Therefore, the
+amount of searches related to COVID-19 on the internet revealed by
+Google Trends are an indicator of how people feel about concepts related
+to the COVID-19 pandemic. A change in online search trends reflects a
+change in participants’ interests and attitudes towards a specific
+topic. Based on the topic, the context (that is, the reasons for this
+change), and this mutated interest per se, it is possible to predict
+people’s behavior and affective response to the topic in question. In
+this study, our aim was to understand how emotional reaction and online
+search behavior have changed in response to the COVID-19 lockdown in the
+Italian population.</p>
+</div>
+<div id="methods-description" class="section level3">
+<h3>Methods Description:</h3>
+<p>Data were collected in the period from 4 May to 17 May 2020, the last
+day of complete lockdown in Italy, from 71 native adult Italian speakers
+(56 females and 13 males; mean age (SD) = 26.2 (7.9) years; mean
+education (SD) = 15.3 (3.2) years). There were no other specific
+eligibility criteria. An online survey was conducted using Google Forms
+to collect affective ratings during the lockdown caused by the COVID-19
+epidemic in Italy. In particular, we asked participants to complete the
+Positive and Negative Affect Schedule (PANAS, Terraciano, McCrae &amp;
+Costa, 2003) and Fear of COVID-19 Scale (FCV-19S, Ahorsu et al., 2020)
+and judged valence, arousal, and dominance (on a 9-point self-assessment
+manikin, Montefinese et al., 2014) of words related or unrelated to
+COVID-19, as identified by Google search trends. The word stimuli
+consisted of 3 groups of 20 words each. The first group (REL+) consisted
+of the words showing the largest positive relation between their search
+trends and the search trend for COVID-related terms. On the contrary,
+the second group (REL-) consisted of the words showing the largest
+negative relation between their search trends and the search trend for
+COVID-related terms. In other words, the COVID-19 epidemic in Italy and
+the consequent increase in interest in terms related to COVID was
+related to a similar increase in interest for the REL+ words and a
+decrease in interest for the REL- words. The third group (UNREL)
+consisted of the words for which the search trend was unrelated to the
+search trend for the COVID-related terms.</p>
+</div>
+<div id="data-location" class="section level3">
+<h3>Data Location:</h3>
+<p><a href="https://osf.io/we9r4/" class="uri">https://osf.io/we9r4/</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>DF <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/montefinese_data.csv&quot;</span>) </span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">names</span>(DF) <span class="ot">&lt;-</span> <span class="fu">make.names</span>(<span class="fu">names</span>(DF),<span class="at">unique =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">names</span>(DF)[<span class="fu">names</span>(DF) <span class="sc">==</span> <span class="st">&#39;ITEM..ITA.&#39;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;item&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>DF <span class="ot">&lt;-</span> DF <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="fu">filter</span>(StimType <span class="sc">!=</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="fu">filter</span>(Measure <span class="sc">==</span> <span class="st">&quot;Valence&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># only look at valence score </span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="fu">arrange</span>(item) <span class="sc">%&gt;%</span> <span class="co">#orders the rows of the data by the target_name column</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> <span class="co">#group by the target name</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">items =</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(item)))<span class="sc">%&gt;%</span> <span class="co">#transform target name into a item</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">select</span>(items, item, <span class="fu">everything</span>()</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>         ) <span class="co">#select all variables from items and target_name </span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="fu">head</span>(DF)</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt;   items     item ssID Gender Age Education Measure</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; 1     1 affogare    1      F  36        21 Valence</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; 2     1 affogare    2      M  40        21 Valence</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; 3     1 affogare    3      F  29        21 Valence</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; 4     1 affogare    4      M  39        13 Valence</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt; 5     1 affogare    5      F  27        16 Valence</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; 6     1 affogare    6      M  33        18 Valence</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt;   StimType Response</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; 1    UNREL        2</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; 2    UNREL        2</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; 3    UNREL        1</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt; 4    UNREL        1</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt; 5    UNREL        1</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="co">#&gt; 6    UNREL        1</span></span></code></pre></div>
+</div>
+<div id="date-published" class="section level3">
+<h3>Date Published:</h3>
+<p>2021-08-10</p>
+</div>
+<div id="dataset-citation" class="section level3">
+<h3>Dataset Citation:</h3>
+<p>Montefinese M, Ambrosini E, Angrilli A. 2021. Online search trends
+and word-related emotional response during COVID-19 lockdown in Italy: a
+cross-sectional online study. PeerJ 9:e11858 <a href="https://doi.org/10.7717/peerj.11858" class="uri">https://doi.org/10.7717/peerj.11858</a></p>
+</div>
+<div id="keywords" class="section level3">
+<h3>Keywords:</h3>
+<p>Covid-19; Emotional response; Online search; Lockdown; Coping</p>
+</div>
+<div id="use-license" class="section level3">
+<h3>Use License:</h3>
+<p>CC-By Attribution 4.0 International</p>
+</div>
+<div id="geographic-description---citystatecountry-of-participants" class="section level3">
+<h3>Geographic Description - City/State/Country of Participants:</h3>
+<p>Italy</p>
+</div>
+<div id="column-metadata" class="section level3">
+<h3>Column Metadata:</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/montefinese_metadata.xlsx&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">flextable</span>(metadata) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-6200070c{}.cl-61fcb89a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-61fe1834{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-61fe20b8{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe20c2{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe20c3{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe20cc{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe20cd{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2126{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2130{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2144{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe214e{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2162{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe216c{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2176{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2177{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe218a{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe218b{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe21b2{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe21bc{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe21bd{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe21be{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe21ee{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe21ef{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2202{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2203{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2216{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2220{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2221{width:5.898in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61fe2222{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-6200070c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-61fe20b8"><p class="cl-61fe1834"><span class="cl-61fcb89a">Variable Name</span></p></th><th class="cl-61fe20c2"><p class="cl-61fe1834"><span class="cl-61fcb89a">Variable Description</span></p></th><th class="cl-61fe20c3"><p class="cl-61fe1834"><span class="cl-61fcb89a">Type (numeric, character, logical, etc.)</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-61fe20cc"><p class="cl-61fe1834"><span class="cl-61fcb89a">ssID</span></p></td><td class="cl-61fe20cd"><p class="cl-61fe1834"><span class="cl-61fcb89a">Participant code</span></p></td><td class="cl-61fe2126"><p class="cl-61fe1834"><span class="cl-61fcb89a">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-61fe2130"><p class="cl-61fe1834"><span class="cl-61fcb89a">Gender</span></p></td><td class="cl-61fe2144"><p class="cl-61fe1834"><span class="cl-61fcb89a">Participants’ gender</span></p></td><td class="cl-61fe214e"><p class="cl-61fe1834"><span class="cl-61fcb89a">Character</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-61fe2162"><p class="cl-61fe1834"><span class="cl-61fcb89a">Age</span></p></td><td class="cl-61fe216c"><p class="cl-61fe1834"><span class="cl-61fcb89a">Participants’ age</span></p></td><td class="cl-61fe2176"><p class="cl-61fe1834"><span class="cl-61fcb89a">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-61fe2177"><p class="cl-61fe1834"><span class="cl-61fcb89a">Education</span></p></td><td class="cl-61fe218a"><p class="cl-61fe1834"><span class="cl-61fcb89a">Participants’ years of education</span></p></td><td class="cl-61fe218b"><p class="cl-61fe1834"><span class="cl-61fcb89a">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-61fe21b2"><p class="cl-61fe1834"><span class="cl-61fcb89a">Measure</span></p></td><td class="cl-61fe21bc"><p class="cl-61fe1834"><span class="cl-61fcb89a">Questionnaires and ratings (PANAS, COVID-19 fear, valence, arousal, dominance)</span></p></td><td class="cl-61fe21bd"><p class="cl-61fe1834"><span class="cl-61fcb89a">Character</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-61fe21be"><p class="cl-61fe1834"><span class="cl-61fcb89a">ITEM (ITA)</span></p></td><td class="cl-61fe21ee"><p class="cl-61fe1834"><span class="cl-61fcb89a">Test items and word stimuli</span></p></td><td class="cl-61fe21ef"><p class="cl-61fe1834"><span class="cl-61fcb89a">Character</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-61fe2202"><p class="cl-61fe1834"><span class="cl-61fcb89a">Stim Type</span></p></td><td class="cl-61fe2203"><p class="cl-61fe1834"><span class="cl-61fcb89a">Word condition (REL+, REL-, UNREL)</span></p></td><td class="cl-61fe2216"><p class="cl-61fe1834"><span class="cl-61fcb89a">Character</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-61fe2220"><p class="cl-61fe1834"><span class="cl-61fcb89a">Response</span></p></td><td class="cl-61fe2221"><p class="cl-61fe1834"><span class="cl-61fcb89a">Participants’ scores to the questionnaires and ratings</span></p></td><td class="cl-61fe2222"><p class="cl-61fe1834"><span class="cl-61fcb89a">Numeric</span></p></td></tr></tbody></table></div>
+</div>
+<div id="aipe-analysis" class="section level3">
+<h3>AIPE Analysis:</h3>
+<p>In this dataset, there are REL+ and REL- variables. In the REL+
+condition, the words show the largest positive relation between their
+search trends and the search trend for the COVID-related terms. In the
+REL- condition, the words showed the largest negative relation between
+their search trends and the search trends for the COVID-related terms.
+The third group (UNREL) consisted in the words for which the search
+trend was unrelated to the search trend for the COVID-related terms.</p>
+<div id="stopping-rule" class="section level4">
+<h4>Stopping Rule</h4>
+<p>What the usual standard error for the data that could be considered
+for our stopping rule using the 40% decile? Given potential differences
+in conditions, we subset the data to each condition to estimate
+separately.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">### create  subset for REL+</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>DF_RELpos <span class="ot">&lt;-</span> <span class="fu">subset</span>(DF, StimType <span class="sc">==</span> <span class="st">&quot;REL+&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="do">### create  subset for REL-</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>DF_RELneg <span class="ot">&lt;-</span> <span class="fu">subset</span>(DF, StimType <span class="sc">==</span> <span class="st">&quot;REL-&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="do">### create  subset for UNREL</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>DF_UNREL <span class="ot">&lt;-</span> <span class="fu">subset</span>(DF, StimType <span class="sc">==</span> <span class="st">&quot;UNREL&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># individual SEs for REL+ condition </span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>cutoff_relpos <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF_RELpos,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>                                  <span class="at">grouping_items =</span> <span class="st">&quot;item&quot;</span>, </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>                                  <span class="at">score =</span> <span class="st">&quot;Response&quot;</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>                                  <span class="at">minimum =</span> <span class="fu">min</span>(DF_RELpos<span class="sc">$</span>Response),</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>                                  <span class="at">maximum =</span> <span class="fu">max</span>(DF_RELpos<span class="sc">$</span>Response))</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>SE1 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(DF_RELpos<span class="sc">$</span>Response, DF_RELpos<span class="sc">$</span>item, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>SE1</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt;      burro       casa cioccolato   computer </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt;  0.1557687  0.1766870  0.1537913  0.1998951 </span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;     corona   famiglia     febbre     lavare </span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt;  0.2176631  0.1481984  0.1481984  0.1860313 </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt;    libertà      mondo     muffin    notizie </span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt;  0.1916883  0.2017999  0.1846399  0.1636991 </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt;      peste     salute    salvare       sole </span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt;  0.1621336  0.1569829  0.1431403  0.1483131 </span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt;      tempo termometro      torta     vaiolo </span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt;  0.1952478  0.1441268  0.1393278  0.1585099</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>cutoff_relpos<span class="sc">$</span>cutoff</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; 0.1564972</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co"># individual SEs for REL- condition</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>cutoff_relneg <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF_RELneg,</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>                                  <span class="at">grouping_items =</span> <span class="st">&quot;item&quot;</span>, </span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>                                  <span class="at">score =</span> <span class="st">&quot;Response&quot;</span>, </span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>                                  <span class="at">minimum =</span> <span class="fu">min</span>(DF_RELneg<span class="sc">$</span>Response),</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>                                  <span class="at">maximum =</span> <span class="fu">max</span>(DF_RELneg<span class="sc">$</span>Response))</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>SE2 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(DF_RELneg<span class="sc">$</span>Response, DF_RELneg<span class="sc">$</span>item, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>SE2</span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt;    autobus      costa    dormire     giacca </span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; 0.17715152 0.18453238 0.16521553 0.15728951 </span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt;      hotel   mangiare matrimonio     motore </span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; 0.17384120 0.14909443 0.20475544 0.15085177 </span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt;    palazzo  pantalone     piazza    profumo </span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; 0.17073238 0.17481656 0.20640961 0.16138025 </span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; ristorante      sposa       tram     tumore </span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt; 0.20118108 0.21208427 0.16872880 0.07001896 </span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt;       uomo    vacanza    viaggio  villaggio </span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt; 0.16715951 0.13096103 0.18557374 0.16663313</span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a>cutoff_relneg<span class="sc">$</span>cutoff</span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt;      40% </span></span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a><span class="co">#&gt; 0.166949</span></span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a><span class="co"># individual SEs for UNREL condition</span></span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a>cutoff_unrel <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF_UNREL,</span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a>                                  <span class="at">grouping_items =</span> <span class="st">&quot;item&quot;</span>, </span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a>                                  <span class="at">score =</span> <span class="st">&quot;Response&quot;</span>, </span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a>                                  <span class="at">minimum =</span> <span class="fu">min</span>(DF_UNREL<span class="sc">$</span>Response),</span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a>                                  <span class="at">maximum =</span> <span class="fu">max</span>(DF_UNREL<span class="sc">$</span>Response))</span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a>SE3 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(DF_UNREL<span class="sc">$</span>Response, DF_UNREL<span class="sc">$</span>item, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a>SE3</span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a><span class="co">#&gt;    affogare        baco     cannone      cappio </span></span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a><span class="co">#&gt;   0.1312204   0.1622734   0.2131240   0.1750919 </span></span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a><span class="co">#&gt;   corridore  dipendente  disturbare      fetore </span></span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a><span class="co">#&gt;   0.1781088   0.1796297   0.1535516   0.1507766 </span></span>
+<span id="cb4-61"><a href="#cb4-61" tabindex="-1"></a><span class="co">#&gt;  firmamento    funerale       gusto       ladro </span></span>
+<span id="cb4-62"><a href="#cb4-62" tabindex="-1"></a><span class="co">#&gt;   0.1973986   0.1121214   0.1526631   0.1473738 </span></span>
+<span id="cb4-63"><a href="#cb4-63" tabindex="-1"></a><span class="co">#&gt; malevolenza     mestolo     nettare      oceano </span></span>
+<span id="cb4-64"><a href="#cb4-64" tabindex="-1"></a><span class="co">#&gt;   0.1379994   0.1218824   0.1755445   0.1511708 </span></span>
+<span id="cb4-65"><a href="#cb4-65" tabindex="-1"></a><span class="co">#&gt;  offendersi     orgasmo  perfezione     tradire </span></span>
+<span id="cb4-66"><a href="#cb4-66" tabindex="-1"></a><span class="co">#&gt;   0.1652155   0.1458857   0.2210864   0.1158751</span></span>
+<span id="cb4-67"><a href="#cb4-67" tabindex="-1"></a>cutoff_unrel<span class="sc">$</span>cutoff</span>
+<span id="cb4-68"><a href="#cb4-68" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb4-69"><a href="#cb4-69" tabindex="-1"></a><span class="co">#&gt; 0.1510131</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># sequence of sample sizes to try</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>samplesize_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">25</span>, <span class="dv">300</span>, <span class="dv">5</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># create a blank table for us to save the values in positive ----</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values), </span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_RELpos<span class="sc">$</span>item)))</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>sim_table<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>sim_table<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="st">&quot;Response&quot;</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co"># make a second table for negative -----</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>sim_table2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values), </span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_RELneg<span class="sc">$</span>item)))</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>sim_table2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table2)</span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>sim_table2<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>sim_table2<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="st">&quot;Response&quot;</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co"># make a second table for unrelated -----</span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>sim_table3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values), </span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_UNREL<span class="sc">$</span>item)))</span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>sim_table3 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table3)</span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>sim_table3<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a>sim_table3<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="st">&quot;Response&quot;</span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="co"># loop over sample size</span></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(samplesize_values)){</span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>    </span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>  <span class="co"># related positive temp variables ----</span></span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>  temp_RELpos <span class="ot">&lt;-</span> DF_RELpos <span class="sc">%&gt;%</span> </span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">se1 =</span> <span class="fu">sd</span>(Response)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(Response))) </span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>  </span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a>  <span class="co"># put in table </span></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a>  <span class="fu">colnames</span>(sim_table)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_RELpos<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_RELpos<span class="sc">$</span>item</span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a>  sim_table[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_RELpos<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_RELpos<span class="sc">$</span>se1</span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a>  sim_table[i, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a>  </span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a>  <span class="co"># related negative temp variables ----</span></span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a>  temp_RELneg <span class="ot">&lt;-</span>DF_RELneg <span class="sc">%&gt;%</span> </span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">se2 =</span> <span class="fu">sd</span>(Response)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(Response))) </span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a></span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a>  <span class="co"># put in table </span></span>
+<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a>  <span class="fu">colnames</span>(sim_table2)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_RELneg<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_RELneg<span class="sc">$</span>item</span>
+<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a>  sim_table2[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_RELneg<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_RELneg<span class="sc">$</span>se2</span>
+<span id="cb5-62"><a href="#cb5-62" tabindex="-1"></a>  sim_table2[i, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb5-63"><a href="#cb5-63" tabindex="-1"></a>  </span>
+<span id="cb5-64"><a href="#cb5-64" tabindex="-1"></a>  <span class="co"># unrelated temp variables ----</span></span>
+<span id="cb5-65"><a href="#cb5-65" tabindex="-1"></a>  temp_UNREL <span class="ot">&lt;-</span>DF_UNREL <span class="sc">%&gt;%</span> </span>
+<span id="cb5-66"><a href="#cb5-66" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-67"><a href="#cb5-67" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-68"><a href="#cb5-68" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">se3 =</span> <span class="fu">sd</span>(Response)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(Response))) </span>
+<span id="cb5-69"><a href="#cb5-69" tabindex="-1"></a></span>
+<span id="cb5-70"><a href="#cb5-70" tabindex="-1"></a>  <span class="co"># put in table </span></span>
+<span id="cb5-71"><a href="#cb5-71" tabindex="-1"></a>  <span class="fu">colnames</span>(sim_table3)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_UNREL<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_UNREL<span class="sc">$</span>item</span>
+<span id="cb5-72"><a href="#cb5-72" tabindex="-1"></a>  sim_table3[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_UNREL<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_UNREL<span class="sc">$</span>se3</span>
+<span id="cb5-73"><a href="#cb5-73" tabindex="-1"></a>  sim_table3[i, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb5-74"><a href="#cb5-74" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="minimum-sample-size" class="section level4">
+<h4>Minimum Sample Size</h4>
+<p>Suggestions for REL+ Condition:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># multiply by correction </span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE1, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>final_sample <span class="ot">&lt;-</span> </span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  sim_table <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, var))  <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">se =</span> value)   <span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var)  <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(se <span class="sc">&lt;=</span> cutoff)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_RELpos<span class="sc">$</span>item)))  <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;sample_size&#39;.</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; You can override using the `.groups` argument.</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="fu">flextable</span>(final_sample <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-629ef362{}.cl-629ab568{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-629c2114{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-629c2132{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-629c2a10{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-629c2a24{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-629c2a38{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-629c2a39{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-629c2a42{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-629c2a6a{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-629c2a74{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-629c2a7e{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-629c2a88{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-629ef362"><thead><tr style="overflow-wrap:break-word;"><th class="cl-629c2a10"><p class="cl-629c2114"><span class="cl-629ab568">sample_size</span></p></th><th class="cl-629c2a24"><p class="cl-629c2132"><span class="cl-629ab568">var</span></p></th><th class="cl-629c2a38"><p class="cl-629c2114"><span class="cl-629ab568">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-629c2a39"><p class="cl-629c2114"><span class="cl-629ab568">25</span></p></td><td class="cl-629c2a42"><p class="cl-629c2132"><span class="cl-629ab568">Response</span></p></td><td class="cl-629c2a6a"><p class="cl-629c2114"><span class="cl-629ab568">0.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-629c2a39"><p class="cl-629c2114"><span class="cl-629ab568">30</span></p></td><td class="cl-629c2a42"><p class="cl-629c2132"><span class="cl-629ab568">Response</span></p></td><td class="cl-629c2a6a"><p class="cl-629c2114"><span class="cl-629ab568">0.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-629c2a39"><p class="cl-629c2114"><span class="cl-629ab568">35</span></p></td><td class="cl-629c2a42"><p class="cl-629c2132"><span class="cl-629ab568">Response</span></p></td><td class="cl-629c2a6a"><p class="cl-629c2114"><span class="cl-629ab568">0.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-629c2a39"><p class="cl-629c2114"><span class="cl-629ab568">40</span></p></td><td class="cl-629c2a42"><p class="cl-629c2132"><span class="cl-629ab568">Response</span></p></td><td class="cl-629c2a6a"><p class="cl-629c2114"><span class="cl-629ab568">0.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-629c2a39"><p class="cl-629c2114"><span class="cl-629ab568">50</span></p></td><td class="cl-629c2a42"><p class="cl-629c2132"><span class="cl-629ab568">Response</span></p></td><td class="cl-629c2a6a"><p class="cl-629c2114"><span class="cl-629ab568">0.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-629c2a74"><p class="cl-629c2114"><span class="cl-629ab568">45</span></p></td><td class="cl-629c2a7e"><p class="cl-629c2132"><span class="cl-629ab568">Response</span></p></td><td class="cl-629c2a88"><p class="cl-629c2114"><span class="cl-629ab568">0.1</span></p></td></tr></tbody></table></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>final_table_pos <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="at">proportion_summary =</span> final_sample,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">pilot_sample_size =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_RELpos<span class="sc">$</span>ssID)),</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">proportion_variability =</span> cutoff_relpos<span class="sc">$</span>prop_var</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  )</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="fu">flextable</span>(final_table_pos) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-62ab027e{}.cl-62a82982{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-62a95dac{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-62a96540{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a96541{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a9655e{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a9655f{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a96568{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a9657c{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a9657d{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a9659a{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a965ae{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a965af{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a965c2{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62a965cc{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-62ab027e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-62a96540"><p class="cl-62a95dac"><span class="cl-62a82982">percent_below</span></p></th><th class="cl-62a96541"><p class="cl-62a95dac"><span class="cl-62a82982">sample_size</span></p></th><th class="cl-62a9655e"><p class="cl-62a95dac"><span class="cl-62a82982">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-62a9655f"><p class="cl-62a95dac"><span class="cl-62a82982">80</span></p></td><td class="cl-62a96568"><p class="cl-62a95dac"><span class="cl-62a82982">100</span></p></td><td class="cl-62a9657c"><p class="cl-62a95dac"><span class="cl-62a82982">66.65688</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62a9657d"><p class="cl-62a95dac"><span class="cl-62a82982">90</span></p></td><td class="cl-62a9659a"><p class="cl-62a95dac"><span class="cl-62a82982">105</span></p></td><td class="cl-62a965ae"><p class="cl-62a95dac"><span class="cl-62a82982">70.07476</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62a9657d"><p class="cl-62a95dac"><span class="cl-62a82982">90</span></p></td><td class="cl-62a9659a"><p class="cl-62a95dac"><span class="cl-62a82982">105</span></p></td><td class="cl-62a965ae"><p class="cl-62a95dac"><span class="cl-62a82982">70.07476</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62a965af"><p class="cl-62a95dac"><span class="cl-62a82982">95</span></p></td><td class="cl-62a965c2"><p class="cl-62a95dac"><span class="cl-62a82982">125</span></p></td><td class="cl-62a965cc"><p class="cl-62a95dac"><span class="cl-62a82982">84.64245</span></p></td></tr></tbody></table></div>
+<p>Suggestions for REL- Condition:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE2, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>final_sample2 <span class="ot">&lt;-</span> </span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  sim_table2 <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, var)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">se =</span> value)  <span class="sc">%&gt;%</span> </span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(se <span class="sc">&lt;=</span> cutoff)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_RELneg<span class="sc">$</span>item))) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;sample_size&#39;.</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; You can override using the `.groups` argument.</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="fu">flextable</span>(final_sample2 <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-62b7c09a{}.cl-62b4d876{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-62b61380{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-62b6138a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-62b61b8c{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62b61b8d{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62b61b96{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62b61b97{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62b61b98{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62b61bbe{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62b61bbf{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62b61bc0{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62b61bc8{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-62b7c09a"><thead><tr style="overflow-wrap:break-word;"><th class="cl-62b61b8c"><p class="cl-62b61380"><span class="cl-62b4d876">sample_size</span></p></th><th class="cl-62b61b8d"><p class="cl-62b6138a"><span class="cl-62b4d876">var</span></p></th><th class="cl-62b61b96"><p class="cl-62b61380"><span class="cl-62b4d876">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-62b61b97"><p class="cl-62b61380"><span class="cl-62b4d876">25</span></p></td><td class="cl-62b61b98"><p class="cl-62b6138a"><span class="cl-62b4d876">Response</span></p></td><td class="cl-62b61bbe"><p class="cl-62b61380"><span class="cl-62b4d876">0.05</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62b61b97"><p class="cl-62b61380"><span class="cl-62b4d876">30</span></p></td><td class="cl-62b61b98"><p class="cl-62b6138a"><span class="cl-62b4d876">Response</span></p></td><td class="cl-62b61bbe"><p class="cl-62b61380"><span class="cl-62b4d876">0.05</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62b61b97"><p class="cl-62b61380"><span class="cl-62b4d876">35</span></p></td><td class="cl-62b61b98"><p class="cl-62b6138a"><span class="cl-62b4d876">Response</span></p></td><td class="cl-62b61bbe"><p class="cl-62b61380"><span class="cl-62b4d876">0.05</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62b61b97"><p class="cl-62b61380"><span class="cl-62b4d876">40</span></p></td><td class="cl-62b61b98"><p class="cl-62b6138a"><span class="cl-62b4d876">Response</span></p></td><td class="cl-62b61bbe"><p class="cl-62b61380"><span class="cl-62b4d876">0.05</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62b61b97"><p class="cl-62b61380"><span class="cl-62b4d876">50</span></p></td><td class="cl-62b61b98"><p class="cl-62b6138a"><span class="cl-62b4d876">Response</span></p></td><td class="cl-62b61bbe"><p class="cl-62b61380"><span class="cl-62b4d876">0.15</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62b61bbf"><p class="cl-62b61380"><span class="cl-62b4d876">55</span></p></td><td class="cl-62b61bc0"><p class="cl-62b6138a"><span class="cl-62b4d876">Response</span></p></td><td class="cl-62b61bc8"><p class="cl-62b61380"><span class="cl-62b4d876">0.15</span></p></td></tr></tbody></table></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>final_table_neg <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="at">proportion_summary =</span> final_sample2,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">pilot_sample_size =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_RELneg<span class="sc">$</span>ssID)),</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="at">proportion_variability =</span> cutoff_relneg<span class="sc">$</span>prop_var</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  )</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="fu">flextable</span>(final_table_neg) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-62c482f8{}.cl-62c1a5b0{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-62c2db7e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-62c2e2a4{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e2ae{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e2af{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e2b8{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e2b9{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e2c2{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e2fe{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e2ff{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e308{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e309{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e30a{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62c2e312{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-62c482f8"><thead><tr style="overflow-wrap:break-word;"><th class="cl-62c2e2a4"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">percent_below</span></p></th><th class="cl-62c2e2ae"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">sample_size</span></p></th><th class="cl-62c2e2af"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-62c2e2b8"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">85</span></p></td><td class="cl-62c2e2b9"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">95</span></p></td><td class="cl-62c2e2c2"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">61.90142</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62c2e2b8"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">85</span></p></td><td class="cl-62c2e2b9"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">95</span></p></td><td class="cl-62c2e2c2"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">61.90142</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62c2e2fe"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">100</span></p></td><td class="cl-62c2e2ff"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">100</span></p></td><td class="cl-62c2e308"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">66.58936</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62c2e309"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">100</span></p></td><td class="cl-62c2e30a"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">100</span></p></td><td class="cl-62c2e312"><p class="cl-62c2db7e"><span class="cl-62c1a5b0">66.58936</span></p></td></tr></tbody></table></div>
+<p>Suggestions for UNREL Condition:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE3, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>final_sample3 <span class="ot">&lt;-</span> </span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  sim_table3 <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, var)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">se =</span> value)  <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(se <span class="sc">&lt;=</span> cutoff)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_UNREL<span class="sc">$</span>item))) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;sample_size&#39;.</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; You can override using the `.groups` argument.</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="fu">flextable</span>(final_sample3 <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-62d24578{}.cl-62cf3f54{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-62d09a34{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-62d09a3e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-62d0a254{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62d0a25e{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62d0a272{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62d0a2ae{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62d0a2af{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62d0a2b0{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62d0a2b8{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62d0a2cc{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62d0a2e0{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-62d24578"><thead><tr style="overflow-wrap:break-word;"><th class="cl-62d0a254"><p class="cl-62d09a34"><span class="cl-62cf3f54">sample_size</span></p></th><th class="cl-62d0a25e"><p class="cl-62d09a3e"><span class="cl-62cf3f54">var</span></p></th><th class="cl-62d0a272"><p class="cl-62d09a34"><span class="cl-62cf3f54">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-62d0a2ae"><p class="cl-62d09a34"><span class="cl-62cf3f54">25</span></p></td><td class="cl-62d0a2af"><p class="cl-62d09a3e"><span class="cl-62cf3f54">Response</span></p></td><td class="cl-62d0a2b0"><p class="cl-62d09a34"><span class="cl-62cf3f54">0.00</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62d0a2ae"><p class="cl-62d09a34"><span class="cl-62cf3f54">30</span></p></td><td class="cl-62d0a2af"><p class="cl-62d09a3e"><span class="cl-62cf3f54">Response</span></p></td><td class="cl-62d0a2b0"><p class="cl-62d09a34"><span class="cl-62cf3f54">0.00</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62d0a2ae"><p class="cl-62d09a34"><span class="cl-62cf3f54">35</span></p></td><td class="cl-62d0a2af"><p class="cl-62d09a3e"><span class="cl-62cf3f54">Response</span></p></td><td class="cl-62d0a2b0"><p class="cl-62d09a34"><span class="cl-62cf3f54">0.00</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62d0a2ae"><p class="cl-62d09a34"><span class="cl-62cf3f54">40</span></p></td><td class="cl-62d0a2af"><p class="cl-62d09a3e"><span class="cl-62cf3f54">Response</span></p></td><td class="cl-62d0a2b0"><p class="cl-62d09a34"><span class="cl-62cf3f54">0.15</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62d0a2ae"><p class="cl-62d09a34"><span class="cl-62cf3f54">45</span></p></td><td class="cl-62d0a2af"><p class="cl-62d09a3e"><span class="cl-62cf3f54">Response</span></p></td><td class="cl-62d0a2b0"><p class="cl-62d09a34"><span class="cl-62cf3f54">0.15</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62d0a2b8"><p class="cl-62d09a34"><span class="cl-62cf3f54">55</span></p></td><td class="cl-62d0a2cc"><p class="cl-62d09a3e"><span class="cl-62cf3f54">Response</span></p></td><td class="cl-62d0a2e0"><p class="cl-62d09a34"><span class="cl-62cf3f54">0.20</span></p></td></tr></tbody></table></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>final_table_unrel <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="at">proportion_summary =</span> final_sample3,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">pilot_sample_size =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_UNREL<span class="sc">$</span>ssID)),</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">proportion_variability =</span> cutoff_unrel<span class="sc">$</span>prop_var</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  )</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="fu">flextable</span>(final_table_unrel) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-62deeb16{}.cl-62dc1472{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-62dd45cc{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-62dd4cca{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4cd4{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4cde{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d2e{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d38{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d39{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d42{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d43{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d44{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d4c{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d4d{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-62dd4d4e{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-62deeb16"><thead><tr style="overflow-wrap:break-word;"><th class="cl-62dd4cca"><p class="cl-62dd45cc"><span class="cl-62dc1472">percent_below</span></p></th><th class="cl-62dd4cd4"><p class="cl-62dd45cc"><span class="cl-62dc1472">sample_size</span></p></th><th class="cl-62dd4cde"><p class="cl-62dd45cc"><span class="cl-62dc1472">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-62dd4d2e"><p class="cl-62dd45cc"><span class="cl-62dc1472">80</span></p></td><td class="cl-62dd4d38"><p class="cl-62dd45cc"><span class="cl-62dc1472">95</span></p></td><td class="cl-62dd4d39"><p class="cl-62dd45cc"><span class="cl-62dc1472">62.33224</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62dd4d2e"><p class="cl-62dd45cc"><span class="cl-62dc1472">85</span></p></td><td class="cl-62dd4d38"><p class="cl-62dd45cc"><span class="cl-62dc1472">110</span></p></td><td class="cl-62dd4d39"><p class="cl-62dd45cc"><span class="cl-62dc1472">73.33152</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62dd4d42"><p class="cl-62dd45cc"><span class="cl-62dc1472">90</span></p></td><td class="cl-62dd4d43"><p class="cl-62dd45cc"><span class="cl-62dc1472">115</span></p></td><td class="cl-62dd4d44"><p class="cl-62dd45cc"><span class="cl-62dc1472">76.92278</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-62dd4d4c"><p class="cl-62dd45cc"><span class="cl-62dc1472">95</span></p></td><td class="cl-62dd4d4d"><p class="cl-62dd45cc"><span class="cl-62dc1472">130</span></p></td><td class="cl-62dd4d4e"><p class="cl-62dd45cc"><span class="cl-62dc1472">87.59422</span></p></td></tr></tbody></table></div>
+<p>Based on these simulations, we can decide our minimum sample size by
+examining all three potential scores at 80% of items below the
+criterion, <span class="math inline">\(n_{positive}\)</span> = 67, <span class="math inline">\(n_{negative}\)</span> = 62, or <span class="math inline">\(n_{unrelated}\)</span> = 62. These scores are all
+very similar, and we should select the largest one.</p>
+</div>
+<div id="maximum-sample-size" class="section level4">
+<h4>Maximum Sample Size</h4>
+<p>In this example, we could set our maximum sample size for 90% power
+which would equate to: <span class="math inline">\(n_{positive}\)</span>
+= 70, <span class="math inline">\(n_{negative}\)</span> = 67, or <span class="math inline">\(n_{unrelated}\)</span> = 77.</p>
+</div>
+<div id="final-sample-size" class="section level4">
+<h4>Final Sample Size</h4>
+<p>The final sample size should be selected from the largest suggested
+sample size based on condition to ensure that all conditions are
+adequately measured.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

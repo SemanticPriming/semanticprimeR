@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Necdet Gürkan &amp; Yangyang Yu" />
+
+<meta name="date" content="2023-09-18" />
+
+<title>Power and Sample Size Simulation: Superficial Face Judgment</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<style type="text/css">.tabwid {
+font-size: initial;
+padding-bottom: 1em;
+}
+.tabwid table{
+border-spacing:0px !important;
+border-collapse:collapse;
+line-height:1;
+margin-left:auto;
+margin-right:auto;
+border-width: 0;
+border-color: transparent;
+caption-side: top;
+}
+.tabwid-caption-bottom table{
+caption-side: bottom;
+}
+.tabwid_left table{
+margin-left:0;
+}
+.tabwid_right table{
+margin-right:0;
+}
+.tabwid td, .tabwid th {
+padding: 0;
+}
+.tabwid a {
+text-decoration: none;
+}
+.tabwid thead {
+background-color: transparent;
+}
+.tabwid tfoot {
+background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+margin: 0 0 !important;
+}
+</style>
+<script>document.addEventListener("DOMContentLoaded", function(event) {
+  var els = document.querySelectorAll(".tabwid");
+  var tabwid_link = document.querySelector('link[href*="tabwid.css"]')
+  if (tabwid_link === null) {
+    const tabwid_styles = document.evaluate("//style[contains(., 'tabwid')]", document, null, XPathResult.ANY_TYPE, null );
+    tabwid_link = tabwid_styles.iterateNext();
+  }
+
+  Array.prototype.forEach.call(els, function(template) {
+      const dest = document.createElement("div");
+      template.parentNode.insertBefore(dest, template.nextSibling)
+      dest.setAttribute("class", "flextable-shadow-host");
+      const fantome = dest.attachShadow({mode: 'open'});
+      fantome.appendChild(template);
+      if (tabwid_link !== null) {
+        fantome.appendChild(tabwid_link.cloneNode(true));
+      }
+  });
+});
+
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Power and Sample Size Simulation:
+Superficial Face Judgment</h1>
+<h4 class="author">Necdet Gürkan &amp; Yangyang Yu</h4>
+<h4 class="date">2023-09-18</h4>
+
+
+
+<div id="vignette-setup" class="section level3">
+<h3>Vignette Setup:</h3>
+</div>
+<div id="projectdata-title" class="section level3">
+<h3>Project/Data Title:</h3>
+<p>Deep models of superficial trait inferences</p>
+<p>Data provided by: Jordan W. Suchow</p>
+</div>
+<div id="projectdata-description" class="section level3">
+<h3>Project/Data Description:</h3>
+<p>The diversity of human faces and the contexts in which they appear
+gives rise to an expansive stimulus space over which people infer
+psychological traits (e.g., trustworthiness or alertness) and other
+attributes (e.g., age or adiposity). Machine learning methods, in
+particular deep neural networks, provide expressive feature
+representations of face stimuli, but the correspondence between these
+representations and various human attribute inferences is difficult to
+determine because the former are high-dimensional vectors produced via
+black box optimization algorithms. In this paper, we combined deep
+generative image models with over 1 million judgments to model
+inferences of more than 30 attributes over a comprehensive latent face
+space. The predictive accuracy of the model approached human interrater
+reliability, which simulations suggest would not have been possible with
+fewer faces, fewer judgments, or lower-dimensional feature
+representations. The model can be used to predict and manipulate
+inferences with respect to arbitrary face photographs or to generate
+synthetic photorealistic face stimuli that evoke impressions tuned along
+the modeled attributes.</p>
+<p>In sum, the dataset contains 1.14 million ratings across 1000 items
+and 34 traits by 5,000 participants. NOTE: The trait trustworthy in the
+dataset was collected twice, so the trait column has 35 traits.</p>
+</div>
+<div id="methods-description" class="section level3">
+<h3>Methods Description:</h3>
+<p>For the attribute model studies, we used a between-subjects design
+where participants evaluated faces with respect to each attribute.
+Participants first consented. Then they completed a preinstruction
+agreement to answer open-ended questions at the end of the study. In the
+instructions, participants were given 25 examples of face images in
+order to provide a sense of the diversity they would encounter during
+the experiment. Participants were instructed to rate a series of faces
+on a continuous slider scale where extremes were bipolar descriptors
+such as “trustworthy” to “not trustworthy.” We did not supply
+definitions of each attribute to participants and instead relied on
+participants’ intuitive notions for each.</p>
+<p>Each participant then completed 120 trials with the single attribute
+to which they were assigned. One hundred of these trials displayed
+images randomly selected (without replacement) from the full set; the
+remaining 20 trials were repeats of earlier trials, selected randomly
+from the 100 unique trials, which we used to assess intrarater
+reliability. Each stimulus in the full set was judged by at least 30
+unique participants.</p>
+<p>At the end of the experiment, participants were given a survey that
+queried what participants believed we were assessing and asked for a
+self-assessment of their performance and feedback on any potential
+points of confusion, as well as demographic information such as age,
+race, and gender. Participants were given 30 min to complete the entire
+experiment, but most completed it in under 20 min. Each participant was
+paid $1.50.</p>
+</div>
+<div id="data-location" class="section level3">
+<h3>Data Location:</h3>
+<p><a href="https://github.com/jcpeterson/omi" class="uri">https://github.com/jcpeterson/omi</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## Please set the work directory to the folder containing the scripts and data</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>face_data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/suchow_data.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">str</span>(face_data)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    1139300 obs. of  5 variables:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;  $ participant: int  1256 1256 1256 1256 1256 1256 1256 1256 1256 1256 ...</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;  $ stimulus   : int  63 75 73 64 54 46 23 18 74 49 ...</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt;  $ trait      : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;  $ response   : int  77 99 0 58 69 58 54 47 24 71 ...</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;  $ rt         : int  4413 3518 5248 4167 3703 6304 4774 4480 2974 3359 ...</span></span></code></pre></div>
+</div>
+<div id="date-published" class="section level3">
+<h3>Date Published:</h3>
+<p>2022-04-15</p>
+</div>
+<div id="dataset-citation" class="section level3">
+<h3>Dataset Citation:</h3>
+<p>Peterson, J. C., Uddenberg, S., Griffiths, T., Todorov, A., &amp;
+Suchow, J. W. (2022). Deep models of superficial face judgments.
+Proceedings of the National Academy of Sciences (PNAS).</p>
+</div>
+<div id="keywords" class="section level3">
+<h3>Keywords:</h3>
+<p>first impressions, social perception, face perception</p>
+</div>
+<div id="use-license" class="section level3">
+<h3>Use License:</h3>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="uri">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></p>
+</div>
+<div id="geographic-description---citystatecountry-of-participants" class="section level3">
+<h3>Geographic Description - City/State/Country of Participants:</h3>
+<p>For the attribute model studies, we used Amazon Mechanical Turk to
+recruit a total of 4,157 participants across 10,974 sessions, of which
+10,633 (≈ 97%) met our criteria for inclusion. Participants identified
+their gender as female (2,065) or male (2,053), preferred not to say
+(21), or did not have their gender listed as an option (18). The mean
+age was ∼39 y old. Participants identified their race/ethnicity as
+either White (2,935), Black/African American (458), Latinx/a/o or
+Hispanic (158), East Asian (174), Southeast Asian (71), South Asian
+(70), Native American/American Indian (31), Middle Eastern (12), Native
+Hawaiian or Other Pacific Islander (3), or some combination of two or
+more races/ethnicities (215). The remaining participants either
+preferred not to say (22) or did not have their race/ethnicity listed as
+an option (8). Participants were recruited from the United States.</p>
+</div>
+<div id="column-metadata" class="section level3">
+<h3>Column Metadata:</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/suchow_metadata.xlsx&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">flextable</span>(metadata) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-64077fee{}.cl-64047a92{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6405c7ee{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6405d090{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d09a{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d09b{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0a4{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0a5{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0a6{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0a7{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0ae{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0af{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0b0{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0c2{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0cc{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0cd{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0e0{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6405d0e1{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-64077fee"><thead><tr style="overflow-wrap:break-word;"><th class="cl-6405d090"><p class="cl-6405c7ee"><span class="cl-64047a92">Variable Name</span></p></th><th class="cl-6405d09a"><p class="cl-6405c7ee"><span class="cl-64047a92">Variable Description</span></p></th><th class="cl-6405d09b"><p class="cl-6405c7ee"><span class="cl-64047a92">Type (numeric, character, logical, etc.)</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-6405d0a4"><p class="cl-6405c7ee"><span class="cl-64047a92">Participant</span></p></td><td class="cl-6405d0a5"><p class="cl-6405c7ee"><span class="cl-64047a92">Unique number assigned to each participant</span></p></td><td class="cl-6405d0a6"><p class="cl-6405c7ee"><span class="cl-64047a92">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-6405d0a7"><p class="cl-6405c7ee"><span class="cl-64047a92">Stimulus</span></p></td><td class="cl-6405d0ae"><p class="cl-6405c7ee"><span class="cl-64047a92">Face 1 to 1004</span></p></td><td class="cl-6405d0af"><p class="cl-6405c7ee"><span class="cl-64047a92">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-6405d0b0"><p class="cl-6405c7ee"><span class="cl-64047a92">Trait</span></p></td><td class="cl-6405d0c2"><p class="cl-6405c7ee"><span class="cl-64047a92">Trait 1 to 35</span></p></td><td class="cl-6405d0cc"><p class="cl-6405c7ee"><span class="cl-64047a92">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-6405d0cd"><p class="cl-6405c7ee"><span class="cl-64047a92">Response</span></p></td><td class="cl-6405d0e0"><p class="cl-6405c7ee"><span class="cl-64047a92">Rating for corresponding rating</span></p></td><td class="cl-6405d0e1"><p class="cl-6405c7ee"><span class="cl-64047a92">Numeric</span></p></td></tr></tbody></table></div>
+</div>
+<div id="aipe-analysis" class="section level3">
+<h3>AIPE Analysis:</h3>
+<div id="stopping-rule" class="section level4">
+<h4>Stopping Rule</h4>
+<p>When pilot data is this large, it is important to sample a smaller
+subset based on what the participant might actually do in the study. We
+will pick 50 faces rated on 10 traits - and then select the highest and
+lowest variance to estimate from. This choice is somewhat arbitrary - in
+a real study, you could choose to use only the variables you were
+interested in and pick the most conservative values or simply average
+together estimates from all variables.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># pick random faces</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>faces <span class="ot">&lt;-</span> <span class="fu">unique</span>(face_data<span class="sc">$</span>stimulus)[<span class="fu">sample</span>(<span class="fu">unique</span>(face_data<span class="sc">$</span>stimulus), <span class="at">size =</span> <span class="dv">50</span>)]</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># pick random traits</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>traits <span class="ot">&lt;-</span> <span class="fu">unique</span>(face_data<span class="sc">$</span>trait)[<span class="fu">sample</span>(<span class="fu">unique</span>(face_data<span class="sc">$</span>trait), <span class="at">size =</span> <span class="dv">10</span>)]</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>face_data <span class="ot">&lt;-</span> face_data <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="fu">filter</span>(trait <span class="sc">%in%</span> traits) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">filter</span>(stimulus <span class="sc">%in%</span> faces)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># all SEs </span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>SE_full <span class="ot">&lt;-</span> <span class="fu">tapply</span>(face_data<span class="sc">$</span>response, face_data<span class="sc">$</span>trait, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>SE_full</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;         3        11        15        17        18 </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 0.5302480 0.6052025 0.6057533 0.7151215 0.5899025 </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;        20        25        26        29        33 </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 0.5936983 0.8063501 0.8173728 0.7510497 0.6380199</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="do">## smallest variance is trait 4</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>face_data_trait4_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(face_data, trait <span class="sc">==</span> <span class="fu">names</span>(<span class="fu">which.min</span>(SE_full)))</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="do">## largest is trait 30</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>face_data_trait30_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(face_data, trait <span class="sc">==</span> <span class="fu">names</span>(<span class="fu">which.max</span>(SE_full)))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># individual SEs for 4 trait </span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>SE1 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(face_data_trait4_sub<span class="sc">$</span>response, face_data_trait4_sub<span class="sc">$</span>stimulus, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">quantile</span>(SE1, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;      40% </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; 3.230473</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># individual SEs for 30 trait</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>SE2 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(face_data_trait30_sub<span class="sc">$</span>response, face_data_trait30_sub<span class="sc">$</span>stimulus, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="fu">quantile</span>(SE2, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;      40% </span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; 4.120649</span></span></code></pre></div>
+</div>
+<div id="minimum-sample-size" class="section level4">
+<h4>Minimum Sample Size</h4>
+<p>How large does the sample have to be for 80% and 95% of the items to
+be below our stopping SE rule?</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># sequence of sample sizes to try</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>samplesize_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">25</span>, <span class="dv">100</span>, <span class="dv">5</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># create a blank table for us to save the values in </span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values), </span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(face_data_trait4_sub<span class="sc">$</span>stimulus)))</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table)</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>sim_table<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>sim_table<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="st">&quot;response&quot;</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co"># make a second table for the second variable</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>sim_table2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values), </span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(face_data_trait30_sub<span class="sc">$</span>stimulus)))</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>sim_table2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table2)</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>sim_table2<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>sim_table2<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="st">&quot;response&quot;</span></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co"># loop over sample sizes for age and outdoor trait</span></span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(samplesize_values)){</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>    </span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>  <span class="co"># temp dataframe for age trait that samples and summarizes</span></span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>  temp7 <span class="ot">&lt;-</span> face_data_trait4_sub <span class="sc">%&gt;%</span> </span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(stimulus) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">se1 =</span> <span class="fu">sd</span>(response)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(response))) </span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a>  </span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a>  <span class="co"># </span></span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a>  <span class="fu">colnames</span>(sim_table)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(face_data_trait4_sub<span class="sc">$</span>stimulus))] <span class="ot">&lt;-</span> temp7<span class="sc">$</span>stimulus</span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a>  sim_table[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(face_data_trait4_sub<span class="sc">$</span>stimulus))] <span class="ot">&lt;-</span> temp7<span class="sc">$</span>se1</span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a>  sim_table[i, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>  </span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a>  <span class="co"># temp dataframe for outdoor trait that samples and summarizes</span></span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>  temp35 <span class="ot">&lt;-</span>face_data_trait30_sub <span class="sc">%&gt;%</span> </span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(stimulus) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">se2 =</span> <span class="fu">sd</span>(response)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(response))) </span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a>  </span>
+<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a>  <span class="co"># </span></span>
+<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a>  <span class="fu">colnames</span>(sim_table2)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(face_data_trait30_sub<span class="sc">$</span>stimulus))] <span class="ot">&lt;-</span> temp35<span class="sc">$</span>stimulus</span>
+<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a>  sim_table2[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(face_data_trait30_sub<span class="sc">$</span>stimulus))] <span class="ot">&lt;-</span> temp35<span class="sc">$</span>se2</span>
+<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>  sim_table2[i, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>}</span></code></pre></div>
+<p>Calculate the cutoff score with information necessary for
+correction.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>cutoff_trait4 <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> face_data_trait4_sub, </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                 <span class="at">grouping_items =</span> <span class="st">&quot;stimulus&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                 <span class="at">score =</span> <span class="st">&quot;response&quot;</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>                 <span class="at">minimum =</span> <span class="fu">min</span>(face_data_trait4_sub<span class="sc">$</span>response),</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>                 <span class="at">maximum =</span> <span class="fu">max</span>(face_data_trait4_sub<span class="sc">$</span>response))</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co"># same as above</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>cutoff_trait4<span class="sc">$</span>cutoff</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt;      40% </span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 3.230473</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>cutoff_trait30 <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> face_data_trait30_sub, </span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>                 <span class="at">grouping_items =</span> <span class="st">&quot;stimulus&quot;</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>                 <span class="at">score =</span> <span class="st">&quot;response&quot;</span>, </span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>                 <span class="at">minimum =</span> <span class="fu">min</span>(face_data_trait30_sub<span class="sc">$</span>response),</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>                 <span class="at">maximum =</span> <span class="fu">max</span>(face_data_trait30_sub<span class="sc">$</span>response))</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>cutoff_trait30<span class="sc">$</span>cutoff</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt;      40% </span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; 4.120649</span></span></code></pre></div>
+<p>Trait 4 Results:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE1, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>final_sample <span class="ot">&lt;-</span> </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  sim_table <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, var))  <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">se =</span> value)   <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var)  <span class="sc">%&gt;%</span> </span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(se <span class="sc">&lt;=</span> cutoff)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(face_data_trait4_sub<span class="sc">$</span>stimulus)))  <span class="sc">%&gt;%</span> </span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(percent_below <span class="sc">&gt;=</span> .<span class="dv">80</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;sample_size&#39;.</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; You can override using the `.groups` argument.</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="fu">flextable</span>(final_sample <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-64562432{}.cl-6452e8ee{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-64544e14{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-64544e1e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6454579c{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-645457a6{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-645457b0{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-645457b1{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-645457b2{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-645457ce{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-645457d8{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-645457d9{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-645457e2{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-64562432"><thead><tr style="overflow-wrap:break-word;"><th class="cl-6454579c"><p class="cl-64544e14"><span class="cl-6452e8ee">sample_size</span></p></th><th class="cl-645457a6"><p class="cl-64544e1e"><span class="cl-6452e8ee">var</span></p></th><th class="cl-645457b0"><p class="cl-64544e14"><span class="cl-6452e8ee">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-645457b1"><p class="cl-64544e14"><span class="cl-6452e8ee">55</span></p></td><td class="cl-645457b2"><p class="cl-64544e1e"><span class="cl-6452e8ee">response</span></p></td><td class="cl-645457ce"><p class="cl-64544e14"><span class="cl-6452e8ee">0.80</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-645457b1"><p class="cl-64544e14"><span class="cl-6452e8ee">60</span></p></td><td class="cl-645457b2"><p class="cl-64544e1e"><span class="cl-6452e8ee">response</span></p></td><td class="cl-645457ce"><p class="cl-64544e14"><span class="cl-6452e8ee">0.90</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-645457b1"><p class="cl-64544e14"><span class="cl-6452e8ee">65</span></p></td><td class="cl-645457b2"><p class="cl-64544e1e"><span class="cl-6452e8ee">response</span></p></td><td class="cl-645457ce"><p class="cl-64544e14"><span class="cl-6452e8ee">0.92</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-645457b1"><p class="cl-64544e14"><span class="cl-6452e8ee">70</span></p></td><td class="cl-645457b2"><p class="cl-64544e1e"><span class="cl-6452e8ee">response</span></p></td><td class="cl-645457ce"><p class="cl-64544e14"><span class="cl-6452e8ee">0.98</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-645457b1"><p class="cl-64544e14"><span class="cl-6452e8ee">75</span></p></td><td class="cl-645457b2"><p class="cl-64544e1e"><span class="cl-6452e8ee">response</span></p></td><td class="cl-645457ce"><p class="cl-64544e14"><span class="cl-6452e8ee">0.98</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-645457d8"><p class="cl-64544e14"><span class="cl-6452e8ee">80</span></p></td><td class="cl-645457d9"><p class="cl-64544e1e"><span class="cl-6452e8ee">response</span></p></td><td class="cl-645457e2"><p class="cl-64544e14"><span class="cl-6452e8ee">0.98</span></p></td></tr></tbody></table></div>
+<p>Calculate the final corrected scores:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>final_scores <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(<span class="at">proportion_summary =</span> final_sample,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>                     <span class="at">pilot_sample_size =</span> face_data_trait4_sub <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>                       <span class="fu">group_by</span>(stimulus) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>                       <span class="fu">summarize</span>(<span class="at">sample_size =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>                       <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>                       <span class="fu">summarize</span>(<span class="at">avg_sample =</span> <span class="fu">mean</span>(sample_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>                       <span class="fu">pull</span>(avg_sample),</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>                     <span class="at">proportion_variability =</span> cutoff_trait4<span class="sc">$</span>prop_var)</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="fu">flextable</span>(final_scores) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-64638172{}.cl-646095a2{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6461d12e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6461d8b8{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d8c2{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d8c3{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d8c4{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d8cc{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d8cd{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d8ce{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d908{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d91c{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d93a{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d93b{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6461d944{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-64638172"><thead><tr style="overflow-wrap:break-word;"><th class="cl-6461d8b8"><p class="cl-6461d12e"><span class="cl-646095a2">percent_below</span></p></th><th class="cl-6461d8c2"><p class="cl-6461d12e"><span class="cl-646095a2">sample_size</span></p></th><th class="cl-6461d8c3"><p class="cl-6461d12e"><span class="cl-646095a2">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-6461d8c4"><p class="cl-6461d12e"><span class="cl-646095a2">80</span></p></td><td class="cl-6461d8cc"><p class="cl-6461d12e"><span class="cl-646095a2">55</span></p></td><td class="cl-6461d8cd"><p class="cl-6461d12e"><span class="cl-646095a2">45.70328</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-6461d8ce"><p class="cl-6461d12e"><span class="cl-646095a2">90</span></p></td><td class="cl-6461d908"><p class="cl-6461d12e"><span class="cl-646095a2">60</span></p></td><td class="cl-6461d91c"><p class="cl-6461d12e"><span class="cl-646095a2">50.63981</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-6461d8ce"><p class="cl-6461d12e"><span class="cl-646095a2">90</span></p></td><td class="cl-6461d908"><p class="cl-6461d12e"><span class="cl-646095a2">60</span></p></td><td class="cl-6461d91c"><p class="cl-6461d12e"><span class="cl-646095a2">50.63981</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-6461d93a"><p class="cl-6461d12e"><span class="cl-646095a2">98</span></p></td><td class="cl-6461d93b"><p class="cl-6461d12e"><span class="cl-646095a2">70</span></p></td><td class="cl-6461d944"><p class="cl-6461d12e"><span class="cl-646095a2">61.02163</span></p></td></tr></tbody></table></div>
+<p>Trait 30 Results:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE2, <span class="at">probs =</span> .<span class="dv">4</span>) </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>final_sample2 <span class="ot">&lt;-</span> </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  sim_table2 <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, var)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">se =</span> value)  <span class="sc">%&gt;%</span> </span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(se <span class="sc">&lt;=</span> cutoff)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(face_data_trait30_sub<span class="sc">$</span>stimulus))) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(percent_below <span class="sc">&gt;=</span> .<span class="dv">80</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;sample_size&#39;.</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; You can override using the `.groups` argument.</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="fu">flextable</span>(final_sample2 <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-64706860{}.cl-646d94a0{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-646ec74e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-646ec74f{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-646ecf1e{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646ecf1f{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646ecf3c{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646ecf3d{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646ecf3e{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646ecf50{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646ecf5a{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646ecf5b{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646ecf6e{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-64706860"><thead><tr style="overflow-wrap:break-word;"><th class="cl-646ecf1e"><p class="cl-646ec74e"><span class="cl-646d94a0">sample_size</span></p></th><th class="cl-646ecf1f"><p class="cl-646ec74f"><span class="cl-646d94a0">var</span></p></th><th class="cl-646ecf3c"><p class="cl-646ec74e"><span class="cl-646d94a0">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-646ecf3d"><p class="cl-646ec74e"><span class="cl-646d94a0">50</span></p></td><td class="cl-646ecf3e"><p class="cl-646ec74f"><span class="cl-646d94a0">response</span></p></td><td class="cl-646ecf50"><p class="cl-646ec74e"><span class="cl-646d94a0">0.84</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-646ecf3d"><p class="cl-646ec74e"><span class="cl-646d94a0">55</span></p></td><td class="cl-646ecf3e"><p class="cl-646ec74f"><span class="cl-646d94a0">response</span></p></td><td class="cl-646ecf50"><p class="cl-646ec74e"><span class="cl-646d94a0">0.90</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-646ecf3d"><p class="cl-646ec74e"><span class="cl-646d94a0">60</span></p></td><td class="cl-646ecf3e"><p class="cl-646ec74f"><span class="cl-646d94a0">response</span></p></td><td class="cl-646ecf50"><p class="cl-646ec74e"><span class="cl-646d94a0">0.92</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-646ecf3d"><p class="cl-646ec74e"><span class="cl-646d94a0">65</span></p></td><td class="cl-646ecf3e"><p class="cl-646ec74f"><span class="cl-646d94a0">response</span></p></td><td class="cl-646ecf50"><p class="cl-646ec74e"><span class="cl-646d94a0">0.98</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-646ecf3d"><p class="cl-646ec74e"><span class="cl-646d94a0">70</span></p></td><td class="cl-646ecf3e"><p class="cl-646ec74f"><span class="cl-646d94a0">response</span></p></td><td class="cl-646ecf50"><p class="cl-646ec74e"><span class="cl-646d94a0">1.00</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-646ecf5a"><p class="cl-646ec74e"><span class="cl-646d94a0">75</span></p></td><td class="cl-646ecf5b"><p class="cl-646ec74f"><span class="cl-646d94a0">response</span></p></td><td class="cl-646ecf6e"><p class="cl-646ec74e"><span class="cl-646d94a0">1.00</span></p></td></tr></tbody></table></div>
+<p>Calculate the final corrected scores:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>final_scores2 <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(<span class="at">proportion_summary =</span> final_sample2,</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>                     <span class="at">pilot_sample_size =</span> face_data_trait30_sub <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>                       <span class="fu">group_by</span>(stimulus) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>                       <span class="fu">summarize</span>(<span class="at">sample_size =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>                       <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>                       <span class="fu">summarize</span>(<span class="at">avg_sample =</span> <span class="fu">mean</span>(sample_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>                       <span class="fu">pull</span>(avg_sample),</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>                     <span class="at">proportion_variability =</span> cutoff_trait30<span class="sc">$</span>prop_var)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="fu">flextable</span>(final_scores2) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-647d488c{}.cl-647a800c{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-647bb152{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-647bb8d2{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-647bb8dc{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-647bb8dd{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-647bb8de{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-647bb8e6{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-647bb8e7{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-647bb8f0{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-647bb904{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-647bb905{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-647d488c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-647bb8d2"><p class="cl-647bb152"><span class="cl-647a800c">percent_below</span></p></th><th class="cl-647bb8dc"><p class="cl-647bb152"><span class="cl-647a800c">sample_size</span></p></th><th class="cl-647bb8dd"><p class="cl-647bb152"><span class="cl-647a800c">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-647bb8de"><p class="cl-647bb152"><span class="cl-647a800c">84</span></p></td><td class="cl-647bb8e6"><p class="cl-647bb152"><span class="cl-647a800c">50</span></p></td><td class="cl-647bb8e7"><p class="cl-647bb152"><span class="cl-647a800c">45.93775</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-647bb8de"><p class="cl-647bb152"><span class="cl-647a800c">90</span></p></td><td class="cl-647bb8e6"><p class="cl-647bb152"><span class="cl-647a800c">55</span></p></td><td class="cl-647bb8e7"><p class="cl-647bb152"><span class="cl-647a800c">51.50835</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-647bb8de"><p class="cl-647bb152"><span class="cl-647a800c">90</span></p></td><td class="cl-647bb8e6"><p class="cl-647bb152"><span class="cl-647a800c">55</span></p></td><td class="cl-647bb8e7"><p class="cl-647bb152"><span class="cl-647a800c">51.50835</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-647bb8f0"><p class="cl-647bb152"><span class="cl-647a800c">98</span></p></td><td class="cl-647bb904"><p class="cl-647bb152"><span class="cl-647a800c">65</span></p></td><td class="cl-647bb905"><p class="cl-647bb152"><span class="cl-647a800c">62.40286</span></p></td></tr></tbody></table></div>
+<p>Based on these simulations, we can decide our minimum sample size for
+80% is likely close to 46 for the trait 4 trials or 46 for the trait 30
+trials, depending on rounding. We can consider only the most variant
+trait for power analysis since it would satisfy other traits in the
+dataset as well.</p>
+</div>
+<div id="maximum-sample-size" class="section level4">
+<h4>Maximum Sample Size</h4>
+<p>In this example, we could set our maximum sample size for 95% items
+below the criterion, which would equate to 61 for the trait 4 trials or
+62 for trait 30 trials.</p>
+</div>
+<div id="final-sample-size" class="section level4">
+<h4>Final Sample Size</h4>
+<p>Considering both estimated traits and a smaller proportion of things
+to rate, we found that we could likely use samples from 40 to 60 people.
+Other considerations could include fatigue on the number of ratings each
+person has to complete.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

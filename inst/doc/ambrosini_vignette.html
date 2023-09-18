@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Mahmoud M.Elsherif" />
+
+<meta name="date" content="2023-09-18" />
+
+<title>Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<style type="text/css">.tabwid {
+font-size: initial;
+padding-bottom: 1em;
+}
+.tabwid table{
+border-spacing:0px !important;
+border-collapse:collapse;
+line-height:1;
+margin-left:auto;
+margin-right:auto;
+border-width: 0;
+border-color: transparent;
+caption-side: top;
+}
+.tabwid-caption-bottom table{
+caption-side: bottom;
+}
+.tabwid_left table{
+margin-left:0;
+}
+.tabwid_right table{
+margin-right:0;
+}
+.tabwid td, .tabwid th {
+padding: 0;
+}
+.tabwid a {
+text-decoration: none;
+}
+.tabwid thead {
+background-color: transparent;
+}
+.tabwid tfoot {
+background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+margin: 0 0 !important;
+}
+</style>
+<script>document.addEventListener("DOMContentLoaded", function(event) {
+  var els = document.querySelectorAll(".tabwid");
+  var tabwid_link = document.querySelector('link[href*="tabwid.css"]')
+  if (tabwid_link === null) {
+    const tabwid_styles = document.evaluate("//style[contains(., 'tabwid')]", document, null, XPathResult.ANY_TYPE, null );
+    tabwid_link = tabwid_styles.iterateNext();
+  }
+
+  Array.prototype.forEach.call(els, function(template) {
+      const dest = document.createElement("div");
+      template.parentNode.insertBefore(dest, template.nextSibling)
+      dest.setAttribute("class", "flextable-shadow-host");
+      const fantome = dest.attachShadow({mode: 'open'});
+      fantome.appendChild(template);
+      if (tabwid_link !== null) {
+        fantome.appendChild(tabwid_link.cloneNode(true));
+      }
+  });
+});
+
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Power and Sample Size Simulation: Italian
+Age of Acquisition Norms for a Large Set of Words (ItAoA)</h1>
+<h4 class="author">Mahmoud M.Elsherif</h4>
+<h4 class="date">2023-09-18</h4>
+
+
+
+<div id="vignette-setup" class="section level3">
+<h3>Vignette Setup:</h3>
+</div>
+<div id="projectdata-title" class="section level3">
+<h3>Project/Data Title:</h3>
+<p>Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)</p>
+<p>Data provided by: Ettore Ambrosini</p>
+</div>
+<div id="projectdata-description" class="section level3">
+<h3>Project/Data Description:</h3>
+<p>The age of acquisition (AoA) represents the age at which a word is
+learned. This measure has been shown to affect performance in a wide
+variety of cognitive tasks (see reviews by Juhasz, 2005; Johnston and
+Barry, 2006; Brysbaert and Ellis, 2016), with faster reaction times for
+words learned early in life compared to those learned later.</p>
+<p>There are two main approaches to derive AoA data. First, objective
+AoA measures can be obtained by analysis of children’s production
+(Chalard et al., 2003; Álvarez and Cuetos, 2007; Lotto et al., 2010;
+Grigoriev and Oshhepkov, 2013). Within this approach, children
+(classified by age) are asked to name the picture of common objects and
+activities. The AoA of a given word is computed as the mean age of the
+group of children in which at least 75% of them can name the picture
+correctly. Alternatively, subjective AoA can be obtained using adult
+estimates (Barca et al., 2002; Ferrand et al., 2008; Moors et al.,
+2013). Here, adult participants are asked to provide AoA ratings on a
+Likert scale (Schock et al., 2012; Alonso et al., 2015; Borelli et al.,
+2018) or directly in years, indicating the number corresponding to the
+age they thought they had learned a given word (Stadthagen-Gonzalez and
+Davis, 2006; Ferrand et al., 2008; Moors et al., 2013). Compared to the
+use of a Likert scale, the latter method is easier for participants to
+use and does not restrict artificially the response range, instead
+providing more precise information on the AoA of words’ AoA (Ghyselinck
+et al., 2000). It has been shown that the AoA estimates obtained from
+the two different methods are highly correlated (Morrison et al., 1997;
+Ghyselinck et al., 2000; Pind et al., 2000; Lotto et al., 2010; see also
+Brysbaert, 2017; Brysbaert and Biemiller, 2017) and this correlation
+still remains significant when other variables, such as familiarity,
+frequency, and phonological length, are controlled (Bonin et al.,
+2004).</p>
+<p>Only two sets of Italian norms with objective AoA (Rinaldi et al.,
+2004) and subjective AoA (Borelli et al., 2018) include abstract and
+concrete words and different word classes (adjective, noun, and verb),
+but they are limited to a relatively small number of word stimuli (519
+and 512 words, respectively). Unfortunately, the lack of overlap between
+AoA (Dell’Acqua et al., 2000; Barca et al., 2002; Barbarotto et al.,
+2005; Della Rosa et al., 2010; Borelli et al., 2018) and
+semantic-affective norms (Zannino et al., 2006; Kremer and Baroni, 2011;
+Montefinese et al., 2013b, 2014; Fairfield et al., 2017) for Italian
+words has prevented direct comparison of different lexical-semantic
+dimensions to establish the extent to which they overlap or complement
+each other in word processing. An important motivation of the present
+study is to extend previous Italian norms by collecting AoA ratings for
+a much larger range of Italian words for which concreteness and
+semantic-affective norms are now available, thus ensuring greater
+coverage of words varying along these dimensions.</p>
+</div>
+<div id="methods-description" class="section level3">
+<h3>Methods Description:</h3>
+<p>A total of 507 native Italian speakers were enrolled to participate
+in an online study (436 females and 81 males; mean age: 20.82 years, SD
+= 2.22; mean education: 15.16 years, SD = 1.11). We selected 1,957
+Italian words from our Italian adaptations of the original ANEW
+(Montefinese et al., 2014; Fairfield et al., 2017) and from available
+Italian semantic norms (Zannino et al., 2006; Kremer and Baroni, 2011;
+Montefinese et al., 2013). The set of stimuli included 76% of nouns, 16%
+of adjectives, and 8% of verbs. The word stimuli were presented in the
+same verbal form as the previous Italian norms (e.g., the verbs were
+presented in the infinitive form) to preserve consistency with these
+data collections (Montefinese et al., 2014; Fairfield et al., 2017).
+Word stimuli were distributed on 20 lists containing 97–98 words each.
+To avoid primacy or recency effects, the order in which words appeared
+on the list was randomized for each participant separately. All lists
+were roughly matched for word length, word frequency, number of
+orthographic neighbors, and mean frequency of orthographic neighbors.
+For each list, an online form was created using Google modules.
+Participants were asked to estimate the age (in years) at which they
+thought they had learned the word, specifying that this information
+should indicate the age at which, for the first time, they understood
+the word when someone else used it in their presence, even when they did
+not use the word themselves. These instructions and the examples
+provided to the participants closely matched those used in a large
+number of previous studies (Ghyselinck et al., 2000; Stadthagen-Gonzalez
+and Davis, 2006; Kuperman et al., 2012; Moors et al., 2013; Łuniewska et
+al., 2016). The task lasted about 40 min.</p>
+</div>
+<div id="data-location" class="section level3">
+<h3>Data Location:</h3>
+<p>Included with the vignette and Data Location: <a href="https://osf.io/rzycf/" class="uri">https://osf.io/rzycf/</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>DF <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/ambrosini_data.csv&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>DF <span class="ot">&lt;-</span> DF <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="fu">arrange</span>(Ita_Word) <span class="sc">%&gt;%</span> <span class="co">#orders the rows of the data by the target_name column</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="fu">group_by</span>(Ita_Word) <span class="sc">%&gt;%</span> <span class="co">#group by the target name</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">items =</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(Ita_Word)))<span class="sc">%&gt;%</span> <span class="co">#transform target name into a item</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="fu">select</span>(items, Eng_Word, Ita_Word, <span class="fu">everything</span>()</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>         ) <span class="co">#select all variables from items and target_name </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>DF <span class="ot">&lt;-</span> DF <span class="sc">%&gt;%</span> </span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">group_by</span>(Ita_Word) <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="fu">filter</span> (Rating <span class="sc">!=</span> <span class="st">&#39;Unknown&#39;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="fu">head</span>(DF)</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 5</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; # Groups:   Ita_Word [1]</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt;   items Eng_Word Ita_Word SS_ID Rating</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt; </span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; 1     1 dazzle   abbaglio   282 16    </span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; 2     1 dazzle   abbaglio   283 10    </span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; 3     1 dazzle   abbaglio   284 12    </span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt; 4     1 dazzle   abbaglio   285 10    </span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; 5     1 dazzle   abbaglio   286 8     </span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; 6     1 dazzle   abbaglio   287 9</span></span></code></pre></div>
+</div>
+<div id="date-published" class="section level3">
+<h3>Date Published:</h3>
+<p>2019-02-13</p>
+</div>
+<div id="dataset-citation" class="section level3">
+<h3>Dataset Citation:</h3>
+<p>Montefinese, M., Vinson, D., Vigliocco, G., &amp; Ambrosini, E.
+(2018, November 26). Italian age of acquisition norms for a large set of
+words (ItAoA). <a href="https://doi.org/10.17605/OSF.IO/3TRG2" class="uri">https://doi.org/10.17605/OSF.IO/3TRG2</a></p>
+</div>
+<div id="keywords" class="section level3">
+<h3>Keywords:</h3>
+<p>age of acquisition, word, lexicon, Italian language, cross-linguistic
+comparison, subjective rating</p>
+</div>
+<div id="use-license" class="section level3">
+<h3>Use License:</h3>
+<p>CC-By Attribution 4.0 International</p>
+</div>
+<div id="geographic-description---citystatecountry-of-participants" class="section level3">
+<h3>Geographic Description - City/State/Country of Participants:</h3>
+<p>Italy</p>
+</div>
+<div id="column-metadata" class="section level3">
+<h3>Column Metadata:</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/ambrosini_metadata.xlsx&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">flextable</span>(metadata) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-5d0b911c{}.cl-5d081370{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5d098584{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5d099042{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d09904c{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d09904d{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099056{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099057{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099060{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099061{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099062{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099074{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d09907e{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099088{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099089{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d09908a{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099092{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d099093{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d09909c{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d09909d{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d0990a6{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-5d0b911c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-5d099042"><p class="cl-5d098584"><span class="cl-5d081370">Variable Name</span></p></th><th class="cl-5d09904c"><p class="cl-5d098584"><span class="cl-5d081370">Variable Description</span></p></th><th class="cl-5d09904d"><p class="cl-5d098584"><span class="cl-5d081370">Type (numeric, character, logical, etc.)</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5d099056"><p class="cl-5d098584"><span class="cl-5d081370">items</span></p></td><td class="cl-5d099057"><p class="cl-5d098584"><span class="cl-5d081370">Item number</span></p></td><td class="cl-5d099060"><p class="cl-5d098584"><span class="cl-5d081370">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5d099061"><p class="cl-5d098584"><span class="cl-5d081370">Eng_Word</span></p></td><td class="cl-5d099062"><p class="cl-5d098584"><span class="cl-5d081370">English translation of the item</span></p></td><td class="cl-5d099074"><p class="cl-5d098584"><span class="cl-5d081370">Character</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5d09907e"><p class="cl-5d098584"><span class="cl-5d081370">Ita_Word</span></p></td><td class="cl-5d099088"><p class="cl-5d098584"><span class="cl-5d081370">Italian translation of the item</span></p></td><td class="cl-5d099089"><p class="cl-5d098584"><span class="cl-5d081370">Character</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5d09908a"><p class="cl-5d098584"><span class="cl-5d081370">SS_ID</span></p></td><td class="cl-5d099092"><p class="cl-5d098584"><span class="cl-5d081370">Subject ID Number</span></p></td><td class="cl-5d099093"><p class="cl-5d098584"><span class="cl-5d081370">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5d09909c"><p class="cl-5d098584"><span class="cl-5d081370">Rating</span></p></td><td class="cl-5d09909d"><p class="cl-5d098584"><span class="cl-5d081370">Age of acquisition rating</span></p></td><td class="cl-5d0990a6"><p class="cl-5d098584"><span class="cl-5d081370">Numeric</span></p></td></tr></tbody></table></div>
+</div>
+<div id="aipe-analysis" class="section level3">
+<h3>AIPE Analysis:</h3>
+<p>Note that the data are already in long format (each item has one
+row), and therefore, we do not need to restructure the data.</p>
+<div id="stopping-rule" class="section level4">
+<h4>Stopping Rule</h4>
+<p>In this dataset, we have 48772 individual words to select from for
+our research study. You would obviously not use all of these in one
+study. Let’s say we wanted participants to rate 75 pairs of words during
+our study (note: this selection is completely arbitrary).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>random_items <span class="ot">&lt;-</span> <span class="fu">unique</span>(DF<span class="sc">$</span>items)[<span class="fu">sample</span>(<span class="fu">unique</span>(DF<span class="sc">$</span>items), <span class="at">size =</span> <span class="dv">75</span>)]</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>DF <span class="ot">&lt;-</span> DF <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">filter</span>(items <span class="sc">%in%</span> random_items)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># Function for simulation</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>var1 <span class="ot">&lt;-</span> <span class="fu">item_power</span>(<span class="at">data =</span> DF, <span class="co"># name of data frame</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>            <span class="at">dv_col =</span> <span class="st">&quot;Rating&quot;</span>, <span class="co"># name of DV column as a character</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>            <span class="at">item_col =</span> <span class="st">&quot;items&quot;</span>, <span class="co"># number of items column as a character</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>            <span class="at">sample_start =</span> <span class="dv">20</span>, </span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>            <span class="at">sample_stop =</span> <span class="dv">100</span>, </span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>            <span class="at">sample_increase =</span> <span class="dv">5</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>            <span class="at">decile =</span> .<span class="dv">4</span>)</span></code></pre></div>
+<p>What is the usual standard error for the data that could be
+considered for our stopping rule using the 40% decile?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># individual SEs</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>var1<span class="sc">$</span>SE</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;        24        27        29        99       104 </span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; 0.6574699 0.4308132 0.4722993 0.4497407 0.5314132 </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;       109       111       114       118       201 </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 0.5715476 0.4868949 0.4013311 0.4247352 0.6823489 </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt;       287       343       376       394       439 </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 0.2516611 0.3109126 0.6631239 0.3646002 0.5057008 </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;       451       458       469       483       500 </span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 0.5540156 0.2242023 0.4028234 0.3302524 0.5102940 </span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt;       509       521       553       560       621 </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 0.5867424 0.6327717 0.4214262 0.6161169 0.2708013 </span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;       628       635       677       707       780 </span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; 0.4623130 0.4621688 0.3265986 0.2444040 0.5794250 </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt;       809       816       822       840       841 </span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; 0.6189238 0.4434712 0.4062840 0.3872983 0.5461380 </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt;       898       912       918       924       938 </span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; 0.3415650 0.4735680 0.3720215 0.5295281 0.6574699 </span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt;       985       986      1008      1022      1034 </span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; 0.2928026 0.2835489 0.5781580 0.6715157 0.4206344 </span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt;      1041      1062      1089      1096      1155 </span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; 0.4200000 0.4082483 0.3015515 0.2091252 0.3083288 </span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt;      1187      1223      1227      1248      1256 </span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; 0.2948446 0.6582806 0.3824483 0.6193545 0.2581989 </span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt;      1282      1341      1359      1395      1429 </span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt; 0.2690725 0.3282276 0.5224302 0.5540156 0.5326662 </span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt;      1435      1467      1469      1515      1522 </span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; 0.5605949 0.3316625 0.4541143 0.4504812 0.4393935 </span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt;      1528      1538      1606      1617      1642 </span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; 0.4512206 0.3969887 0.5595236 0.3214550 0.4446722 </span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt;      1650      1655      1660      1835      1865 </span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt; 0.5648599 0.2715388 0.3390182 0.3229035 0.3555278</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>var1<span class="sc">$</span>cutoff</span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; 0.4048997</span></span></code></pre></div>
+<p>Using our 40% decile as a guide, we find that 0.405 is our target
+standard error for an accurately measured item.</p>
+</div>
+<div id="minimum-sample-size" class="section level4">
+<h4>Minimum Sample Size</h4>
+<p>To estimate the minimum sample size, we should figure out what number
+of participants it would take to achieve 80%, 85%, 90%, and 95% of the
+SEs for items below our critical score of 0.405?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF, </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                           <span class="at">grouping_items =</span> <span class="st">&quot;items&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                           <span class="at">score =</span> <span class="st">&quot;Rating&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                           <span class="at">minimum =</span> <span class="fu">as.numeric</span>(<span class="fu">min</span>(DF<span class="sc">$</span>Rating)),</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>                           <span class="at">maximum =</span> <span class="fu">as.numeric</span>(<span class="fu">max</span>(DF<span class="sc">$</span>Rating)))</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># showing how this is the same as the person calculated version versus semanticprimeR&#39;s function</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>cutoff<span class="sc">$</span>cutoff</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 0.4048997</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>final_table <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>  <span class="at">proportion_summary =</span> var1<span class="sc">$</span>final_sample,</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>  <span class="at">pilot_sample_size =</span> DF <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(items) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>    <span class="fu">pull</span>(n) <span class="sc">%&gt;%</span> <span class="fu">mean</span>() <span class="sc">%&gt;%</span> <span class="fu">round</span>(),</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>  <span class="at">proportion_variability =</span> cutoff<span class="sc">$</span>prop_var</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>  )</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="fu">flextable</span>(final_table) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-5d356b2c{}.cl-5d327462{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5d33b458{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5d33bc00{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc0a{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc0b{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc0c{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc14{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc15{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc16{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc1e{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc1f{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc20{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc21{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d33bc28{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-5d356b2c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-5d33bc00"><p class="cl-5d33b458"><span class="cl-5d327462">percent_below</span></p></th><th class="cl-5d33bc0a"><p class="cl-5d33b458"><span class="cl-5d327462">sample_size</span></p></th><th class="cl-5d33bc0b"><p class="cl-5d33b458"><span class="cl-5d327462">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5d33bc0c"><p class="cl-5d33b458"><span class="cl-5d327462">85.33333</span></p></td><td class="cl-5d33bc14"><p class="cl-5d33b458"><span class="cl-5d327462">45</span></p></td><td class="cl-5d33bc15"><p class="cl-5d33b458"><span class="cl-5d327462">42.95703</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5d33bc0c"><p class="cl-5d33b458"><span class="cl-5d327462">85.33333</span></p></td><td class="cl-5d33bc14"><p class="cl-5d33b458"><span class="cl-5d327462">45</span></p></td><td class="cl-5d33bc15"><p class="cl-5d33b458"><span class="cl-5d327462">42.95703</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5d33bc16"><p class="cl-5d33b458"><span class="cl-5d327462">90.66667</span></p></td><td class="cl-5d33bc1e"><p class="cl-5d33b458"><span class="cl-5d327462">55</span></p></td><td class="cl-5d33bc1f"><p class="cl-5d33b458"><span class="cl-5d327462">54.62725</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5d33bc20"><p class="cl-5d33b458"><span class="cl-5d327462">98.66667</span></p></td><td class="cl-5d33bc21"><p class="cl-5d33b458"><span class="cl-5d327462">70</span></p></td><td class="cl-5d33bc28"><p class="cl-5d33b458"><span class="cl-5d327462">70.36361</span></p></td></tr></tbody></table></div>
+<p>Our minimum sample size is small at 80% (<em>n</em> = 43 as the
+minimum). We could consider using 90% (<em>n</em> = 55) or 95%
+(<em>n</em> = 70).</p>
+</div>
+<div id="maximum-sample-size" class="section level4">
+<h4>Maximum Sample Size</h4>
+<p>While there are many considerations for maximum sample size (time,
+effort, resources), if we consider a higher value just for estimation
+sake, we could use <em>n</em> = 70 at 98%.</p>
+</div>
+<div id="final-sample-size" class="section level4">
+<h4>Final Sample Size</h4>
+<p>In any estimate of sample size, you should also consider the
+potential for missing data and/or unusable data due to any other
+exclusion criteria in your study (i.e., attention checks, speeding,
+getting the answer right, etc.). In this study, these values can be
+influenced by the other variables that we used to select the stimuli in
+the study.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
