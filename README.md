@@ -9,6 +9,10 @@ library(devtools)
 install_github("SemanticPriming/semanticprimeR")
 ```
 
+## Package Website
+
+https://semanticpriming.github.io/semanticprimeR/
+
 ## Landing Page
 
 Check out our [OSF landing page](https://osf.io/peyqh/) that links all these projects together. 
