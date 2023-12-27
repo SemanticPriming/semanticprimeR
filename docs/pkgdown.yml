@@ -1,0 +1,21 @@
+pandoc: 3.1.1
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  ambrosini_vignette: ambrosini_vignette.html
+  barzykowski_vignette: barzykowski_vignette.html
+  batres_vignette: batres_vignette.html
+  geller_vignette: geller_vignette.html
+  heyman_vignette: heyman_vignette.html
+  mcfall_vignette: mcfall_vignette.html
+  moat_vignette: moat_vignette.html
+  montefinese_vignette: montefinese_vignette.html
+  roer_vignette: roer_vignette.html
+  suchow_vignette: suchow_vignette.html
+  ulloa_vignette: ulloa_vignette.html
+  vanpaemel_vignette: vanpaemel_vignette.html
+last_built: 2023-12-27T20:09Z
+urls:
+  reference: https://semanticpriming.github.io/semanticprimeR/reference
+  article: https://semanticpriming.github.io/semanticprimeR/articles
+
