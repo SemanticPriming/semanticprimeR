@@ -58,7 +58,7 @@ https://github.com/jcpeterson/omi
 
 ```{r}
 ## Please set the work directory to the folder containing the scripts and data
-face_data <- import("data/suchow_data.csv")
+face_data <- import("data/suchow_data.csv.zip")
 str(face_data)
 ```
 

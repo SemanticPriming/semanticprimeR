@@ -124,7 +124,7 @@ A total of 507 native Italian speakers were enrolled to participate in an online
 Included with the vignette and Data Location: https://osf.io/rzycf/
 
 ```{r}
-DF <- import("data/ambrosini_data.csv")
+DF <- import("data/ambrosini_data.csv.zip")
 
 DF <- DF %>%
   arrange(Ita_Word) %>% #orders the rows of the data by the target_name column

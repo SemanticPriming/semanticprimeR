@@ -83,7 +83,7 @@ Mostly United States but any English speaker could complete.
 ### Column Metadata:
 
 ```{r}
-EAMMi2metadata <- import("data/mcfall_metadata.csv")
+EAMMi2metadata <- import("data/mcfall_metadata.csv.zip")
 flextable(EAMMi2metadata) %>% autofit()
 
 EAMMi2 <- EAMMi2[complete.cases(EAMMi2),]

@@ -52,8 +52,10 @@
 #'  score = "score")
 #' proportion_summary
 
-calculate_proportion <- function(samples, cutoff, grouping_items = NULL,
-                              score){
+calculate_proportion <- function(samples,
+                                 cutoff,
+                                 grouping_items = NULL,
+                                 score){
 
   if(is.null(samples)){ stop("You must include list of samples to examine.") }
   if(is.null(cutoff)){ stop("You must include the cutoff score for standard error.") }

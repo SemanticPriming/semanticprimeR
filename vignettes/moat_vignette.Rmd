@@ -132,7 +132,7 @@ The videos were largely sourced from the stock image website Envato Elements and
 Data can be found here: https://osf.io/zu9pg/
  
 ```{r}
-DF <- import("data/moat_data.csv") 
+DF <- import("data/moat_data.csv.zip") 
   
 str(DF)
 ```

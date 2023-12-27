@@ -10,6 +10,7 @@ bootstrap_samples(
   increase = 5,
   population,
   replace = TRUE,
+  nsim = 100,
   grouping_items = NULL
 )
 }
@@ -24,6 +25,8 @@ each potential sample}
 \item{population}{The population data set or the pilot dataset}
 
 \item{replace}{A TRUE/FALSE value to bootstrap with replacement}
+
+\item{nsim}{The number of simulations/samples you want to return}
 
 \item{grouping_items}{The names of columns to group your data
 by for the simulation, usually this column is the item column}
