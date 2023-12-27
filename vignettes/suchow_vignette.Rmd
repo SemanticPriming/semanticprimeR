@@ -138,11 +138,12 @@ How large does the sample have to be for 80% and 95% of the items to be below ou
 
 ```{r power Two different traits}
 # sequence of sample sizes to try
+nsim <- 10 # small for cran 
 samplesize_values <- seq(25, 100, 5)
 
 # create a blank table for us to save the values in 
 sim_table <- matrix(NA, 
-                    nrow = length(samplesize_values), 
+                    nrow = length(samplesize_values)*nsim, 
                     ncol = length(unique(face_data_trait4_sub$stimulus)))
 # make it a data frame
 sim_table <- as.data.frame(sim_table)
@@ -153,7 +154,7 @@ sim_table$var <- "response"
 
 # make a second table for the second variable
 sim_table2 <- matrix(NA, 
-                    nrow = length(samplesize_values), 
+                    nrow = length(samplesize_values)*nsim, 
                     ncol = length(unique(face_data_trait30_sub$stimulus)))
 
 # make it a data frame
@@ -163,31 +164,39 @@ sim_table2 <- as.data.frame(sim_table2)
 sim_table2$sample_size <- NA
 sim_table2$var <- "response"
 
-# loop over sample sizes for age and outdoor trait
-for (i in 1:length(samplesize_values)){
+iterate <- 1
+for (p in 1:nsim){
+  # loop over sample sizes for age and outdoor trait
+  for (i in 1:length(samplesize_values)){
+      
+    # temp dataframe for age trait that samples and summarizes
+    temp7 <- face_data_trait4_sub %>% 
+      dplyr::group_by(stimulus) %>% 
+      dplyr::sample_n(samplesize_values[i], replace = T) %>% 
+      dplyr::summarize(se1 = sd(response)/sqrt(length(response))) 
     
-  # temp dataframe for age trait that samples and summarizes
-  temp7 <- face_data_trait4_sub %>% 
-    dplyr::group_by(stimulus) %>% 
-    dplyr::sample_n(samplesize_values[i], replace = T) %>% 
-    dplyr::summarize(se1 = sd(response)/sqrt(length(response))) 
+    # 
+    colnames(sim_table)[1:length(unique(face_data_trait4_sub$stimulus))] <- temp7$stimulus
+    sim_table[iterate, 1:length(unique(face_data_trait4_sub$stimulus))] <- temp7$se1
+    sim_table[iterate, "sample_size"] <- samplesize_values[i]
+    sim_table[iterate, "nsim"] <- p
+    
+    # temp dataframe for outdoor trait that samples and summarizes
+    temp35 <-face_data_trait30_sub %>% 
+      dplyr::group_by(stimulus) %>% 
+      dplyr::sample_n(samplesize_values[i], replace = T) %>% 
+      dplyr::summarize(se2 = sd(response)/sqrt(length(response))) 
+    
+    # 
+    colnames(sim_table2)[1:length(unique(face_data_trait30_sub$stimulus))] <- temp35$stimulus
+    sim_table2[iterate, 1:length(unique(face_data_trait30_sub$stimulus))] <- temp35$se2
+    sim_table2[iterate, "sample_size"] <- samplesize_values[i]
+    sim_table2[iterate, "nsim"] <- p
+    
+    iterate <- 1 + iterate
   
-  # 
-  colnames(sim_table)[1:length(unique(face_data_trait4_sub$stimulus))] <- temp7$stimulus
-  sim_table[i, 1:length(unique(face_data_trait4_sub$stimulus))] <- temp7$se1
-  sim_table[i, "sample_size"] <- samplesize_values[i]
+  }
   
-  # temp dataframe for outdoor trait that samples and summarizes
-  temp35 <-face_data_trait30_sub %>% 
-    dplyr::group_by(stimulus) %>% 
-    dplyr::sample_n(samplesize_values[i], replace = T) %>% 
-    dplyr::summarize(se2 = sd(response)/sqrt(length(response))) 
-  
-  # 
-  colnames(sim_table2)[1:length(unique(face_data_trait30_sub$stimulus))] <- temp35$stimulus
-  sim_table2[i, 1:length(unique(face_data_trait30_sub$stimulus))] <- temp35$se2
-  sim_table2[i, "sample_size"] <- samplesize_values[i]
-
 }
 ```
 
@@ -218,11 +227,14 @@ Trait 4 Results:
 cutoff <- quantile(SE1, probs = .4)
 final_sample <- 
   sim_table %>%
-  pivot_longer(cols = -c(sample_size, var))  %>% 
-  dplyr::rename(item = name, se = value)   %>% 
-  dplyr::group_by(sample_size, var)  %>% 
-  dplyr::summarize(percent_below = sum(se <= cutoff)/length(unique(face_data_trait4_sub$stimulus)))  %>% 
-  dplyr::filter(percent_below >= .80) %>% 
+  pivot_longer(cols = -c(sample_size, var, nsim)) %>% 
+  dplyr::rename(item = name, se = value) %>% 
+  dplyr::group_by(sample_size, var, nsim) %>% 
+  dplyr::summarize(percent_below = sum(se <= cutoff)/length(unique(face_data_trait4_sub$stimulus))) %>% 
+  ungroup() %>% 
+  # then summarize all down averaging percents
+  dplyr::group_by(sample_size, var) %>% 
+  summarize(percent_below = mean(percent_below)) %>% 
   dplyr::arrange(percent_below) %>% 
   ungroup()
 
@@ -250,11 +262,14 @@ Trait 30 Results:
 cutoff <- quantile(SE2, probs = .4) 
 final_sample2 <- 
   sim_table2 %>%
-  pivot_longer(cols = -c(sample_size, var)) %>% 
+  pivot_longer(cols = -c(sample_size, var, nsim)) %>% 
   dplyr::rename(item = name, se = value)  %>% 
-  dplyr::group_by(sample_size, var) %>% 
+  dplyr::group_by(sample_size, var, nsim) %>% 
   dplyr::summarize(percent_below = sum(se <= cutoff)/length(unique(face_data_trait30_sub$stimulus))) %>% 
-  dplyr::filter(percent_below >= .80) %>% 
+  ungroup() %>% 
+  # then summarize all down averaging percents
+  dplyr::group_by(sample_size, var) %>% 
+  summarize(percent_below = mean(percent_below)) %>% 
   dplyr::arrange(percent_below) %>% 
   ungroup()
 

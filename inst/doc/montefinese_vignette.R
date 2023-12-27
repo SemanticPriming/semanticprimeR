@@ -1,10 +1,10 @@
-## ----setup, include = FALSE------------------------
+## ----setup, include = FALSE------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup, include=FALSE-----------------
+## ----vignette-setup, include=FALSE-----------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -17,7 +17,7 @@ library(reshape)
 library(semanticprimeR)
 set.seed(0329032)
 
-## --------------------------------------------------
+## --------------------------------------------
 DF <- import("data/montefinese_data.csv") 
 
 names(DF) <- make.names(names(DF),unique = TRUE)
@@ -35,12 +35,12 @@ DF <- DF %>%
 
 head(DF)
 
-## --------------------------------------------------
+## --------------------------------------------
 metadata <- import("data/montefinese_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
 
-## ----subset and restructure------------------------
+## ----subset and restructure------------------
 ### create  subset for REL+
 DF_RELpos <- subset(DF, StimType == "REL+")
 
@@ -50,7 +50,7 @@ DF_RELneg <- subset(DF, StimType == "REL-")
 ### create  subset for UNREL
 DF_UNREL <- subset(DF, StimType == "UNREL")
 
-## ----compute se for REL+ and REL-------------------
+## ----compute se for REL+ and REL-------------
 
 # individual SEs for REL+ condition 
 cutoff_relpos <- calculate_cutoff(population = DF_RELpos,
@@ -85,13 +85,14 @@ SE3 <- tapply(DF_UNREL$Response, DF_UNREL$item, function (x) { sd(x)/sqrt(length
 SE3
 cutoff_unrel$cutoff
 
-## ----power three different conditions--------------
+## ----power three different conditions--------
 # sequence of sample sizes to try
+nsim <- 10 # small for cran
 samplesize_values <- seq(25, 300, 5)
 
 # create a blank table for us to save the values in positive ----
 sim_table <- matrix(NA, 
-                    nrow = length(samplesize_values), 
+                    nrow = length(samplesize_values)*nsim, 
                     ncol = length(unique(DF_RELpos$item)))
 # make it a data frame
 sim_table <- as.data.frame(sim_table)
@@ -102,7 +103,7 @@ sim_table$var <- "Response"
 
 # make a second table for negative -----
 sim_table2 <- matrix(NA, 
-                    nrow = length(samplesize_values), 
+                    nrow = length(samplesize_values)*nsim, 
                     ncol = length(unique(DF_RELneg$item)))
 
 # make it a data frame
@@ -114,7 +115,7 @@ sim_table2$var <- "Response"
 
 # make a second table for unrelated -----
 sim_table3 <- matrix(NA, 
-                    nrow = length(samplesize_values), 
+                    nrow = length(samplesize_values)*nsim, 
                     ncol = length(unique(DF_UNREL$item)))
 
 # make it a data frame
@@ -124,59 +125,75 @@ sim_table3 <- as.data.frame(sim_table3)
 sim_table3$sample_size <- NA
 sim_table3$var <- "Response"
 
-# loop over sample size
-for (i in 1:length(samplesize_values)){
+iterate <- 1
+
+for (p in 1:nsim){
+  
+  # loop over sample size
+  for (i in 1:length(samplesize_values)){
+      
+    # related positive temp variables ----
+    temp_RELpos <- DF_RELpos %>% 
+      dplyr::group_by(item) %>% 
+      dplyr::sample_n(samplesize_values[i], replace = T) %>% 
+      dplyr::summarize(se1 = sd(Response)/sqrt(length(Response))) 
     
-  # related positive temp variables ----
-  temp_RELpos <- DF_RELpos %>% 
-    dplyr::group_by(item) %>% 
-    dplyr::sample_n(samplesize_values[i], replace = T) %>% 
-    dplyr::summarize(se1 = sd(Response)/sqrt(length(Response))) 
+    # put in table 
+    colnames(sim_table)[1:length(unique(DF_RELpos$item))] <- temp_RELpos$item
+    sim_table[iterate, 1:length(unique(DF_RELpos$item))] <- temp_RELpos$se1
+    sim_table[iterate, "sample_size"] <- samplesize_values[i]
+    sim_table[iterate, "nsim"] <- p
+    
+    # related negative temp variables ----
+    temp_RELneg <-DF_RELneg %>% 
+      dplyr::group_by(item) %>% 
+      dplyr::sample_n(samplesize_values[i], replace = T) %>% 
+      dplyr::summarize(se2 = sd(Response)/sqrt(length(Response))) 
   
-  # put in table 
-  colnames(sim_table)[1:length(unique(DF_RELpos$item))] <- temp_RELpos$item
-  sim_table[i, 1:length(unique(DF_RELpos$item))] <- temp_RELpos$se1
-  sim_table[i, "sample_size"] <- samplesize_values[i]
+    # put in table 
+    colnames(sim_table2)[1:length(unique(DF_RELneg$item))] <- temp_RELneg$item
+    sim_table2[iterate, 1:length(unique(DF_RELneg$item))] <- temp_RELneg$se2
+    sim_table2[iterate, "sample_size"] <- samplesize_values[i]
+    sim_table2[iterate, "nsim"] <- p
+    
+    # unrelated temp variables ----
+    temp_UNREL <-DF_UNREL %>% 
+      dplyr::group_by(item) %>% 
+      dplyr::sample_n(samplesize_values[i], replace = T) %>% 
+      dplyr::summarize(se3 = sd(Response)/sqrt(length(Response))) 
   
-  # related negative temp variables ----
-  temp_RELneg <-DF_RELneg %>% 
-    dplyr::group_by(item) %>% 
-    dplyr::sample_n(samplesize_values[i], replace = T) %>% 
-    dplyr::summarize(se2 = sd(Response)/sqrt(length(Response))) 
-
-  # put in table 
-  colnames(sim_table2)[1:length(unique(DF_RELneg$item))] <- temp_RELneg$item
-  sim_table2[i, 1:length(unique(DF_RELneg$item))] <- temp_RELneg$se2
-  sim_table2[i, "sample_size"] <- samplesize_values[i]
-  
-  # unrelated temp variables ----
-  temp_UNREL <-DF_UNREL %>% 
-    dplyr::group_by(item) %>% 
-    dplyr::sample_n(samplesize_values[i], replace = T) %>% 
-    dplyr::summarize(se3 = sd(Response)/sqrt(length(Response))) 
-
-  # put in table 
-  colnames(sim_table3)[1:length(unique(DF_UNREL$item))] <- temp_UNREL$item
-  sim_table3[i, 1:length(unique(DF_UNREL$item))] <- temp_UNREL$se3
-  sim_table3[i, "sample_size"] <- samplesize_values[i]
+    # put in table 
+    colnames(sim_table3)[1:length(unique(DF_UNREL$item))] <- temp_UNREL$item
+    sim_table3[iterate, 1:length(unique(DF_UNREL$item))] <- temp_UNREL$se3
+    sim_table3[iterate, "sample_size"] <- samplesize_values[i]
+    sim_table3[iterate, "nsim"] <- p
+    
+    iterate <- iterate + 1
+    
+  }
 }
 
-## ----summary analysis part1------------------------
+
+## ----summary analysis part1------------------
 # multiply by correction 
 cutoff <- quantile(SE1, probs = .4)
 
 final_sample <- 
   sim_table %>%
-  pivot_longer(cols = -c(sample_size, var))  %>% 
-  dplyr::rename(item = name, se = value)   %>% 
-  dplyr::group_by(sample_size, var)  %>% 
-  dplyr::summarize(percent_below = sum(se <= cutoff)/length(unique(DF_RELpos$item)))  %>% 
+  pivot_longer(cols = -c(sample_size, var, nsim)) %>% 
+  dplyr::rename(item = name, se = value) %>% 
+  dplyr::group_by(sample_size, var, nsim) %>% 
+  dplyr::summarize(percent_below = sum(se <= cutoff)/length(unique(DF_RELpos$item))) %>% 
+  ungroup() %>% 
+  # then summarize all down averaging percents
+  dplyr::group_by(sample_size, var) %>% 
+  summarize(percent_below = mean(percent_below)) %>% 
   dplyr::arrange(percent_below) %>% 
   ungroup()
 
 flextable(final_sample %>% head()) %>% autofit()
 
-## --------------------------------------------------
+## --------------------------------------------
 final_table_pos <- calculate_correction(
   proportion_summary = final_sample,
   pilot_sample_size = length(unique(DF_RELpos$ssID)),
@@ -186,21 +203,25 @@ final_table_pos <- calculate_correction(
 flextable(final_table_pos) %>% 
   autofit()
 
-## ----summary analysis part2------------------------
+## ----summary analysis part2------------------
 cutoff <- quantile(SE2, probs = .4)
 
 final_sample2 <- 
   sim_table2 %>%
-  pivot_longer(cols = -c(sample_size, var)) %>% 
+  pivot_longer(cols = -c(sample_size, var, nsim)) %>% 
   dplyr::rename(item = name, se = value)  %>% 
-  dplyr::group_by(sample_size, var) %>% 
+  dplyr::group_by(sample_size, var, nsim) %>% 
   dplyr::summarize(percent_below = sum(se <= cutoff)/length(unique(DF_RELneg$item))) %>% 
+  ungroup() %>% 
+  # then summarize all down averaging percents
+  dplyr::group_by(sample_size, var) %>% 
+  summarize(percent_below = mean(percent_below)) %>% 
   dplyr::arrange(percent_below) %>% 
   ungroup()
 
 flextable(final_sample2 %>% head()) %>% autofit()
 
-## --------------------------------------------------
+## --------------------------------------------
 final_table_neg <- calculate_correction(
   proportion_summary = final_sample2,
   pilot_sample_size = length(unique(DF_RELneg$ssID)),
@@ -210,21 +231,25 @@ final_table_neg <- calculate_correction(
 flextable(final_table_neg) %>% 
   autofit()
 
-## ----summary analysis part3------------------------
+## ----summary analysis part3------------------
 cutoff <- quantile(SE3, probs = .4)
 
 final_sample3 <- 
   sim_table3 %>%
-  pivot_longer(cols = -c(sample_size, var)) %>% 
-  dplyr::rename(item = name, se = value)  %>% 
-  dplyr::group_by(sample_size, var) %>% 
+  pivot_longer(cols = -c(sample_size, var, nsim)) %>% 
+  dplyr::rename(item = name, se = value) %>% 
+  dplyr::group_by(sample_size, var, nsim) %>% 
   dplyr::summarize(percent_below = sum(se <= cutoff)/length(unique(DF_UNREL$item))) %>% 
+  ungroup() %>% 
+  # then summarize all down averaging percents
+  dplyr::group_by(sample_size, var) %>% 
+  summarize(percent_below = mean(percent_below)) %>% 
   dplyr::arrange(percent_below) %>% 
   ungroup()
 
 flextable(final_sample3 %>% head()) %>% autofit()
 
-## --------------------------------------------------
+## --------------------------------------------
 final_table_unrel <- calculate_correction(
   proportion_summary = final_sample3,
   pilot_sample_size = length(unique(DF_UNREL$ssID)),

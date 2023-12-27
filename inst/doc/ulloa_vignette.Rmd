@@ -126,11 +126,12 @@ cutoff2
 
 ```{r power Two different conditions}
 # sequence of sample sizes to try
+nsim <- 10 # small for cran
 samplesize_values <- seq(25, 200, 5)
 
 # create a blank table for us to save the values in 
 sim_table <- matrix(NA, 
-                    nrow = length(samplesize_values), 
+                    nrow = length(samplesize_values)*nsim, 
                     ncol = length(unique(DF_valid$item)))
 # make it a data frame
 sim_table <- as.data.frame(sim_table)
@@ -141,7 +142,7 @@ sim_table$var <- "liking"
 
 # make a second table for the second variable
 sim_table2 <- matrix(NA, 
-                    nrow = length(samplesize_values), 
+                    nrow = length(samplesize_values)*nsim, 
                     ncol = length(unique(DF_valid$item)))
 
 # make it a data frame
@@ -151,31 +152,40 @@ sim_table2 <- as.data.frame(sim_table2)
 sim_table2$sample_size <- NA
 sim_table2$var <- "liking"
 
-# loop over sample sizes for age and outdoor trait
-for (i in 1:length(samplesize_values)){
+iterate <- 1
+for (p in 1:nsim){
+  
+  # loop over sample sizes for age and outdoor trait
+  for (i in 1:length(samplesize_values)){
+      
+    # temp dataframe for age trait that samples and summarizes
+    temp_valid <- DF_valid %>% 
+      dplyr::group_by(item) %>% 
+      dplyr::sample_n(samplesize_values[i], replace = T) %>% 
+      dplyr::summarize(se1 = sd(liking)/sqrt(length(liking))) 
     
-  # temp dataframe for age trait that samples and summarizes
-  temp_valid <- DF_valid %>% 
-    dplyr::group_by(item) %>% 
-    dplyr::sample_n(samplesize_values[i], replace = T) %>% 
-    dplyr::summarize(se1 = sd(liking)/sqrt(length(liking))) 
+    # 
+    colnames(sim_table)[1:length(unique(DF_valid$item))] <- temp_valid$item
+    sim_table[iterate, 1:length(unique(DF_valid$item))] <- temp_valid$se1
+    sim_table[iterate, "sample_size"] <- samplesize_values[i]
+    sim_table[iterate, "nsim"] <- p
+    
+    # temp dataframe for outdoor trait that samples and summarizes
+    
+    temp_invalid <-DF_invalid %>% 
+      dplyr::group_by(item) %>% 
+      dplyr::sample_n(samplesize_values[i], replace = T) %>% 
+      dplyr::summarize(se2 = sd(liking)/sqrt(length(liking))) 
   
-  # 
-  colnames(sim_table)[1:length(unique(DF_valid$item))] <- temp_valid$item
-  sim_table[i, 1:length(unique(DF_valid$item))] <- temp_valid$se1
-  sim_table[i, "sample_size"] <- samplesize_values[i]
+    # 
+    colnames(sim_table)[1:length(unique(DF_invalid$item))] <- temp_invalid$item
+    sim_table2[iterate, 1:length(unique(DF_invalid$item))] <- temp_invalid$se2
+    sim_table2[iterate, "sample_size"] <- samplesize_values[i]
+    sim_table2[iterate, "nsim"] <- p
+    
+    iterate <- 1 + iterate
+  }
   
-  # temp dataframe for outdoor trait that samples and summarizes
-  
-  temp_invalid <-DF_invalid %>% 
-    dplyr::group_by(item) %>% 
-    dplyr::sample_n(samplesize_values[i], replace = T) %>% 
-    dplyr::summarize(se2 = sd(liking)/sqrt(length(liking))) 
-
-  # 
-  colnames(sim_table)[1:length(unique(DF_invalid$item))] <- temp_invalid$item
-  sim_table2[i, 1:length(unique(DF_invalid$item))] <- temp_invalid$se2
-  sim_table2[i, "sample_size"] <- samplesize_values[i]
 }
 ```
 
@@ -204,10 +214,14 @@ cutoff_invalid$cutoff
 ### for valid cue-targeting condition
 final_sample_valid <- 
   sim_table %>%
-  pivot_longer(cols = -c(sample_size, var))  %>% 
-  dplyr::rename(item = name, se = value)   %>% 
-  dplyr::group_by(sample_size, var)  %>% 
-  dplyr::summarize(percent_below = sum(se <= cutoff1)/length(unique(DF_valid$item)))  %>% 
+  pivot_longer(cols = -c(sample_size, var, nsim)) %>%
+  dplyr::rename(item = name, se = value) %>% 
+  dplyr::group_by(sample_size, var, nsim) %>% 
+  dplyr::summarize(percent_below = sum(se <= cutoff1)/length(unique(DF_valid$item))) %>% 
+  ungroup() %>% 
+  # then summarize all down averaging percents
+  dplyr::group_by(sample_size, var) %>% 
+  summarize(percent_below = mean(percent_below)) %>% 
   dplyr::arrange(percent_below) %>% 
   ungroup()
 
@@ -232,10 +246,14 @@ flextable(final_scores %>%
 ### for valid cue-targeting condition
 final_sample_invalid <- 
   sim_table2 %>%
-  pivot_longer(cols = -c(sample_size, var))  %>% 
-  dplyr::rename(item = name, se = value)   %>% 
-  dplyr::group_by(sample_size, var)  %>% 
-  dplyr::summarize(percent_below = sum(se <= cutoff2)/length(unique(DF_invalid$item)))  %>% 
+  pivot_longer(cols = -c(sample_size, var, nsim)) %>%
+  dplyr::rename(item = name, se = value) %>% 
+  dplyr::group_by(sample_size, var, nsim) %>% 
+  dplyr::summarize(percent_below = sum(se <= cutoff2)/length(unique(DF_invalid$item))) %>% 
+  ungroup() %>% 
+  # then summarize all down averaging percents
+  dplyr::group_by(sample_size, var) %>% 
+  summarize(percent_below = mean(percent_below)) %>% 
   dplyr::arrange(percent_below) %>% 
   ungroup()
 

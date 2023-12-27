@@ -1,10 +1,10 @@
-## ----setup, include = FALSE------------------------
+## ----setup, include = FALSE------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette_setup, include=FALSE-----------------
+## ----vignette_setup, include=FALSE-----------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -17,7 +17,7 @@ library(data.table)
 library(semanticprimeR)
 set.seed(48394)
 
-## ----data read-in----------------------------------
+## ----data read-in----------------------------
 ### for typicality data -- cleaning and processing
 typicality_fnames <- list.files(path = "data/vanpaemel_data",
                                 full.names = TRUE)
@@ -43,7 +43,7 @@ typicality_all_df_v3 <- typicality_all_df_v2 %>%
                     
 head(typicality_all_df_v3)
 
-## --------------------------------------------------
+## --------------------------------------------
 metadata <- import("data/vanpaemel_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
@@ -58,7 +58,7 @@ max(SE)
 
 # comparison type 1: amphibians
 
-## ----subset and restructure------------------------
+## ----subset and restructure------------------
 typicality_data_gp1_sub <- subset(typicality_all_df_v3, compType == 1)
 
 # individual SEs for  comparison type 1
@@ -66,13 +66,14 @@ SE1 <- tapply(typicality_data_gp1_sub$score, typicality_data_gp1_sub$comp_group,
 
 SE1
 
-## ----power Two different comparison types----------
+## ----power Two different comparison types----
 # sequence of sample sizes to try
+nsim <- 10 # small for cran 
 samplesize_values <- seq(5, 200, 5)
 
 # create a blank table for us to save the values in 
 sim_table <- matrix(NA, 
-                    nrow = length(samplesize_values), 
+                    nrow = length(samplesize_values)*nsim, 
                     ncol = length(unique(typicality_data_gp1_sub$comp_group)))
 # make it a data frame
 sim_table <- as.data.frame(sim_table)
@@ -81,23 +82,30 @@ sim_table <- as.data.frame(sim_table)
 sim_table$sample_size <- NA
 sim_table$var <- "score"
 
-# loop over sample sizes for comparison type 
-for (i in 1:length(samplesize_values)){
-    
-  # temp dataframe for comparison type 1 that samples and summarizes
-  temp1 <- typicality_data_gp1_sub %>% 
-    dplyr::group_by(comp_group) %>% 
-    dplyr::sample_n(samplesize_values[i], replace = T) %>% 
-    dplyr::summarize(se2 = sd(score)/sqrt(length(score))) 
+iterate <- 1
+for (p in 1:nsim){
   
-  # add to table
-  colnames(sim_table)[1:length(unique(typicality_data_gp1_sub$comp_group))] <- temp1$comp_group
-  sim_table[i, 1:length(unique(typicality_data_gp1_sub$comp_group))] <- temp1$se2
-  sim_table[i, "sample_size"] <- samplesize_values[i]
-
+    # loop over sample sizes for comparison type 
+  for (i in 1:length(samplesize_values)){
+      
+    # temp dataframe for comparison type 1 that samples and summarizes
+    temp1 <- typicality_data_gp1_sub %>% 
+      dplyr::group_by(comp_group) %>% 
+      dplyr::sample_n(samplesize_values[i], replace = T) %>% 
+      dplyr::summarize(se2 = sd(score)/sqrt(length(score))) 
+    
+    # add to table
+    colnames(sim_table)[1:length(unique(typicality_data_gp1_sub$comp_group))] <- temp1$comp_group
+    sim_table[iterate, 1:length(unique(typicality_data_gp1_sub$comp_group))] <- temp1$se2
+    sim_table[iterate, "sample_size"] <- samplesize_values[i]
+    sim_table[iterate, "nsim"] <- p
+    
+    iterate <- 1 + iterate 
+  }
+  
 }
 
-## ----cutoff----------------------------------------
+## ----cutoff----------------------------------
 cutoff <- calculate_cutoff(population = typicality_data_gp1_sub, 
                  grouping_items = "comp_group",
                  score = "score", 
@@ -111,17 +119,20 @@ cutoff$cutoff
 # figure out cut off
 final_sample <- 
   sim_table %>%
-  pivot_longer(cols = -c(sample_size, var))  %>% 
-  dplyr::rename(item = name, se = value)   %>% 
-  dplyr::group_by(sample_size, var)  %>% 
-  dplyr::summarize(percent_below = sum(se <= cutoff$cutoff)/length(unique(typicality_data_gp1_sub$comp_group)))  %>% 
-  # dplyr::filter(percent_below >= .80) %>% 
+  pivot_longer(cols = -c(sample_size, var, nsim)) %>% 
+  dplyr::rename(item = name, se = value) %>% 
+  dplyr::group_by(sample_size, var, nsim) %>% 
+  dplyr::summarize(percent_below = sum(se <= cutoff$cutoff)/length(unique(typicality_data_gp1_sub$comp_group))) %>% 
+  ungroup() %>% 
+  # then summarize all down averaging percents
+  dplyr::group_by(sample_size, var) %>% 
+  summarize(percent_below = mean(percent_below)) %>% 
   dplyr::arrange(percent_below) %>% 
   ungroup()
 
 flextable(final_sample) %>% autofit()
 
-## ----calculate correction--------------------------
+## ----calculate correction--------------------
 final_scores <- calculate_correction(proportion_summary = final_sample,
                      pilot_sample_size = length(unique(typicality_data_gp1_sub$participant)),
                      proportion_variability = cutoff$prop_var)

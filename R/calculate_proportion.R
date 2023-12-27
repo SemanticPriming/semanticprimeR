@@ -82,7 +82,9 @@ calculate_proportion <- function(samples,
 
   # create end summary
   summary_DF <- bind_rows(summary_list) %>%
-    select(-num_items)
+    select(-num_items) %>%
+    group_by(sample_size) %>%
+    summarize(percent_below = mean(percent_below))
 
   # return values
   return(summary_DF)
