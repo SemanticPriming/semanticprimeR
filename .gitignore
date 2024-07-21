@@ -1,5 +1,11 @@
 # Tests
 /tests
+*.udpipe
+
+/subs_vec
+/subs_count
+/wiki_vec
+/wiki_count
 
 # History files
 .Rhistory
@@ -41,3 +47,7 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 .DS_Store
+/vignettes/subs_count
+/vignettes/subs_vec
+/vignettes/wiki_count
+/vignettes/wiki_vec

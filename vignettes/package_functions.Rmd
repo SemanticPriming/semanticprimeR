@@ -1,0 +1,301 @@
+---
+title: "semanticprimeR Package Functions"
+author: "Erin Buchanan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{semanticprimeR Package Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Libraries
+
+```{r}
+library(semanticprimeR)
+library(udpipe)
+library(stopwords)
+```
+
+## Power Functions
+
+During the process of this project, we proposed a new way to calculate "power" for adaptive sampling of items using accuracy in parameter estimation and bootstrapping/simulation methods. You can review the preprint here: https://osf.io/preprints/osf/e3afx
+
+This package has many vignettes for different types of data you can examine by using `vignette(package = "semanticprimeR")` to review what is avaliable and `vignette(topic = "montefinese_vignette", package = "semanticprimeR")` as a specific example to view a specific vignette. 
+
+The information presented here is a shortened version of the paper to show off the functionality of the package. 
+
+### Simulate Population 
+
+Let's say we want to run a priming study, but do not have previous data. We can use `simulate_population()` to create some sample data to use in for estimating sample size for adaptive testing and stopping rules. 
+
+```{r}
+df <- simulate_population(mu = 25, # mean priming in ms
+                    mu_sigma = 5, # standard deviation of the item means
+                    sigma = 10, # population standard devation for items
+                    sigma_sigma = 3, # standard deviation of the standard deviation of items
+                    number_items = 75, # number of priming items 
+                    number_scores = 100, # a population of values to simulate
+                    smallest_sigma = 1, # smallest possible item standard deviation 
+                    min_score = -25, # min ms priming
+                    max_score = 100, # max ms priming 
+                    digits = 3)
+
+head(df)
+```
+### Calculate Cutoff
+
+From this dataframe, we can calculate the standard error of the items, which is used to determine if the item has reached the stopping rule (i.e., if the standard error reaches a defined value, it is considered accurately measured, and we can stop sampling it). To get the defined value, we use the 40% decile of the standard errors of the items.
+
+```{r}
+cutoff <- calculate_cutoff(population = df, # pilot data or simulated data
+  grouping_items = "item", # name of the item indicator column
+  score = "score", # name of the dependent variable column
+  minimum = min(df$score), # minimum possible/found score
+  maximum = max(df$score)) # maximum possible/found score
+                           
+cutoff$se_items # all standard errors of items
+cutoff$sd_items # standard deviation of the standard errors
+cutoff$cutoff # 40% decile score
+cutoff$prop_var # proportion of possible variance 
+```
+
+### Bootstrap/Simulate Samples
+
+Next, we use bootstrapping/simulate to pretend we have samples of a starting size (we suggest 20) up to a maximim size we are willing to collect. These samples will be used to determine the number of items that achieve our stopping rule to determine how many participants are needed to accurately measure most items.
+
+```{r eval = F}
+samples <- bootstrap_samples(start = 20, # starting sample size
+  stop = 400, # stopping sample size
+  increase = 5, # increase bootstrapped samples by this amount
+  population = df, # population or pilot data
+  replace = TRUE, # bootstrap with replacement? 
+  nsim = 500, # number of simulations to run
+  grouping_items = "item") # item column label 
+
+save(samples, file = "data/simulatePriming.RData")
+```
+
+```{r}
+# since that's a slow function, we wrote out the data and read it back in
+load("data/simulatePriming.Rdata")
+head(samples[[1]])
+```
+
+### Calculate Proportions of Items Measured
+
+From those samples and our estimated cutoff score, we can calculate the number of items below our suggested stopping rule. 
+
+```{r}
+proportion_summary <- calculate_proportion(samples = samples, # samples list
+  cutoff = cutoff$cutoff, # cut off score 
+  grouping_items = "item", # item column name
+  score = "score") # dependent variable column name 
+
+head(proportion_summary)
+```
+
+### Final Sample Size
+
+As you will note in our paper, we determined that this simulation procedure needs a correction to approximate traditional interpretations of power. You can use "power" levels like 80 percent, 90 percent, etc. similarly to traditional power - use higher numbers if you want to be more stringent to make sure all items are "well measured" (and correspondingly you will get higher estimated sample sizes). We suggested using 80% as a "minimum" sample size, the cutoff stopping rule while running the study if you use adaptive sampling (or just overall to review the data), and a higher value like 90% for a maximum sample size to collect. 
+
+```{r}
+corrected_summary <- calculate_correction(
+  proportion_summary = proportion_summary, # prop from above
+  pilot_sample_size = 100, # number of participants in the pilot data 
+  proportion_variability = cutoff$prop_var, # proportion variance from cutoff scores
+  power_levels = c(80, 85, 90, 95)) # what levels of power to calculate 
+
+corrected_summary
+```
+
+## Create Stimuli Functions
+
+Once you've determine your sample sizes, you will want to create stimuli. These functions show you how we created stimuli from the `OpenSubtitles` project using the `subs2vec` project. 
+
+- `OpenSubtitles`: https://opus.nlpl.eu/OpenSubtitles/corpus/version/OpenSubtitles
+- `subs2vec`: https://github.com/jvparidon/subs2vec. 
+
+### Get Models 
+
+You can review the available models from `subs2vec` merged with the available data in `OpenSubtitles` by using the data function. You can use `?subsData` to view the information about the columns and the dataset. 
+
+```{r}
+data("subsData")
+head(subsData)
+```
+
+We only worked with languages in which we could use a part of speech tagger. We recommend `udpipe` as a great package that has many taggers. The language model necessary is shown in the `udpipe_model` column. 
+
+In this example, let's use Afrikaans as a smaller dataset for an example. The datasets can be very large - just a warning for downloading and using on your computer. Use the `import_subs` function to download and import the files you are interested in. 
+
+For language, please use the two letter language code in the `language_code` column of the subsData. 
+
+You then need to pick `what` to download: 
+
+- `subs_vec`: The subtitles embeddings from a fastText model. 
+- `subs_count`: The frequency of tokens found in the `subs_vec` model. 
+- `wiki_vec`: The Wikipedia embeddings from a fastText model. 
+- `subs_count`: The frequency of tokens found in the `wiki_vec` model. 
+
+You may see some warnings based on file formatting. 
+
+```{r}
+af_freq <- import_subs(
+  language = "af",
+  what = "subs_count"
+)
+
+head(af_freq)
+```
+
+We then used `udpipe` to filter our possible options. You may have other criteria, but here's an example of how we tagged concepts (for their main part of speech, given no sentence context here). When you use this function, it will download the model necessary for tagging. 
+
+```{r}
+# tag with udpipe
+af_tagged <- udpipe(af_freq$unigram, 
+                    object = subsData$udpipe_model[subsData$language_code == "af"], 
+                    parser = "none")
+
+head(af_tagged)
+```
+
+We then:
+
+- Lower cased
+- Removed anything less than three characters when appropriate
+- Picked words only in nouns, verbs, adjectives, and adverbs
+- Took out stopwords
+- Took out words with numbers
+
+We only used the top 10,000 words for the next section, but this selection will depend on your use case as well. 
+
+```{r}
+# word_choice
+word_choice <- c("NOUN", "VERB", "ADJ", "ADV")
+
+# lower case
+af_tagged$lemma <- tolower(af_tagged$lemma)
+
+# three characters 
+af_tagged <- subset(af_tagged, nchar(af_tagged$lemma) >= 3)
+
+# only nouns verbs, etc. 
+af_tagged <- subset(af_tagged, upos %in% word_choice)
+
+# removed stop words just in case they were incorrectly tagged
+af_tagged <- subset(af_tagged, !(lemma %in% stopwords(language = "af", source = "stopwords-iso")))
+
+# removed things with numbers
+af_tagged <- subset(af_tagged, !(grepl("[0-9]", af_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(af_freq) <- c("sentence", "freq")
+af_final <- merge(af_tagged, af_freq, by = "sentence", all.x = T)
+
+head(af_final)
+
+# eliminate duplicates by lemma
+af_final <- af_final[order(af_final$freq, decreasing = TRUE) , ]
+af_final <- af_final[!duplicated(af_final$lemma), ]
+
+# grab top 10K
+af_top <- af_final[1:10000 , ]
+```
+
+Next, we used `import_subs()` again import the embeddings for the subtitles. 
+
+```{r}
+af_dims <- import_subs(
+  language = "af",
+  what = "subs_vec"
+)
+
+head(af_dims)
+```
+
+In our case, we want to use the tokens as row names, so we want to move the first column to the row names and delete it to have a 300 dimension by tokens matrix. 
+
+```{r}
+# lower case
+af_dims$V1 <- tolower(af_dims[ , 1]) # first column is always the tokens
+
+# eliminate duplicates 
+af_dims <- subset(af_dims, !duplicated(af_dims[ , 1]))
+
+# make row names
+rownames(af_dims) <- af_dims[ , 1]
+af_dims <- af_dims[ , -1]
+head(af_dims)
+```
+
+### Calculate Similarity
+
+We can then use the `calculate_similarity()` function to get the similarity values for all words based on the dimension matrix. The underlying function is cosine calculated between vectors of the two word dimensions. 
+
+```{r}
+af_cosine <- 
+  calculate_similarity(
+    words = af_final$sentence, # the tokens you want to filter
+    dimensions = af_dims, # the matrix of items 
+    by = 1 # 1 for rows, 2 for columns 
+)
+```
+
+The `top_n` function can be used to calculate the top number of cosine values for each token in the similarity matrix. Please note: it will always return the token-token combination as 1 (the token related to itself), so you should ask for n+1 number of 
+cosines to then filter out the token-token combinations. Big thanks to Brenton Wiernik who figured out how to make this computational efficient. 
+
+```{r}
+# get the top 5 related words 
+af_top_sim <- top_n(af_cosine, 6)
+af_top_sim <- subset(af_top_sim, cue!=target)
+
+head(af_top_sim)
+```
+
+### Create Pseudowords 
+
+We originally set up a function to create words by replacing the number of characters based on the bigrams in the token. We recommend you use the other function based on Wuggy, but you can also do simple replacement. 
+
+```{r}
+af_top_sim$fake_cue <- fake_simple(af_top_sim$cue)
+# you'd want to also do this based on target depending on your study 
+head(af_top_sim)
+```
+
+You can also use the Wuggy algorithm using `fake_Wuggy()`. *This function is not fast. It is slower the larger the size of the words to create from.* It returns a dataframe of options 
+
+```{r}
+af_wuggy <- fake_Wuggy(
+  wordlist = af_final$sentence, # full valid options in language
+  language_hyp = "../inst/latex/hyph-af.tex", # path to hyphenation.tex 
+  lang = "af", # two letter language code
+  replacewords <- af_top_sim$cue[1:10] # words you want to create pseudowords for  
+)
+```
+
+
+## Get Data
+
+```{r}
+get_data()
+load_metadata()
+
+```
+
+## Process Data
+
+```{r}
+process_labjs()
+transition_probabilities()
+```
+
+
