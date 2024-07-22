@@ -45,6 +45,8 @@ get_dataset <- function(corpus = NULL,
   metadata <- load_metadata()
   variable_return <- list(metadata = metadata)
 
+  https://github.com/SemanticPriming/semanticprimeR/releases/download/v0.0.1/Bonin2021.csv
+
   if (!is.null(corpus)){
 
       con <- gzcon(url(paste("http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/mono/OpenSubtitles.",
