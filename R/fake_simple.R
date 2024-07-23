@@ -9,7 +9,8 @@
 #' @param wordlist a list of tokens you want to use to create
 #' your pseudowords.
 #'
-#' @import quanteda
+#' @importFrom quanteda tokens_ngrams
+#' @importFrom quanteda tokens
 #'
 #' @return A dataset of original tokens and suggested pseudowords.
 #'

@@ -18,7 +18,8 @@
 #' @param replacewords A list of tokens you want to use to create
 #' your pseudowords.
 #'
-#' @import sylly dplyr tidyr tidytext stringdist stringr
+#' @import sylly dplyr tidyr tidytext stringr
+#' @importFrom stringdist stringdist
 #'
 #' @return A dataset of original tokens and suggested pseudowords.
 #' \itemize{
@@ -44,6 +45,8 @@
 #'  \item{"original_word"}{The original token.}
 #'  \item{"replacement_word"}{The final replacement token.}
 #' }
+#'
+#' @export
 #'
 #' @examples
 #' # af_wuggy <- fake_Wuggy(

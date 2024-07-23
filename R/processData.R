@@ -8,7 +8,8 @@
 #'
 #' @return The experiment data in a long format.
 #'
-#' @import RSQLite dplyr DBI purrr jsonlite readr
+#' @import RSQLite dplyr DBI purrr readr
+#' @importFrom jsonlite fromJSON
 #'
 #' @keywords metadata, datasets, linguistic norms
 #'
@@ -24,7 +25,7 @@ processData <- function(database) {
   require("RSQLite")
   require("dplyr")
   require("purrr")
-  require("jsonlite")
+  # require("jsonlite")
   require("readr")
 
   con <- dbConnect(
