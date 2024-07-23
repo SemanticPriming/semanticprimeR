@@ -119,7 +119,7 @@ parameter estimation and bootstrapping/simulation methods. You can
 review the preprint here: <a href="https://osf.io/preprints/osf/e3afx" class="external-link uri">https://osf.io/preprints/osf/e3afx</a></p>
 <p>This package has many vignettes for different types of data you can
 examine by using <code>vignette(package = "semanticprimeR")</code> to
-review what is avaliable and
+review what is available and
 <code><a href="../articles/montefinese_vignette.html">vignette(topic = "montefinese_vignette", package = "semanticprimeR")</a></code>
 as a specific example to view a specific vignette.</p>
 <p>The information presented here is a shortened version of the paper to
@@ -134,7 +134,7 @@ and stopping rules.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_population.html">simulate_population</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fl">25</span>, <span class="co"># mean priming in ms</span></span>
 <span>                    mu_sigma <span class="op">=</span> <span class="fl">5</span>, <span class="co"># standard deviation of the item means</span></span>
-<span>                    sigma <span class="op">=</span> <span class="fl">10</span>, <span class="co"># population standard devation for items</span></span>
+<span>                    sigma <span class="op">=</span> <span class="fl">10</span>, <span class="co"># population standard deviation for items</span></span>
 <span>                    sigma_sigma <span class="op">=</span> <span class="fl">3</span>, <span class="co"># standard deviation of the standard deviation of items</span></span>
 <span>                    number_items <span class="op">=</span> <span class="fl">75</span>, <span class="co"># number of priming items </span></span>
 <span>                    number_scores <span class="op">=</span> <span class="fl">100</span>, <span class="co"># a population of values to simulate</span></span>
@@ -192,7 +192,7 @@ items.</p>
 <h3 id="bootstrapsimulate-samples">Bootstrap/Simulate Samples<a class="anchor" aria-label="anchor" href="#bootstrapsimulate-samples"></a>
 </h3>
 <p>Next, we use bootstrapping/simulate to pretend we have samples of a
-starting size (we suggest 20) up to a maximim size we are willing to
+starting size (we suggest 20) up to a maximum size we are willing to
 collect. These samples will be used to determine the number of items
 that achieve our stopping rule to determine how many participants are
 needed to accurately measure most items.</p>
@@ -604,7 +604,7 @@ datasets are broken into a couple types:</p>
 <li>
 <code>procedure_stimuli</code>: The stimuli from the study. Each
 dataset includes the ~5000 trials used in the study listed as cue-target
-paits with their <code>cue_type</code>/<code>target_type</code>
+pairs with their <code>cue_type</code>/<code>target_type</code>
 (word/nonword) and trial <code>type</code> (related, unrelated,
 nonword). The cosine values from the subs2vec models are included when
 available for word pairs. If the value is blank or NA, you can assume
@@ -645,7 +645,7 @@ averages/summaries of the target trials matched by related and unrelated
 to create a priming score).</li>
 </ul>
 <div class="section level3">
-<h3 id="load-avaiable-data">Load Avaiable Data<a class="anchor" aria-label="anchor" href="#load-avaiable-data"></a>
+<h3 id="load-available-data">Load Available Data<a class="anchor" aria-label="anchor" href="#load-available-data"></a>
 </h3>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"primeData"</span><span class="op">)</span></span>
@@ -670,7 +670,7 @@ of the <code>full_data</code> datasets are quite large and may take a
 while download and/or import directly. You can also just use the direct
 links the primeData file to download them. Some files are heavily
 compressed in <code>.gz</code> format. I recommend 7-zip if you aren’t
-familar with the command line to unzip these: <a href="https://www.wikihow.com/Extract-a-Gz-File" class="external-link uri">https://www.wikihow.com/Extract-a-Gz-File</a></p>
+familiar with the command line to unzip these: <a href="https://www.wikihow.com/Extract-a-Gz-File" class="external-link uri">https://www.wikihow.com/Extract-a-Gz-File</a></p>
 <p>You can also import them directly into <em>R</em> with the
 <em>rio</em> package (which is what this function does, but it does
 download the file each time, so I’d recommend one download and then put
@@ -700,7 +700,7 @@ calculated from subs2vec.</p>
 <h2 id="match-to-lab-data">Match to LAB Data<a class="anchor" aria-label="anchor" href="#match-to-lab-data"></a>
 </h2>
 <div class="section level3">
-<h3 id="load-available-data">Load Available Data<a class="anchor" aria-label="anchor" href="#load-available-data"></a>
+<h3 id="load-available-data-1">Load Available Data<a class="anchor" aria-label="anchor" href="#load-available-data-1"></a>
 </h3>
 <p>To review the available data from the Linguistic Annotated
 Bibliography, you can use <code>data("labData")</code>, which includes

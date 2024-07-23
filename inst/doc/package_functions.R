@@ -15,7 +15,7 @@ library(rio)
 ## ------------------------------------------
 df <- simulate_population(mu = 25, # mean priming in ms
                     mu_sigma = 5, # standard deviation of the item means
-                    sigma = 10, # population standard devation for items
+                    sigma = 10, # population standard deviation for items
                     sigma_sigma = 3, # standard deviation of the standard deviation of items
                     number_items = 75, # number of priming items 
                     number_scores = 100, # a population of values to simulate
