@@ -52,7 +52,7 @@ import_lab <- function( bibtexID = NULL,
   labData$link <- paste0("https://github.com/SemanticPriming/semanticprimeR/releases/download/v0.0.1/",
                          labData$bibtex, ".csv")
   metadata <- labData
-  variable_return <- list(metadata = labData)
+  variable_return <- list()
 
   if (!is.null(bibtexID)) {
 
@@ -83,7 +83,7 @@ import_lab <- function( bibtexID = NULL,
     }
 
     if (!is.null(variables)){
-      temp <- metadata[metadata$bibtex == bibtexID, 26:ncol(metadata)]
+      temp <- metadata[metadata$bibtex == bibtexID, 25:ncol(metadata)]
       variable_return$variables <- colnames(temp)[temp == 1]
     }
 

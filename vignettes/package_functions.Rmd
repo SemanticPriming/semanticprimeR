@@ -356,18 +356,36 @@ If you want to find specific types of LAB data, you can use the `language` and/o
 
 ```{r}
 saved <- import_lab(language = "English", variables = c("aoa", "freq"))
+# possible datasets that are English, aoa, and frequency
+saved
+
+saved <- import_lab(language = "Spanish", variables = c("aoa"))
+
+saved
 ```
 
 ### Load Specific Data
 
 ```{r}
-saved <- import_lab(bibtexID = "Birchenough2017", citation = TRUE)
+saved <- import_lab(bibtexID = "Alonso2015", citation = TRUE)
+
+saved$citation
+
+head(saved$loaded_data)
 ```
 
 ### Match To Prime Data
 
 ```{r}
+es_words_merged <- es_words %>%
+  # merge with the cue word (will be .x variables)
+  left_join(saved$loaded_data, 
+            by = c("es_cue" = "word_spanish")) %>% 
+  # merge with the target word (will be .y variables)
+  left_join(saved$loaded_data, 
+            by = c("es_target" = "word_spanish"))
 
+head(es_words_merged)
 ```
 
 ## Other Cool Stuff

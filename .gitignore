@@ -51,3 +51,4 @@ vignettes/*.pdf
 /vignettes/subs_vec
 /vignettes/wiki_count
 /vignettes/wiki_vec
+data/lab_data.csv
