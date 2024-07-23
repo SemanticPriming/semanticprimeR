@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------
+## ----setup, include = FALSE------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup------------------------
+## ----vignette-setup--------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -94,12 +94,12 @@ item_power <- function(data, # name of data frame
 
 }
 
-## ------------------------------------------
+## --------------------------------------------------------
 DF <- import("data/moat_data.csv.zip") 
   
 str(DF)
 
-## ------------------------------------------
+## --------------------------------------------------------
 metadata <- tibble::tribble(
              ~Variable.Name,                                                                                                       ~Variable.Description, ~`Type.(numeric,.character,.logical,.etc.)`,
                       "Id",                                                                                                            "Participant ID",                                   "numeric",
@@ -111,7 +111,7 @@ metadata <- tibble::tribble(
 
 flextable(metadata) %>% autofit()
 
-## ------------------------------------------
+## --------------------------------------------------------
 # Function for simulation
 var1 <- item_power(data = DF, # name of data frame
             dv_col = "rating", # name of DV column as a character
@@ -122,7 +122,7 @@ var1 <- item_power(data = DF, # name of data frame
             sample_increase = 5,
             decile = .4)
 
-## ------------------------------------------
+## --------------------------------------------------------
 var1$SE
 var1$cutoff
 
@@ -136,7 +136,7 @@ cutoff_score <- calculate_cutoff(population = DF,
                                  maximum = max(DF$rating))
 cutoff_score$cutoff
 
-## ------------------------------------------
+## --------------------------------------------------------
 flextable(var1$final_sample %>% head()) %>% 
   autofit()
 

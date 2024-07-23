@@ -352,7 +352,6 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(rio)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 </div>
 <div id="power-functions" class="section level2">
 <h2>Power Functions</h2>
@@ -392,8 +391,9 @@ and stopping rules.</p>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 4    4  7.695</span></span>
 <span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 5    5  6.408</span></span>
 <span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; 6    6 28.881</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R
-### Calculate Cutoff</p>
+</div>
+<div id="calculate-cutoff" class="section level3">
+<h3>Calculate Cutoff</h3>
 <p>From this dataframe, we can calculate the standard error of the
 items, which is used to determine if the item has reached the stopping
 rule (i.e., if the standard error reaches a defined value, it is
@@ -407,33 +407,28 @@ items.</p>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">maximum =</span> <span class="fu">max</span>(df<span class="sc">$</span>score)) <span class="co"># maximum possible/found score</span></span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>                           </span>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>cutoff<span class="sc">$</span>se_items <span class="co"># all standard errors of items</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;  [1] 0.3920147 1.0708714 1.1341028 1.2229538</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;  [5] 1.0577257 1.0177127 0.8686909 0.9484874</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;  [9] 0.4339395 0.9412878 1.3666437 1.0084056</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; [13] 0.8099465 0.7877877 1.0833332 1.4624172</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; [17] 1.2440920 1.2148211 1.6182107 1.3737822</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; [21] 0.7382102 0.8146362 0.7408250 0.5671575</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; [25] 1.2728319 1.2118386 0.6816918 0.6105171</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; [29] 0.5920832 1.0920425 1.4495927 1.0026142</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; [33] 0.5444239 0.9605256 0.5372017 0.9130861</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; [37] 0.6175753 0.8841982 1.3333519 0.5847828</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; [41] 0.7523152 1.3867805 1.0585425 0.5410292</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; [45] 1.0476215 0.4265040 0.7721489 1.4449187</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; [49] 0.9088416 1.4981560 0.6674206 1.0049786</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; [53] 1.0465209 1.0159452 0.6905518 1.3574879</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; [57] 0.9471974 0.5624475 1.3495594 0.9263670</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt; [61] 1.1375711 1.0324721 1.1059288 1.0277050</span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt; [65] 0.8997262 1.3560916 1.0809033 1.2846047</span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; [69] 1.5011117 1.0401674 1.3945916 0.8620661</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; [73] 0.7431917 1.5115933 0.8433558</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>cutoff<span class="sc">$</span>sd_items <span class="co"># standard deviation of the standard errors</span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; [1] 0.3028549</span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>cutoff<span class="sc">$</span>cutoff <span class="co"># 40% decile score</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; 0.9210546</span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>cutoff<span class="sc">$</span>prop_var <span class="co"># proportion of possible variance </span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; [1] 0.006429904</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;  [1] 0.3920147 1.0708714 1.1341028 1.2229538 1.0577257</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;  [6] 1.0177127 0.8686909 0.9484874 0.4339395 0.9412878</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; [11] 1.3666437 1.0084056 0.8099465 0.7877877 1.0833332</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; [16] 1.4624172 1.2440920 1.2148211 1.6182107 1.3737822</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; [21] 0.7382102 0.8146362 0.7408250 0.5671575 1.2728319</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; [26] 1.2118386 0.6816918 0.6105171 0.5920832 1.0920425</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; [31] 1.4495927 1.0026142 0.5444239 0.9605256 0.5372017</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; [36] 0.9130861 0.6175753 0.8841982 1.3333519 0.5847828</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; [41] 0.7523152 1.3867805 1.0585425 0.5410292 1.0476215</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; [46] 0.4265040 0.7721489 1.4449187 0.9088416 1.4981560</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; [51] 0.6674206 1.0049786 1.0465209 1.0159452 0.6905518</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; [56] 1.3574879 0.9471974 0.5624475 1.3495594 0.9263670</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; [61] 1.1375711 1.0324721 1.1059288 1.0277050 0.8997262</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; [66] 1.3560916 1.0809033 1.2846047 1.5011117 1.0401674</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; [71] 1.3945916 0.8620661 0.7431917 1.5115933 0.8433558</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>cutoff<span class="sc">$</span>sd_items <span class="co"># standard deviation of the standard errors</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt; [1] 0.3028549</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>cutoff<span class="sc">$</span>cutoff <span class="co"># 40% decile score</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; 0.9210546</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>cutoff<span class="sc">$</span>prop_var <span class="co"># proportion of possible variance </span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; [1] 0.006429904</span></span></code></pre></div>
 </div>
 <div id="bootstrapsimulate-samples" class="section level3">
 <h3>Bootstrap/Simulate Samples</h3>
@@ -451,9 +446,8 @@ needed to accurately measure most items.</p>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">grouping_items =</span> <span class="st">&quot;item&quot;</span>) <span class="co"># item column label </span></span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
 <span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="fu">save</span>(samples, <span class="at">file =</span> <span class="st">&quot;data/simulatePriming.RData&quot;</span>)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># since that&#39;s a slow function, we wrote out the data and read it back in</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/simulatePriming.Rdata&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">paste0</span>(filelocation,<span class="st">&quot;/vignettes/data/simulatePriming.Rdata&quot;</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">head</span>(samples[[<span class="dv">1</span>]])</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 2</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; # Groups:   item [1]</span></span>
@@ -465,7 +459,6 @@ needed to accurately measure most items.</p>
 <span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; 4     1 25.6 </span></span>
 <span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; 5     1 31.0 </span></span>
 <span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; 6     1  5.53</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 </div>
 <div id="calculate-proportions-of-items-measured" class="section level3">
 <h3>Calculate Proportions of Items Measured</h3>
@@ -486,7 +479,6 @@ the number of items below our suggested stopping rule.</p>
 <span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; 4          35        0.08  </span></span>
 <span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; 5          40        0.107 </span></span>
 <span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; 6          45        0.12</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 </div>
 <div id="final-sample-size" class="section level3">
 <h3>Final Sample Size</h3>
@@ -508,15 +500,12 @@ to collect.</p>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>corrected_summary</span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;   percent_below sample_size</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;       &lt;dbl&gt;</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 1          80           190</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; 2          85.3         225</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; 3          92           265</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; 4          96           280</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable:</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; #   corrected_sample_size &lt;dbl&gt;</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;   percent_below sample_size corrected_sample_size</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;       &lt;dbl&gt;                 &lt;dbl&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 1          80           190                  104.</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; 2          85.3         225                  123.</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; 3          92           265                  145.</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; 4          96           280                  153.</span></span></code></pre></div>
 </div>
 </div>
 <div id="create-stimuli-functions" class="section level2">
@@ -538,19 +527,16 @@ about the columns and the dataset.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;subsData&quot;</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(subsData))</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 10</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt;   language_code subs_vec  subs_count wiki_vec</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;   </span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 1 hi            https://… https://h… https:/…</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 2 gl            https://… https://h… https:/…</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 3 ca            https://… https://h… https:/…</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 4 bn            https://… https://h… https:/…</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 5 br            https://… https://h… https:/…</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; 6 bs            https://… https://h… https:/…</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; # ℹ 6 more variables: wiki_count &lt;chr&gt;,</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; #   files &lt;dbl&gt;, tokens &lt;chr&gt;,</span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; #   sentences &lt;chr&gt;, language &lt;chr&gt;,</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; #   udpipe_model &lt;chr&gt;</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt;   language_code subs_vec     subs_count wiki_vec wiki_count</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;     </span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 1 hi            https://hdl… https://h… https:/… https://h…</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 2 gl            https://hdl… https://h… https:/… https://h…</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 3 ca            https://hdl… https://h… https:/… https://h…</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 4 bn            https://hdl… https://h… https:/… https://h…</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 5 br            https://hdl… https://h… https:/… https://h…</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; 6 bs            https://hdl… https://h… https:/… https://h…</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: files &lt;dbl&gt;, tokens &lt;chr&gt;,</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; #   sentences &lt;chr&gt;, language &lt;chr&gt;, udpipe_model &lt;chr&gt;</span></span></code></pre></div>
 <p>We only worked with languages in which we could use a part of speech
 tagger. We recommend <code>udpipe</code> as a great package that has
 many taggers. The language model necessary is shown in the
@@ -577,8 +563,6 @@ model.</li>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="at">language =</span> <span class="st">&quot;af&quot;</span>,</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">&quot;subs_count&quot;</span></span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">head</span>(af_freq)</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt;   unigram unigram_freq</span></span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; 1     die        12673</span></span>
@@ -587,7 +571,6 @@ model.</li>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; 4      is         9147</span></span>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; 5     het         8109</span></span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; 6      jy         7425</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <p>We then used <code>udpipe</code> to filter our possible options. You
 may have other criteria, but here’s an example of how we tagged concepts
 (for their main part of speech, given no sentence context here). When
@@ -600,21 +583,18 @@ tagging.</p>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(af_tagged))</span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 17</span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt;   doc_id paragraph_id sentence_id sentence</span></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;int&gt;       &lt;int&gt; &lt;chr&gt;   </span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; 1 doc1              1           1 die     </span></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; 2 doc2              1           1 nie     </span></span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; 3 doc3              1           1 ek      </span></span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; 4 doc4              1           1 is      </span></span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; 5 doc5              1           1 het     </span></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; 6 doc6              1           1 jy      </span></span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; # ℹ 13 more variables: start &lt;int&gt;,</span></span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt; #   end &lt;int&gt;, term_id &lt;int&gt;,</span></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt; #   token_id &lt;chr&gt;, token &lt;chr&gt;,</span></span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt; #   lemma &lt;chr&gt;, upos &lt;chr&gt;, xpos &lt;chr&gt;,</span></span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt; #   feats &lt;chr&gt;, head_token_id &lt;chr&gt;,</span></span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="co">#&gt; #   dep_rel &lt;chr&gt;, deps &lt;chr&gt;, misc &lt;chr&gt;</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt;   doc_id paragraph_id sentence_id sentence start   end</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;int&gt;       &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; 1 doc1              1           1 die          1     3</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; 2 doc2              1           1 nie          1     3</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; 3 doc3              1           1 ek           1     2</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; 4 doc4              1           1 is           1     2</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; 5 doc5              1           1 het          1     3</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; 6 doc6              1           1 jy           1     2</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; # ℹ 11 more variables: term_id &lt;int&gt;, token_id &lt;chr&gt;,</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt; #   token &lt;chr&gt;, lemma &lt;chr&gt;, upos &lt;chr&gt;, xpos &lt;chr&gt;,</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt; #   feats &lt;chr&gt;, head_token_id &lt;chr&gt;, dep_rel &lt;chr&gt;,</span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt; #   deps &lt;chr&gt;, misc &lt;chr&gt;</span></span></code></pre></div>
 <p>We then:</p>
 <ul>
 <li>Lower cased</li>
@@ -650,55 +630,48 @@ selection will depend on your use case as well.</p>
 <span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a></span>
 <span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(af_final))</span>
 <span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 18</span></span>
-<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="co">#&gt;   sentence    doc_id paragraph_id sentence_id</span></span>
-<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;         &lt;int&gt;       &lt;int&gt;</span></span>
-<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a><span class="co">#&gt; 1 aanbeveling doc17…            1           1</span></span>
-<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a><span class="co">#&gt; 2 aanbeweeg   doc81…            1           1</span></span>
-<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a><span class="co">#&gt; 3 aanbied     doc13…            1           1</span></span>
-<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a><span class="co">#&gt; 4 aanbreek    doc82…            1           1</span></span>
-<span id="cb12-32"><a href="#cb12-32" tabindex="-1"></a><span class="co">#&gt; 5 aanbring    doc14…            1           1</span></span>
-<span id="cb12-33"><a href="#cb12-33" tabindex="-1"></a><span class="co">#&gt; 6 aandadig    doc57…            1           1</span></span>
-<span id="cb12-34"><a href="#cb12-34" tabindex="-1"></a><span class="co">#&gt; # ℹ 14 more variables: start &lt;int&gt;,</span></span>
-<span id="cb12-35"><a href="#cb12-35" tabindex="-1"></a><span class="co">#&gt; #   end &lt;int&gt;, term_id &lt;int&gt;,</span></span>
-<span id="cb12-36"><a href="#cb12-36" tabindex="-1"></a><span class="co">#&gt; #   token_id &lt;chr&gt;, token &lt;chr&gt;,</span></span>
-<span id="cb12-37"><a href="#cb12-37" tabindex="-1"></a><span class="co">#&gt; #   lemma &lt;chr&gt;, upos &lt;chr&gt;, xpos &lt;chr&gt;,</span></span>
-<span id="cb12-38"><a href="#cb12-38" tabindex="-1"></a><span class="co">#&gt; #   feats &lt;chr&gt;, head_token_id &lt;chr&gt;,</span></span>
-<span id="cb12-39"><a href="#cb12-39" tabindex="-1"></a><span class="co">#&gt; #   dep_rel &lt;chr&gt;, deps &lt;chr&gt;, misc &lt;chr&gt;,</span></span>
-<span id="cb12-40"><a href="#cb12-40" tabindex="-1"></a><span class="co">#&gt; #   freq &lt;int&gt;</span></span>
-<span id="cb12-41"><a href="#cb12-41" tabindex="-1"></a></span>
-<span id="cb12-42"><a href="#cb12-42" tabindex="-1"></a><span class="co"># eliminate duplicates by lemma</span></span>
-<span id="cb12-43"><a href="#cb12-43" tabindex="-1"></a>af_final <span class="ot">&lt;-</span> af_final[<span class="fu">order</span>(af_final<span class="sc">$</span>freq, <span class="at">decreasing =</span> <span class="cn">TRUE</span>) , ]</span>
-<span id="cb12-44"><a href="#cb12-44" tabindex="-1"></a>af_final <span class="ot">&lt;-</span> af_final[<span class="sc">!</span><span class="fu">duplicated</span>(af_final<span class="sc">$</span>lemma), ]</span>
-<span id="cb12-45"><a href="#cb12-45" tabindex="-1"></a></span>
-<span id="cb12-46"><a href="#cb12-46" tabindex="-1"></a><span class="co"># grab top 10K</span></span>
-<span id="cb12-47"><a href="#cb12-47" tabindex="-1"></a>af_top <span class="ot">&lt;-</span> af_final[<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span> , ]</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="co">#&gt;   sentence    doc_id   paragraph_id sentence_id start   end</span></span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a><span class="co">#&gt; 1 aanbeveling doc17194            1           1     1    11</span></span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a><span class="co">#&gt; 2 aanbeweeg   doc8125             1           1     1     9</span></span>
+<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a><span class="co">#&gt; 3 aanbied     doc1372             1           1     1     7</span></span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a><span class="co">#&gt; 4 aanbreek    doc8254             1           1     1     8</span></span>
+<span id="cb12-32"><a href="#cb12-32" tabindex="-1"></a><span class="co">#&gt; 5 aanbring    doc14447            1           1     1     8</span></span>
+<span id="cb12-33"><a href="#cb12-33" tabindex="-1"></a><span class="co">#&gt; 6 aandadig    doc5795             1           1     1     8</span></span>
+<span id="cb12-34"><a href="#cb12-34" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more variables: term_id &lt;int&gt;, token_id &lt;chr&gt;,</span></span>
+<span id="cb12-35"><a href="#cb12-35" tabindex="-1"></a><span class="co">#&gt; #   token &lt;chr&gt;, lemma &lt;chr&gt;, upos &lt;chr&gt;, xpos &lt;chr&gt;,</span></span>
+<span id="cb12-36"><a href="#cb12-36" tabindex="-1"></a><span class="co">#&gt; #   feats &lt;chr&gt;, head_token_id &lt;chr&gt;, dep_rel &lt;chr&gt;,</span></span>
+<span id="cb12-37"><a href="#cb12-37" tabindex="-1"></a><span class="co">#&gt; #   deps &lt;chr&gt;, misc &lt;chr&gt;, freq &lt;int&gt;</span></span>
+<span id="cb12-38"><a href="#cb12-38" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" tabindex="-1"></a><span class="co"># eliminate duplicates by lemma</span></span>
+<span id="cb12-40"><a href="#cb12-40" tabindex="-1"></a>af_final <span class="ot">&lt;-</span> af_final[<span class="fu">order</span>(af_final<span class="sc">$</span>freq, <span class="at">decreasing =</span> <span class="cn">TRUE</span>) , ]</span>
+<span id="cb12-41"><a href="#cb12-41" tabindex="-1"></a>af_final <span class="ot">&lt;-</span> af_final[<span class="sc">!</span><span class="fu">duplicated</span>(af_final<span class="sc">$</span>lemma), ]</span>
+<span id="cb12-42"><a href="#cb12-42" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" tabindex="-1"></a><span class="co"># grab top 10K</span></span>
+<span id="cb12-44"><a href="#cb12-44" tabindex="-1"></a>af_top <span class="ot">&lt;-</span> af_final[<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span> , ]</span></code></pre></div>
 <p>Next, we used <code>import_subs()</code> again import the embeddings
 for the subtitles.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>af_dims <span class="ot">&lt;-</span> <span class="fu">import_subs</span>(</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="at">language =</span> <span class="st">&quot;af&quot;</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">&quot;subs_vec&quot;</span></span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(af_dims))</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 301</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;   V1           V2        V3      V4      V5</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; 1 &lt;/s&gt;  -0.236     0.0544    0.0202 -0.0531</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; 2 nie   -0.000683  0.0787    0.0382  0.0379</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; 3 die   -0.0233   -0.000478  0.191  -0.103 </span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; 4 is    -0.410     0.144     0.133  -0.104 </span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; 5 het    0.344    -0.0163   -0.198   0.259 </span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; 6 n      0.0615   -0.139    -0.0674 -0.0658</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; # ℹ 296 more variables: V6 &lt;dbl&gt;, V7 &lt;dbl&gt;,</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; #   V8 &lt;dbl&gt;, V9 &lt;dbl&gt;, V10 &lt;dbl&gt;,</span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; #   V11 &lt;dbl&gt;, V12 &lt;dbl&gt;, V13 &lt;dbl&gt;,</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; #   V14 &lt;dbl&gt;, V15 &lt;dbl&gt;, V16 &lt;dbl&gt;,</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; #   V17 &lt;dbl&gt;, V18 &lt;dbl&gt;, V19 &lt;dbl&gt;,</span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt; #   V20 &lt;dbl&gt;, V21 &lt;dbl&gt;, V22 &lt;dbl&gt;,</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt; #   V23 &lt;dbl&gt;, V24 &lt;dbl&gt;, V25 &lt;dbl&gt;, …</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;   V1           V2        V3      V4      V5     V6       V7</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; 1 &lt;/s&gt;  -0.236     0.0544    0.0202 -0.0531  0.146  9.71e-4</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; 2 nie   -0.000683  0.0787    0.0382  0.0379  0.295  2.25e-1</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; 3 die   -0.0233   -0.000478  0.191  -0.103   0.176 -8.84e-2</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; 4 is    -0.410     0.144     0.133  -0.104   0.295 -3.91e-2</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; 5 het    0.344    -0.0163   -0.198   0.259  -0.579 -1.54e-1</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; 6 n      0.0615   -0.139    -0.0674 -0.0658 -0.105 -2.12e-1</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; # ℹ 294 more variables: V8 &lt;dbl&gt;, V9 &lt;dbl&gt;, V10 &lt;dbl&gt;,</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; #   V11 &lt;dbl&gt;, V12 &lt;dbl&gt;, V13 &lt;dbl&gt;, V14 &lt;dbl&gt;, V15 &lt;dbl&gt;,</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; #   V16 &lt;dbl&gt;, V17 &lt;dbl&gt;, V18 &lt;dbl&gt;, V19 &lt;dbl&gt;, V20 &lt;dbl&gt;,</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; #   V21 &lt;dbl&gt;, V22 &lt;dbl&gt;, V23 &lt;dbl&gt;, V24 &lt;dbl&gt;, V25 &lt;dbl&gt;,</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; #   V26 &lt;dbl&gt;, V27 &lt;dbl&gt;, V28 &lt;dbl&gt;, V29 &lt;dbl&gt;, V30 &lt;dbl&gt;,</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt; #   V31 &lt;dbl&gt;, V32 &lt;dbl&gt;, V33 &lt;dbl&gt;, V34 &lt;dbl&gt;, V35 &lt;dbl&gt;,</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt; #   V36 &lt;dbl&gt;, V37 &lt;dbl&gt;, V38 &lt;dbl&gt;, V39 &lt;dbl&gt;, …</span></span></code></pre></div>
 <p>In our case, we want to use the tokens as row names, so we want to
 move the first column to the row names and delete it to have a 300
 dimension by tokens matrix.</p>
@@ -713,22 +686,21 @@ dimension by tokens matrix.</p>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>af_dims <span class="ot">&lt;-</span> af_dims[ , <span class="sc">-</span><span class="dv">1</span>]</span>
 <span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(af_dims))</span>
 <span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 300</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt;          V2        V3      V4      V5     V6</span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;       &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 1 -0.236     0.0544    0.0202 -0.0531  0.146</span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; 2 -0.000683  0.0787    0.0382  0.0379  0.295</span></span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt; 3 -0.0233   -0.000478  0.191  -0.103   0.176</span></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt; 4 -0.410     0.144     0.133  -0.104   0.295</span></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt; 5  0.344    -0.0163   -0.198   0.259  -0.579</span></span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; 6  0.0615   -0.139    -0.0674 -0.0658 -0.105</span></span>
-<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 295 more variables: V7 &lt;dbl&gt;, V8 &lt;dbl&gt;,</span></span>
-<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; #   V9 &lt;dbl&gt;, V10 &lt;dbl&gt;, V11 &lt;dbl&gt;,</span></span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; #   V12 &lt;dbl&gt;, V13 &lt;dbl&gt;, V14 &lt;dbl&gt;,</span></span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; #   V15 &lt;dbl&gt;, V16 &lt;dbl&gt;, V17 &lt;dbl&gt;,</span></span>
-<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; #   V18 &lt;dbl&gt;, V19 &lt;dbl&gt;, V20 &lt;dbl&gt;,</span></span>
-<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; #   V21 &lt;dbl&gt;, V22 &lt;dbl&gt;, V23 &lt;dbl&gt;,</span></span>
-<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt; #   V24 &lt;dbl&gt;, V25 &lt;dbl&gt;, V26 &lt;dbl&gt;, …</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt;          V2        V3      V4      V5     V6        V7</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;       &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 1 -0.236     0.0544    0.0202 -0.0531  0.146  0.000971</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; 2 -0.000683  0.0787    0.0382  0.0379  0.295  0.225   </span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt; 3 -0.0233   -0.000478  0.191  -0.103   0.176 -0.0884  </span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt; 4 -0.410     0.144     0.133  -0.104   0.295 -0.0391  </span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt; 5  0.344    -0.0163   -0.198   0.259  -0.579 -0.154   </span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; 6  0.0615   -0.139    -0.0674 -0.0658 -0.105 -0.212   </span></span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 294 more variables: V8 &lt;dbl&gt;, V9 &lt;dbl&gt;, V10 &lt;dbl&gt;,</span></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; #   V11 &lt;dbl&gt;, V12 &lt;dbl&gt;, V13 &lt;dbl&gt;, V14 &lt;dbl&gt;, V15 &lt;dbl&gt;,</span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; #   V16 &lt;dbl&gt;, V17 &lt;dbl&gt;, V18 &lt;dbl&gt;, V19 &lt;dbl&gt;, V20 &lt;dbl&gt;,</span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; #   V21 &lt;dbl&gt;, V22 &lt;dbl&gt;, V23 &lt;dbl&gt;, V24 &lt;dbl&gt;, V25 &lt;dbl&gt;,</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; #   V26 &lt;dbl&gt;, V27 &lt;dbl&gt;, V28 &lt;dbl&gt;, V29 &lt;dbl&gt;, V30 &lt;dbl&gt;,</span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; #   V31 &lt;dbl&gt;, V32 &lt;dbl&gt;, V33 &lt;dbl&gt;, V34 &lt;dbl&gt;, V35 &lt;dbl&gt;,</span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt; #   V36 &lt;dbl&gt;, V37 &lt;dbl&gt;, V38 &lt;dbl&gt;, V39 &lt;dbl&gt;, …</span></span></code></pre></div>
 </div>
 <div id="calculate-similarity" class="section level3">
 <h3>Calculate Similarity</h3>
@@ -742,7 +714,6 @@ word dimensions.</p>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="at">dimensions =</span> af_dims, <span class="co"># the matrix of items </span></span>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="dv">1</span> <span class="co"># 1 for rows, 2 for columns </span></span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <p>The <code>top_n</code> function can be used to calculate the top
 number of cosine values for each token in the similarity matrix. Please
 note: it will always return the token-token combination as 1 (the token
@@ -761,7 +732,6 @@ who figured out how to make this computational efficient.</p>
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt; 5  nou nicolas 0.8419336</span></span>
 <span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt; 6  nou jakkals 0.8278382</span></span>
 <span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co">#&gt; 8 hier    bier 0.8086171</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 </div>
 <div id="create-pseudowords" class="section level3">
 <h3>Create Pseudowords</h3>
@@ -779,7 +749,6 @@ replacement.</p>
 <span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; 5  nou nicolas 0.8419336      nob</span></span>
 <span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt; 6  nou jakkals 0.8278382      wou</span></span>
 <span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; 8 hier    bier 0.8086171     gier</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <p>You can also use the Wuggy algorithm using <code>fake_Wuggy()</code>.
 <em>This function is not fast. It is slower the larger the size of the
 words to create from.</em> It returns a dataframe of options to use for
@@ -809,27 +778,28 @@ from being options.}</li>
 </ul>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>af_wuggy <span class="ot">&lt;-</span> <span class="fu">fake_Wuggy</span>(</span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="at">wordlist =</span> af_final<span class="sc">$</span>sentence, <span class="co"># full valid options in language</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="at">language_hyp =</span> <span class="st">&quot;../inst/latex/hyph-af.tex&quot;</span>, <span class="co"># path to hyphenation.tex </span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="at">language_hyp =</span> <span class="fu">paste0</span>(filelocation,<span class="st">&quot;/inst/latex/hyph-af.tex&quot;</span>), <span class="co"># path to hyphenation.tex </span></span>
 <span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="at">lang =</span> <span class="st">&quot;af&quot;</span>, <span class="co"># two letter language code</span></span>
 <span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  replacewords <span class="ot">&lt;-</span> <span class="fu">unique</span>(af_top_sim<span class="sc">$</span>cue[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]) <span class="co"># words you want to create pseudowords for  </span></span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>)</span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(af_wuggy))</span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 14</span></span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt;   word_id first    original_pair second  syll</span></span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;  &lt;dbl&gt;</span></span>
-<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt; 1       2 first_b… first_blank-… hi         1</span></span>
-<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">#&gt; 2       3 ne       ne-t          t          1</span></span>
-<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">#&gt; 3       1 first_b… first_blank-… no         1</span></span>
-<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt; 4       4 first_b… first_blank-… we         1</span></span>
-<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; # ℹ 9 more variables: original_freq &lt;dbl&gt;,</span></span>
-<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt; #   replacement_pair &lt;chr&gt;,</span></span>
-<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a><span class="co">#&gt; #   replacement_syll &lt;chr&gt;,</span></span>
-<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a><span class="co">#&gt; #   replacement_freq &lt;int&gt;, freq_diff &lt;dbl&gt;,</span></span>
-<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a><span class="co">#&gt; #   char_diff &lt;int&gt;, letter_diff &lt;dbl&gt;,</span></span>
-<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a><span class="co">#&gt; #   original_word &lt;chr&gt;,</span></span>
-<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a><span class="co">#&gt; #   replacement_word &lt;chr&gt;</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt;   |                                                         |                                                 |   0%  |                                                         |                                                 |   1%  |                                                         |=                                                |   1%  |                                                         |=                                                |   2%  |                                                         |=                                                |   3%  |                                                         |==                                               |   3%  |                                                         |==                                               |   4%  |                                                         |==                                               |   5%  |                                                         |===                                              |   5%  |                                                         |===                                              |   6%  |                                                         |===                                              |   7%  |                                                         |====                                             |   7%  |                                                         |====                                             |   8%  |                                                         |====                                             |   9%  |                                                         |=====                                            |   9%  |                                                         |=====                                            |  10%  |                                                         |=====                                            |  11%  |                                                         |======                                           |  11%  |                                                         |======                                           |  12%  |                                                         |======                                           |  13%  |                                                         |=======                                          |  13%  |                                                         |=======                                          |  14%  |                                                         |=======                                          |  15%  |                                                         |========                                         |  15%  |                                                         |========                                         |  16%  |                                                         |========                                         |  17%  |                                                         |=========                                        |  17%  |                                                         |=========                                        |  18%  |                                                         |=========                                        |  19%  |                                                         |==========                                       |  19%  |                                                         |==========                                       |  20%  |                                                         |==========                                       |  21%  |                                                         |===========                                      |  21%  |                                                         |===========                                      |  22%  |                                                         |===========                                      |  23%  |                                                         |============                                     |  23%  |                                                         |============                                     |  24%  |                                                         |============                                     |  25%  |                                                         |============                                     |  26%  |                                                         |=============                                    |  26%  |                                                         |=============                                    |  27%  |                                                         |=============                                    |  28%  |                                                         |==============                                   |  28%  |                                                         |==============                                   |  29%  |                                                         |==============                                   |  30%  |                                                         |===============                                  |  30%  |                                                         |===============                                  |  31%  |                                                         |===============                                  |  32%  |                                                         |================                                 |  32%  |                                                         |================                                 |  33%  |                                                         |================                                 |  34%  |                                                         |=================                                |  34%  |                                                         |=================                                |  35%  |                                                         |=================                                |  36%  |                                                         |==================                               |  36%  |                                                         |==================                               |  37%  |                                                         |==================                               |  38%  |                                                         |===================                              |  38%  |                                                         |===================                              |  39%  |                                                         |===================                              |  40%  |                                                         |====================                             |  40%  |                                                         |====================                             |  41%  |                                                         |====================                             |  42%  |                                                         |=====================                            |  42%  |                                                         |=====================                            |  43%  |                                                         |=====================                            |  44%  |                                                         |======================                           |  44%  |                                                         |======================                           |  45%  |                                                         |======================                           |  46%  |                                                         |=======================                          |  46%  |                                                         |=======================                          |  47%  |                                                         |=======================                          |  48%  |                                                         |========================                         |  48%  |                                                         |========================                         |  49%  |                                                         |========================                         |  50%  |                                                         |=========================                        |  50%  |                                                         |=========================                        |  51%  |                                                         |=========================                        |  52%  |                                                         |==========================                       |  52%  |                                                         |==========================                       |  53%  |                                                         |==========================                       |  54%  |                                                         |===========================                      |  54%  |                                                         |===========================                      |  55%  |                                                         |===========================                      |  56%  |                                                         |============================                     |  56%  |                                                         |============================                     |  57%  |                                                         |============================                     |  58%  |                                                         |=============================                    |  58%  |                                                         |=============================                    |  59%  |                                                         |=============================                    |  60%  |                                                         |==============================                   |  60%  |                                                         |==============================                   |  61%  |                                                         |==============================                   |  62%  |                                                         |===============================                  |  62%  |                                                         |===============================                  |  63%  |                                                         |===============================                  |  64%  |                                                         |================================                 |  64%  |                                                         |================================                 |  65%  |                                                         |================================                 |  66%  |                                                         |=================================                |  66%  |                                                         |=================================                |  67%  |                                                         |=================================                |  68%  |                                                         |==================================               |  68%  |                                                         |==================================               |  69%  |                                                         |==================================               |  70%  |                                                         |===================================              |  70%  |                                                         |===================================              |  71%  |                                                         |===================================              |  72%  |                                                         |====================================             |  72%  |                                                         |====================================             |  73%  |                                                         |====================================             |  74%  |                                                         |=====================================            |  74%  |                                                         |=====================================            |  75%  |                                                         |=====================================            |  76%  |                                                         |=====================================            |  77%  |                                                         |======================================           |  77%  |                                                         |======================================           |  78%  |                                                         |======================================           |  79%  |                                                         |=======================================          |  79%  |                                                         |=======================================          |  80%  |                                                         |=======================================          |  81%  |                                                         |========================================         |  81%  |                                                         |========================================         |  82%  |                                                         |========================================         |  83%  |                                                         |=========================================        |  83%  |                                                         |=========================================        |  84%  |                                                         |=========================================        |  85%  |                                                         |==========================================       |  85%  |                                                         |==========================================       |  86%  |                                                         |==========================================       |  87%  |                                                         |===========================================      |  87%  |                                                         |===========================================      |  88%  |                                                         |===========================================      |  89%  |                                                         |============================================     |  89%  |                                                         |============================================     |  90%  |                                                         |============================================     |  91%  |                                                         |=============================================    |  91%  |                                                         |=============================================    |  92%  |                                                         |=============================================    |  93%  |                                                         |==============================================   |  93%  |                                                         |==============================================   |  94%  |                                                         |==============================================   |  95%  |                                                         |===============================================  |  95%  |                                                         |===============================================  |  96%  |                                                         |===============================================  |  97%  |                                                         |================================================ |  97%  |                                                         |================================================ |  98%  |                                                         |================================================ |  99%  |                                                         |=================================================|  99%  |                                                         |=================================================| 100%</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(af_wuggy))</span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 14</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt;   word_id first    original_pair second  syll original_freq</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;  &lt;dbl&gt;         &lt;dbl&gt;</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">#&gt; 1       2 first_b… first_blank-… hi         1             5</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">#&gt; 2       3 ne       ne-t          t          1             1</span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt; 3       1 first_b… first_blank-… no         1            22</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; 4       4 first_b… first_blank-… we         1            23</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 8 more variables: replacement_pair &lt;chr&gt;,</span></span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a><span class="co">#&gt; #   replacement_syll &lt;chr&gt;, replacement_freq &lt;int&gt;,</span></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a><span class="co">#&gt; #   freq_diff &lt;dbl&gt;, char_diff &lt;int&gt;, letter_diff &lt;dbl&gt;,</span></span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a><span class="co">#&gt; #   original_word &lt;chr&gt;, replacement_word &lt;chr&gt;</span></span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a><span class="fu">getwd</span>()</span>
+<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a><span class="co">#&gt; [1] &quot;/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes&quot;</span></span></code></pre></div>
 </div>
 </div>
 <div id="get-priming-data" class="section level2">
@@ -878,35 +848,27 @@ to create a priming score).</li>
 <h3>Load Available Data</h3>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;primeData&quot;</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">head</span>(primeData)</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt;           type</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; 1    item_data</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; 2 priming_data</span></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; 3 priming_data</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; 4 priming_data</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; 5 priming_data</span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; 6    full_data</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt;                              filename</span></span>
-<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; 1           ar_answered_item_data.csv</span></span>
-<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt; 2 ar_answered_prime_summary_no2.5.csv</span></span>
-<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co">#&gt; 3 ar_answered_prime_summary_no3.0.csv</span></span>
-<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a><span class="co">#&gt; 4       ar_answered_prime_summary.csv</span></span>
-<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="co">#&gt; 5        ar_answered_prime_trials.csv</span></span>
-<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co">#&gt; 6                 ar_full_data.csv.gz</span></span>
-<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a><span class="co">#&gt;   language</span></span>
-<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt; 1       ar</span></span>
-<span id="cb20-19"><a href="#cb20-19" tabindex="-1"></a><span class="co">#&gt; 2       ar</span></span>
-<span id="cb20-20"><a href="#cb20-20" tabindex="-1"></a><span class="co">#&gt; 3       ar</span></span>
-<span id="cb20-21"><a href="#cb20-21" tabindex="-1"></a><span class="co">#&gt; 4       ar</span></span>
-<span id="cb20-22"><a href="#cb20-22" tabindex="-1"></a><span class="co">#&gt; 5       ar</span></span>
-<span id="cb20-23"><a href="#cb20-23" tabindex="-1"></a><span class="co">#&gt; 6       ar</span></span>
-<span id="cb20-24"><a href="#cb20-24" tabindex="-1"></a><span class="co">#&gt;                                                                                                location</span></span>
-<span id="cb20-25"><a href="#cb20-25" tabindex="-1"></a><span class="co">#&gt; 1           https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_item_data.csv</span></span>
-<span id="cb20-26"><a href="#cb20-26" tabindex="-1"></a><span class="co">#&gt; 2 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary_no2.5.csv</span></span>
-<span id="cb20-27"><a href="#cb20-27" tabindex="-1"></a><span class="co">#&gt; 3 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary_no3.0.csv</span></span>
-<span id="cb20-28"><a href="#cb20-28" tabindex="-1"></a><span class="co">#&gt; 4       https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary.csv</span></span>
-<span id="cb20-29"><a href="#cb20-29" tabindex="-1"></a><span class="co">#&gt; 5        https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_trials.csv</span></span>
-<span id="cb20-30"><a href="#cb20-30" tabindex="-1"></a><span class="co">#&gt; 6                 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_full_data.csv.gz</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt;           type                            filename</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; 1    item_data           ar_answered_item_data.csv</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; 2 priming_data ar_answered_prime_summary_no2.5.csv</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; 3 priming_data ar_answered_prime_summary_no3.0.csv</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; 4 priming_data       ar_answered_prime_summary.csv</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; 5 priming_data        ar_answered_prime_trials.csv</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; 6    full_data                 ar_full_data.csv.gz</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt;   language</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; 1       ar</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt; 2       ar</span></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co">#&gt; 3       ar</span></span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a><span class="co">#&gt; 4       ar</span></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="co">#&gt; 5       ar</span></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co">#&gt; 6       ar</span></span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a><span class="co">#&gt;                                                                                                location</span></span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt; 1           https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_item_data.csv</span></span>
+<span id="cb20-19"><a href="#cb20-19" tabindex="-1"></a><span class="co">#&gt; 2 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary_no2.5.csv</span></span>
+<span id="cb20-20"><a href="#cb20-20" tabindex="-1"></a><span class="co">#&gt; 3 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary_no3.0.csv</span></span>
+<span id="cb20-21"><a href="#cb20-21" tabindex="-1"></a><span class="co">#&gt; 4       https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary.csv</span></span>
+<span id="cb20-22"><a href="#cb20-22" tabindex="-1"></a><span class="co">#&gt; 5        https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_trials.csv</span></span>
+<span id="cb20-23"><a href="#cb20-23" tabindex="-1"></a><span class="co">#&gt; 6                 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_full_data.csv.gz</span></span></code></pre></div>
 <p>Once you decide what file you would like to download and import, you
 can use <code>import_prime()</code> to import that file. Note that some
 of the <code>full_data</code> datasets are quite large and may take a
@@ -926,24 +888,21 @@ the import into your code directly with
 includes the trials, type of trial information, and the cosine
 calculated from subs2vec.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>es_words <span class="ot">&lt;-</span> <span class="fu">import_prime</span>(<span class="st">&quot;es_words.csv&quot;</span>)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">head</span>(es_words)</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#&gt;     es_cue es_target    type cue_type</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; 1 lenguado   abadejo related     word</span></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">#&gt; 2    dejar abandonar related     word</span></span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; 3  espalda   abdomen related     word</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt; 4     beso    abrazo related     word</span></span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; 5 ridículo   absurdo related     word</span></span>
-<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="co">#&gt; 6   abuelo    abuela related     word</span></span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt;   target_type es_cosine</span></span>
-<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt; 1        word 0.5712210</span></span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; 2        word 0.5418134</span></span>
-<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co">#&gt; 3        word 0.4251472</span></span>
-<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a><span class="co">#&gt; 4        word 0.7530440</span></span>
-<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="co">#&gt; 5        word 0.7036410</span></span>
-<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="co">#&gt; 6        word 0.7450651</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#&gt;     es_cue es_target    type cue_type target_type</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; 1 lenguado   abadejo related     word        word</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">#&gt; 2    dejar abandonar related     word        word</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; 3  espalda   abdomen related     word        word</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt; 4     beso    abrazo related     word        word</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; 5 ridículo   absurdo related     word        word</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="co">#&gt; 6   abuelo    abuela related     word        word</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt;   es_cosine</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt; 1 0.5712210</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; 2 0.5418134</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co">#&gt; 3 0.4251472</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a><span class="co">#&gt; 4 0.7530440</span></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="co">#&gt; 5 0.7036410</span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="co">#&gt; 6 0.7450651</span></span></code></pre></div>
 </div>
 </div>
 <div id="match-to-lab-data" class="section level2">
@@ -957,26 +916,25 @@ our LAB data release for merging.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;labData&quot;</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(labData))</span>
 <span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 73</span></span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt;   included bibtex      author  year ref_title</span></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;    </span></span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; 1 no       Adelman2014 Adelm…  2014 &quot;A behav…</span></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; 2 no       Aguilar2017 Aguil…  2017 &quot;Develop…</span></span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="co">#&gt; 3 no       Akinina2015 Akini…  2014 &quot;Russian…</span></span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="co">#&gt; 4 no       Al-Sulaiti… Al-Su…  2006 &quot;The Des…</span></span>
-<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co">#&gt; 5 no       Alameda1995 Alame…  1995 &quot;Diccion…</span></span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="co">#&gt; 6 yes      Alario1999  Alari…  1999 &quot;A set o…</span></span>
-<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a><span class="co">#&gt; # ℹ 68 more variables: ref_journal &lt;chr&gt;,</span></span>
-<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a><span class="co">#&gt; #   ref_volume &lt;chr&gt;, ref_page &lt;chr&gt;,</span></span>
-<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a><span class="co">#&gt; #   ref_doi &lt;chr&gt;, no1 &lt;chr&gt;, no2 &lt;int&gt;,</span></span>
-<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a><span class="co">#&gt; #   type1 &lt;chr&gt;, ref1 &lt;chr&gt;, type2 &lt;chr&gt;,</span></span>
-<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a><span class="co">#&gt; #   ref2 &lt;chr&gt;, notes_stim &lt;chr&gt;,</span></span>
-<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a><span class="co">#&gt; #   data_name &lt;chr&gt;, nonling &lt;int&gt;,</span></span>
-<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a><span class="co">#&gt; #   language &lt;chr&gt;, notes_lang &lt;chr&gt;, …</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt;   included bibtex        author  year ref_title ref_journal</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;      </span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; 1 no       Adelman2014   Adelm…  2014 &quot;A behav… Behavior R…</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; 2 no       Aguilar2017   Aguil…  2017 &quot;Develop… 2017 IEEE …</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="co">#&gt; 3 no       Akinina2015   Akini…  2014 &quot;Russian… Behavior R…</span></span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="co">#&gt; 4 no       Al-Sulaiti20… Al-Su…  2006 &quot;The Des… Internatio…</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co">#&gt; 5 no       Alameda1995   Alame…  1995 &quot;Diccion… Servicio d…</span></span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="co">#&gt; 6 yes      Alario1999    Alari…  1999 &quot;A set o… Behavior R…</span></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a><span class="co">#&gt; # ℹ 67 more variables: ref_volume &lt;chr&gt;, ref_page &lt;chr&gt;,</span></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a><span class="co">#&gt; #   ref_doi &lt;chr&gt;, no1 &lt;chr&gt;, no2 &lt;int&gt;, type1 &lt;chr&gt;,</span></span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a><span class="co">#&gt; #   ref1 &lt;chr&gt;, type2 &lt;chr&gt;, ref2 &lt;chr&gt;, notes_stim &lt;chr&gt;,</span></span>
+<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a><span class="co">#&gt; #   data_name &lt;chr&gt;, nonling &lt;int&gt;, language &lt;chr&gt;,</span></span>
+<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a><span class="co">#&gt; #   notes_lang &lt;chr&gt;, language_glotto &lt;chr&gt;,</span></span>
+<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a><span class="co">#&gt; #   notes_glotto &lt;chr&gt;, population &lt;chr&gt;, notes_var &lt;chr&gt;,</span></span>
+<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a><span class="co">#&gt; #   accuracy &lt;int&gt;, ambiguity &lt;int&gt;, aoa &lt;int&gt;, …</span></span>
 <span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a></span>
 <span id="cb23-20"><a href="#cb23-20" tabindex="-1"></a><span class="co"># import_lab() also loads this dataset </span></span>
 <span id="cb23-21"><a href="#cb23-21" tabindex="-1"></a></span>
 <span id="cb23-22"><a href="#cb23-22" tabindex="-1"></a><span class="co"># ?labData # use this to learn about the dataset </span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 </div>
 <div id="load-filtered-metadata" class="section level3">
 <h3>Load Filtered Metadata</h3>
@@ -985,51 +943,42 @@ our LAB data release for merging.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>saved <span class="ot">&lt;-</span> <span class="fu">import_lab</span>(<span class="at">language =</span> <span class="st">&quot;English&quot;</span>, <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">&quot;aoa&quot;</span>, <span class="st">&quot;freq&quot;</span>))</span>
 <span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co"># possible datasets that are English, aoa, and frequency</span></span>
 <span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(saved))</span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 1</span></span>
-<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">#&gt;   saved          </span></span>
-<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="co">#&gt;   &lt;named list&gt;   </span></span>
-<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">#&gt; 1 &lt;df [119 × 74]&gt;</span></span>
-<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">#&gt; 2 &lt;df [3 × 74]&gt;</span></span>
-<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a>saved <span class="ot">&lt;-</span> <span class="fu">import_lab</span>(<span class="at">language =</span> <span class="st">&quot;Spanish&quot;</span>, <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">&quot;aoa&quot;</span>))</span>
-<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a></span>
-<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(saved))</span>
-<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 1</span></span>
-<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">#&gt;   saved          </span></span>
-<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt;   &lt;named list&gt;   </span></span>
-<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt; 1 &lt;df [119 × 74]&gt;</span></span>
-<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a><span class="co">#&gt; 2 &lt;df [8 × 74]&gt;</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">#&gt;   saved        </span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="co">#&gt;   &lt;named list&gt; </span></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">#&gt; 1 &lt;df [3 × 74]&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>saved <span class="ot">&lt;-</span> <span class="fu">import_lab</span>(<span class="at">language =</span> <span class="st">&quot;Spanish&quot;</span>, <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">&quot;aoa&quot;</span>))</span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(saved))</span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt;   saved        </span></span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">#&gt;   &lt;named list&gt; </span></span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt; 1 &lt;df [8 × 74]&gt;</span></span></code></pre></div>
 </div>
 <div id="load-specific-data" class="section level3">
 <h3>Load Specific Data</h3>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>es_aos <span class="ot">&lt;-</span> <span class="fu">import_lab</span>(<span class="at">bibtexID =</span> <span class="st">&quot;Alonso2015&quot;</span>, <span class="at">citation =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>es_aos<span class="sc">$</span>citation</span>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Alonso, Fernandez, &amp; Diez. (2014). Subjective age-of-acquisition norms for 7039 Spanish words. Behavior Research Methods, 47, 268--274. doi: 10.3758/s13428-014-0454-2&quot;</span></span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a></span>
 <span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(es_aos<span class="sc">$</span>loaded_data))</span>
 <span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 13</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt;   word_spanish aoa_M aoa_SD aoa_min aoa_max</span></span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;</span></span>
-<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co">#&gt; 1 a             2.28   1.44       1       6</span></span>
-<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a><span class="co">#&gt; 2 abajo         2.96   1.37       1       6</span></span>
-<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a><span class="co">#&gt; 3 abandonado    6.06   1.66       2      10</span></span>
-<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a><span class="co">#&gt; 4 abandonar     7.58   1.66       4      11</span></span>
-<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a><span class="co">#&gt; 5 abandono      7.22   1.94       3      11</span></span>
-<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a><span class="co">#&gt; 6 abatimiento  10.0    1.49       5      11</span></span>
-<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 8 more variables: aoa_zscore &lt;dbl&gt;,</span></span>
-<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a><span class="co">#&gt; #   oral_freq_log_M &lt;dbl&gt;,</span></span>
-<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_SUBTLEXESP_M &lt;dbl&gt;,</span></span>
-<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_LEXESP_M &lt;dbl&gt;,</span></span>
-<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_espal_M &lt;dbl&gt;,</span></span>
-<span id="cb26-19"><a href="#cb26-19" tabindex="-1"></a><span class="co">#&gt; #   lem_cat_espl_max &lt;chr&gt;,</span></span>
-<span id="cb26-20"><a href="#cb26-20" tabindex="-1"></a><span class="co">#&gt; #   lem_max_code &lt;chr&gt;, syllable_N &lt;int&gt;</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt;   word_spanish aoa_M aoa_SD aoa_min aoa_max aoa_zscore</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;      &lt;dbl&gt;</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co">#&gt; 1 a             2.28   1.44       1       6     -1.65 </span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a><span class="co">#&gt; 2 abajo         2.96   1.37       1       6     -1.36 </span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a><span class="co">#&gt; 3 abandonado    6.06   1.66       2      10     -0.584</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a><span class="co">#&gt; 4 abandonar     7.58   1.66       4      11     -0.02 </span></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a><span class="co">#&gt; 5 abandono      7.22   1.94       3      11      0.04 </span></span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a><span class="co">#&gt; 6 abatimiento  10.0    1.49       5      11      1.06 </span></span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 7 more variables: oral_freq_log_M &lt;dbl&gt;,</span></span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_SUBTLEXESP_M &lt;dbl&gt;,</span></span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_LEXESP_M &lt;dbl&gt;,</span></span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_espal_M &lt;dbl&gt;,</span></span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a><span class="co">#&gt; #   lem_cat_espl_max &lt;chr&gt;, lem_max_code &lt;chr&gt;,</span></span>
+<span id="cb26-19"><a href="#cb26-19" tabindex="-1"></a><span class="co">#&gt; #   syllable_N &lt;int&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>es_sim <span class="ot">&lt;-</span> <span class="fu">import_lab</span>(<span class="at">bibtexID =</span> <span class="st">&quot;Cabana2024_R1&quot;</span>, <span class="at">citation =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>es_sim<span class="sc">$</span>citation</span>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Cabana, Zugarramurdi, Valle-Lisboa, &amp; De Deyne. (2024). The \xd2Small World of Words\xd3 free association norms for Rioplatense Spanish. Behavior Research Methods, 56, 968--985. doi: 10.3758/s13428-023-02070-z&quot;</span></span>
 <span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a></span>
@@ -1043,7 +992,6 @@ our LAB data release for merging.</p>
 <span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="co">#&gt; 4 ?     incógnita         4    66      0.0606</span></span>
 <span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a><span class="co">#&gt; 5 ?     interrogación     3    66      0.0455</span></span>
 <span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="co">#&gt; 6 ?     no sé             2    66      0.0303</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 </div>
 <div id="match-to-prime-data" class="section level3">
 <h3>Match To Prime Data</h3>
@@ -1061,22 +1009,21 @@ our LAB data release for merging.</p>
 <span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a></span>
 <span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(es_words_merged))</span>
 <span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 33</span></span>
-<span id="cb29-15"><a href="#cb29-15" tabindex="-1"></a><span class="co">#&gt;   es_cue es_target type  cue_type target_type</span></span>
-<span id="cb29-16"><a href="#cb29-16" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;      </span></span>
-<span id="cb29-17"><a href="#cb29-17" tabindex="-1"></a><span class="co">#&gt; 1 lengu… abadejo   rela… word     word       </span></span>
-<span id="cb29-18"><a href="#cb29-18" tabindex="-1"></a><span class="co">#&gt; 2 dejar  abandonar rela… word     word       </span></span>
-<span id="cb29-19"><a href="#cb29-19" tabindex="-1"></a><span class="co">#&gt; 3 espal… abdomen   rela… word     word       </span></span>
-<span id="cb29-20"><a href="#cb29-20" tabindex="-1"></a><span class="co">#&gt; 4 beso   abrazo    rela… word     word       </span></span>
-<span id="cb29-21"><a href="#cb29-21" tabindex="-1"></a><span class="co">#&gt; 5 ridíc… absurdo   rela… word     word       </span></span>
-<span id="cb29-22"><a href="#cb29-22" tabindex="-1"></a><span class="co">#&gt; 6 abuelo abuela    rela… word     word       </span></span>
-<span id="cb29-23"><a href="#cb29-23" tabindex="-1"></a><span class="co">#&gt; # ℹ 28 more variables: es_cosine &lt;dbl&gt;,</span></span>
-<span id="cb29-24"><a href="#cb29-24" tabindex="-1"></a><span class="co">#&gt; #   aoa_M.x &lt;dbl&gt;, aoa_SD.x &lt;dbl&gt;,</span></span>
-<span id="cb29-25"><a href="#cb29-25" tabindex="-1"></a><span class="co">#&gt; #   aoa_min.x &lt;int&gt;, aoa_max.x &lt;int&gt;,</span></span>
-<span id="cb29-26"><a href="#cb29-26" tabindex="-1"></a><span class="co">#&gt; #   aoa_zscore.x &lt;dbl&gt;,</span></span>
-<span id="cb29-27"><a href="#cb29-27" tabindex="-1"></a><span class="co">#&gt; #   oral_freq_log_M.x &lt;dbl&gt;,</span></span>
-<span id="cb29-28"><a href="#cb29-28" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_SUBTLEXESP_M.x &lt;dbl&gt;,</span></span>
-<span id="cb29-29"><a href="#cb29-29" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_LEXESP_M.x &lt;dbl&gt;, …</span></span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
+<span id="cb29-15"><a href="#cb29-15" tabindex="-1"></a><span class="co">#&gt;   es_cue   es_target type    cue_type target_type es_cosine</span></span>
+<span id="cb29-16"><a href="#cb29-16" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt;</span></span>
+<span id="cb29-17"><a href="#cb29-17" tabindex="-1"></a><span class="co">#&gt; 1 lenguado abadejo   related word     word            0.571</span></span>
+<span id="cb29-18"><a href="#cb29-18" tabindex="-1"></a><span class="co">#&gt; 2 dejar    abandonar related word     word            0.542</span></span>
+<span id="cb29-19"><a href="#cb29-19" tabindex="-1"></a><span class="co">#&gt; 3 espalda  abdomen   related word     word            0.425</span></span>
+<span id="cb29-20"><a href="#cb29-20" tabindex="-1"></a><span class="co">#&gt; 4 beso     abrazo    related word     word            0.753</span></span>
+<span id="cb29-21"><a href="#cb29-21" tabindex="-1"></a><span class="co">#&gt; 5 ridículo absurdo   related word     word            0.704</span></span>
+<span id="cb29-22"><a href="#cb29-22" tabindex="-1"></a><span class="co">#&gt; 6 abuelo   abuela    related word     word            0.745</span></span>
+<span id="cb29-23"><a href="#cb29-23" tabindex="-1"></a><span class="co">#&gt; # ℹ 27 more variables: aoa_M.x &lt;dbl&gt;, aoa_SD.x &lt;dbl&gt;,</span></span>
+<span id="cb29-24"><a href="#cb29-24" tabindex="-1"></a><span class="co">#&gt; #   aoa_min.x &lt;int&gt;, aoa_max.x &lt;int&gt;, aoa_zscore.x &lt;dbl&gt;,</span></span>
+<span id="cb29-25"><a href="#cb29-25" tabindex="-1"></a><span class="co">#&gt; #   oral_freq_log_M.x &lt;dbl&gt;,</span></span>
+<span id="cb29-26"><a href="#cb29-26" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_SUBTLEXESP_M.x &lt;dbl&gt;,</span></span>
+<span id="cb29-27"><a href="#cb29-27" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_LEXESP_M.x &lt;dbl&gt;,</span></span>
+<span id="cb29-28"><a href="#cb29-28" tabindex="-1"></a><span class="co">#&gt; #   written_freq_log_espal_M.x &lt;dbl&gt;,</span></span>
+<span id="cb29-29"><a href="#cb29-29" tabindex="-1"></a><span class="co">#&gt; #   lem_cat_espl_max.x &lt;chr&gt;, lem_max_code.x &lt;chr&gt;, …</span></span></code></pre></div>
 </div>
 </div>
 <div id="other-cool-stuff" class="section level2">
@@ -1088,7 +1035,6 @@ here as <code>processData()</code>, and you can see that we used it in
 our data processing files. It’s here if you want to use it yourself on
 <code>labjs</code> projects.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">processData</span>(<span class="st">&quot;data.sqlite&quot;</span>)</span></code></pre></div>
-<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/package_functions.R</p>
 <ul>
 <li>Check out the <code>text</code> package for how to merge word
 embeddings in <em>R</em>: <a href="https://osf.io/preprints/psyarxiv/293kt" class="uri">https://osf.io/preprints/psyarxiv/293kt</a></li>

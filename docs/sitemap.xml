@@ -1,108 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/404.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/ambrosini_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/barzykowski_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/batres_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/geller_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/heyman_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/mcfall_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/moat_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/montefinese_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/package_functions.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/roer_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/suchow_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/ulloa_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/articles/vanpaemel_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/index.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/bootstrap_samples.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_correction.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_cutoff.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_proportion.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_similarity.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/fake_Wuggy.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/fake_simple.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/import_lab.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/import_prime.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/import_subs.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/labData.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/primeData.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/processData.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/simulate_population.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/subsData.html</loc>
-  </url>
-  <url>
-    <loc>https://semanticpriming.github.io/semanticprimeR/reference/top_n.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/404.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/LICENSE-text.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/ambrosini_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/barzykowski_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/batres_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/geller_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/heyman_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/index.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/mcfall_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/moat_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/montefinese_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/package_functions.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/roer_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/suchow_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/ulloa_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/articles/vanpaemel_vignette.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/authors.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/index.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/bootstrap_samples.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_correction.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_cutoff.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_proportion.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_similarity.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/fake_Wuggy.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/fake_simple.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/import_lab.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/import_prime.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/import_subs.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/index.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/labData.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/primeData.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/processData.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/simulate_population.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/subsData.html</loc></url>
+<url><loc>https://semanticpriming.github.io/semanticprimeR/reference/top_n.html</loc></url>
 </urlset>
+

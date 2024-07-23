@@ -11,7 +11,7 @@
 #' @format A data frame of information from the LAB database
 #' and information on how to load the datasets.
 #'
-#' \itemize{
+#' \describe{
 #'  \item{included}{information about if the data is included in
 #' the current LAB data archive.}
 #' \item{bibtex}{ the code to use to open the relevant data.}

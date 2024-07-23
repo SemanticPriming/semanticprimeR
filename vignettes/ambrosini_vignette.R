@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------
+## ----setup, include = FALSE------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette_setup, include = FALSE-------
+## ----vignette_setup, include = FALSE---------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Set a random seed
@@ -99,7 +99,7 @@ item_power <- function(data, # name of data frame
 
 }
 
-## ------------------------------------------
+## --------------------------------------------------------
 DF <- import("data/ambrosini_data.csv.zip")
 
 DF <- DF %>%
@@ -115,12 +115,12 @@ DF <- DF %>%
 
 head(DF)
 
-## ------------------------------------------
+## --------------------------------------------------------
 metadata <- import("data/ambrosini_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
 
-## ------------------------------------------
+## --------------------------------------------------------
 random_items <- unique(DF$items)[sample(unique(DF$items), size = 75)]
 
 DF <- DF %>% 
@@ -136,13 +136,13 @@ var1 <- item_power(data = DF, # name of data frame
             sample_increase = 5,
             decile = .4)
 
-## ------------------------------------------
+## --------------------------------------------------------
 # individual SEs
 var1$SE
 
 var1$cutoff
 
-## ------------------------------------------
+## --------------------------------------------------------
 cutoff <- calculate_cutoff(population = DF, 
                            grouping_items = "items",
                            score = "Rating",

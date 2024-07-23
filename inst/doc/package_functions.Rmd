@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r echo = F}
+filelocation <- "/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR"
+```
+
 ## Libraries
 
 ```{r}
@@ -88,7 +92,7 @@ save(samples, file = "data/simulatePriming.RData")
 
 ```{r}
 # since that's a slow function, we wrote out the data and read it back in
-load("data/simulatePriming.Rdata")
+load(paste0(filelocation,"/vignettes/data/simulatePriming.Rdata"))
 head(samples[[1]])
 ```
 
@@ -158,7 +162,7 @@ af_freq <- import_subs(
 ```
 
 ```{r echo = F, message = F}
-af_freq <- import("subs_count/af/dedup.af.words.unigrams.txt")
+af_freq <- import(paste0(filelocation,"/vignettes/subs_count/af/dedup.af.words.unigrams.txt"))
 ```
 
 ```{r}
@@ -306,12 +310,15 @@ You can also use the Wuggy algorithm using `fake_Wuggy()`. *This function is not
 ```{r message=FALSE}
 af_wuggy <- fake_Wuggy(
   wordlist = af_final$sentence, # full valid options in language
-  language_hyp = "../inst/latex/hyph-af.tex", # path to hyphenation.tex 
+  language_hyp = paste0(filelocation,"/inst/latex/hyph-af.tex"), # path to hyphenation.tex 
   lang = "af", # two letter language code
   replacewords <- unique(af_top_sim$cue[1:20]) # words you want to create pseudowords for  
 )
 
 head(tibble(af_wuggy))
+
+
+getwd()
 ```
 
 ## Get Priming Data
@@ -350,7 +357,7 @@ es_words <- import_prime("es_words.csv")
 ```
 
 ```{r echo = F}
-es_words <- import('procedure_stimuli/es/es_words.csv')
+es_words <- import(paste0(filelocation, '/vignettes/procedure_stimuli/es/es_words.csv'))
 ```
 
 ```{r}
@@ -394,7 +401,7 @@ es_aos <- import_lab(bibtexID = "Alonso2015", citation = TRUE)
 
 ```{r echo = F}
 # save(es_aos, file = "lab_data/es_aos.Rdata")
-load("lab_data/es_aos.Rdata")
+load(paste0(filelocation, "/vignettes/lab_data/es_aos.Rdata"))
 ```
 
 ```{r}
@@ -409,7 +416,7 @@ es_sim <- import_lab(bibtexID = "Cabana2024_R1", citation = TRUE)
 
 ```{r echo = F}
 # save(es_sim, file = "lab_data/es_sim.Rdata")
-load("lab_data/es_sim.Rdata")
+load(paste0(filelocation,"/vignettes/lab_data/es_sim.Rdata"))
 ```
 
 ```{r}

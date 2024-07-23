@@ -23,7 +23,7 @@ datasets that include that variable (can also be paired with language).
 Use the column names from the metadata as your filter.}
 }
 \value{
-\itemize{
+\describe{
  \item{metadata}{The metadata list of avaliable datasets}
  \item{loaded_data}{The dataset you requested to load}
  \item{language}{The language of the dataset you requested to load}

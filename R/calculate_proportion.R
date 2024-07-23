@@ -15,7 +15,7 @@
 #' cutoff score SE
 #'
 #' @return
-#' \itemize{
+#' \describe{
 #'  \item{"summary_DF"}{Summary of the proportion of items
 #' below the standard error cutoff score. }
 #' }

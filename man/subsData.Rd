@@ -8,7 +8,7 @@
 A data frame of links and information about the
 subs2vec project.
 
-\itemize{
+\describe{
  \item{language_code}{the two letter language code of the model}
  \item{subs_vec}{a link to download the subtitle only fastText model}
  \item{subs_count}{a link to download the frequencies for the tokens

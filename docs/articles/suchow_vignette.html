@@ -5,66 +5,58 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="semanticprimeR">
 <title>Power and Sample Size Simulation: Superficial Face Judgment • semanticprimeR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Power and Sample Size Simulation: Superficial Face Judgment">
-<meta property="og:description" content="semanticprimeR">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Power and Sample Size Simulation: Superficial Face Judgment">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">semanticprimeR</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/ambrosini_vignette.html">Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)</a>
-    <a class="dropdown-item" href="../articles/barzykowski_vignette.html">Power and Sample Size Simulation: Cue Word Valence Data Example</a>
-    <a class="dropdown-item" href="../articles/batres_vignette.html">Power and Sample Size Simulation: Attractiveness Ratings Example</a>
-    <a class="dropdown-item" href="../articles/geller_vignette.html">Power and Sample Size Simulation: Overconfidence for picture cues in foreign language learning</a>
-    <a class="dropdown-item" href="../articles/heyman_vignette.html">Power and Sample Size Simulation: Reaction Time Example (raw RT)</a>
-    <a class="dropdown-item" href="../articles/mcfall_vignette.html">Power and Sample Size Simulation: EAMMi2</a>
-    <a class="dropdown-item" href="../articles/moat_vignette.html">Power and Sample Size Simulation: Seeing is Believing</a>
-    <a class="dropdown-item" href="../articles/montefinese_vignette.html">Power and Sample Size Simulatio: Online search trends and word-related emotional response during COVID-19 lockdown in Italy</a>
-    <a class="dropdown-item" href="../articles/package_functions.html">semanticprimeR Package Functions</a>
-    <a class="dropdown-item" href="../articles/roer_vignette.html">Power and Sample Size Simulation: Survival Processing Usefulness</a>
-    <a class="dropdown-item" href="../articles/suchow_vignette.html">Power and Sample Size Simulation: Superficial Face Judgment</a>
-    <a class="dropdown-item" href="../articles/ulloa_vignette.html">Power and Sample Size Simulation: Liking effect induced by gaze</a>
-    <a class="dropdown-item" href="../articles/vanpaemel_vignette.html">Power and Sample Size Simulation: Typicality, goodness, imageability, and familiarity of stimuli across 16 categories</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/ambrosini_vignette.html">Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)</a></li>
+    <li><a class="dropdown-item" href="../articles/barzykowski_vignette.html">Power and Sample Size Simulation: Cue Word Valence Data Example</a></li>
+    <li><a class="dropdown-item" href="../articles/batres_vignette.html">Power and Sample Size Simulation: Attractiveness Ratings Example</a></li>
+    <li><a class="dropdown-item" href="../articles/geller_vignette.html">Power and Sample Size Simulation: Overconfidence for picture cues in foreign language learning</a></li>
+    <li><a class="dropdown-item" href="../articles/heyman_vignette.html">Power and Sample Size Simulation: Reaction Time Example (raw RT)</a></li>
+    <li><a class="dropdown-item" href="../articles/mcfall_vignette.html">Power and Sample Size Simulation: EAMMi2</a></li>
+    <li><a class="dropdown-item" href="../articles/moat_vignette.html">Power and Sample Size Simulation: Seeing is Believing</a></li>
+    <li><a class="dropdown-item" href="../articles/montefinese_vignette.html">Power and Sample Size Simulatio: Online search trends and word-related emotional response during COVID-19 lockdown in Italy</a></li>
+    <li><a class="dropdown-item" href="../articles/package_functions.html">semanticprimeR Package Functions</a></li>
+    <li><a class="dropdown-item" href="../articles/roer_vignette.html">Power and Sample Size Simulation: Survival Processing Usefulness</a></li>
+    <li><a class="dropdown-item" href="../articles/suchow_vignette.html">Power and Sample Size Simulation: Superficial Face Judgment</a></li>
+    <li><a class="dropdown-item" href="../articles/ulloa_vignette.html">Power and Sample Size Simulation: Liking effect induced by gaze</a></li>
+    <li><a class="dropdown-item" href="../articles/vanpaemel_vignette.html">Power and Sample Size Simulation: Typicality, goodness, imageability, and familiarity of stimuli across 16 categories</a></li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -73,13 +65,14 @@
 <link href="suchow_vignette_files/tabwid-1.1.3/tabwid.css" rel="stylesheet">
 <script src="suchow_vignette_files/tabwid-1.1.3/tabwid.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Power and Sample Size Simulation: Superficial Face Judgment</h1>
+
+      <h1>Power and Sample Size Simulation: Superficial Face Judgment</h1>
                         <h4 data-toc-skip class="author">Necdet Gürkan
 &amp; Yangyang Yu</h4>
             
             <h4 data-toc-skip class="date">2024-07-23</h4>
       
-      
+
       <div class="d-none name"><code>suchow_vignette.Rmd</code></div>
     </div>
 
@@ -211,33 +204,33 @@ an option (8). Participants were recruited from the United States.</p>
 <span></span>
 <span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/autofit.html" class="external-link">autofit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-44cb6ef2{}.cl-44c902de{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-44c9f946{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-44ca009e{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00a8{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00a9{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00aa{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00ab{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00b2{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00b3{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00b4{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00b5{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00bc{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00bd{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00be{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00c6{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00c7{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ca00c8{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-44cb6ef2">
+<style>.cl-ead2fc34{}.cl-ead08f62{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ead19038{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ead197b8{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197b9{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197c2{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197c3{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197c4{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197c5{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197cc{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197cd{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197ce{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197d6{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197d7{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197d8{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197e0{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197e1{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ead197e2{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-ead2fc34">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-44ca009e"><p class="cl-44c9f946"><span class="cl-44c902de">Variable Name</span></p></th>
-<th class="cl-44ca00a8"><p class="cl-44c9f946"><span class="cl-44c902de">Variable Description</span></p></th>
-<th class="cl-44ca00a9"><p class="cl-44c9f946"><span class="cl-44c902de">Type (numeric, character, logical, etc.)</span></p></th>
+<th class="cl-ead197b8"><p class="cl-ead19038"><span class="cl-ead08f62">Variable Name</span></p></th>
+<th class="cl-ead197b9"><p class="cl-ead19038"><span class="cl-ead08f62">Variable Description</span></p></th>
+<th class="cl-ead197c2"><p class="cl-ead19038"><span class="cl-ead08f62">Type (numeric, character, logical, etc.)</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-44ca00aa"><p class="cl-44c9f946"><span class="cl-44c902de">Participant</span></p></td>
-<td class="cl-44ca00ab"><p class="cl-44c9f946"><span class="cl-44c902de">Unique number assigned to each participant</span></p></td>
-<td class="cl-44ca00b2"><p class="cl-44c9f946"><span class="cl-44c902de">Numeric</span></p></td>
+<td class="cl-ead197c3"><p class="cl-ead19038"><span class="cl-ead08f62">Participant</span></p></td>
+<td class="cl-ead197c4"><p class="cl-ead19038"><span class="cl-ead08f62">Unique number assigned to each participant</span></p></td>
+<td class="cl-ead197c5"><p class="cl-ead19038"><span class="cl-ead08f62">Numeric</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-44ca00b3"><p class="cl-44c9f946"><span class="cl-44c902de">Stimulus</span></p></td>
-<td class="cl-44ca00b4"><p class="cl-44c9f946"><span class="cl-44c902de">Face 1 to 1004</span></p></td>
-<td class="cl-44ca00b5"><p class="cl-44c9f946"><span class="cl-44c902de">Numeric</span></p></td>
+<td class="cl-ead197cc"><p class="cl-ead19038"><span class="cl-ead08f62">Stimulus</span></p></td>
+<td class="cl-ead197cd"><p class="cl-ead19038"><span class="cl-ead08f62">Face 1 to 1004</span></p></td>
+<td class="cl-ead197ce"><p class="cl-ead19038"><span class="cl-ead08f62">Numeric</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-44ca00bc"><p class="cl-44c9f946"><span class="cl-44c902de">Trait</span></p></td>
-<td class="cl-44ca00bd"><p class="cl-44c9f946"><span class="cl-44c902de">Trait 1 to 35</span></p></td>
-<td class="cl-44ca00be"><p class="cl-44c9f946"><span class="cl-44c902de">Numeric</span></p></td>
+<td class="cl-ead197d6"><p class="cl-ead19038"><span class="cl-ead08f62">Trait</span></p></td>
+<td class="cl-ead197d7"><p class="cl-ead19038"><span class="cl-ead08f62">Trait 1 to 35</span></p></td>
+<td class="cl-ead197d8"><p class="cl-ead19038"><span class="cl-ead08f62">Numeric</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-44ca00c6"><p class="cl-44c9f946"><span class="cl-44c902de">Response</span></p></td>
-<td class="cl-44ca00c7"><p class="cl-44c9f946"><span class="cl-44c902de">Rating for corresponding rating</span></p></td>
-<td class="cl-44ca00c8"><p class="cl-44c9f946"><span class="cl-44c902de">Numeric</span></p></td>
+<td class="cl-ead197e0"><p class="cl-ead19038"><span class="cl-ead08f62">Response</span></p></td>
+<td class="cl-ead197e1"><p class="cl-ead19038"><span class="cl-ead08f62">Rating for corresponding rating</span></p></td>
+<td class="cl-ead197e2"><p class="cl-ead19038"><span class="cl-ead08f62">Numeric</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -405,43 +398,43 @@ correction.</p>
 <span></span>
 <span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">final_sample</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/autofit.html" class="external-link">autofit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-45c8c8cc{}.cl-45c69b6a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-45c778be{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-45c778c8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-45c77f6c{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45c77f6d{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45c77f76{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45c77f77{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45c77f78{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45c77f79{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45c77f80{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45c77f81{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45c77f82{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-45c8c8cc">
+<style>.cl-ebdc2aba{}.cl-ebda0d2a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ebdae66e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ebdae66f{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ebdaecc2{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebdaecc3{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebdaeccc{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebdaeccd{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebdaecce{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebdaecd6{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebdaecd7{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebdaecd8{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebdaecd9{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-ebdc2aba">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-45c77f6c"><p class="cl-45c778be"><span class="cl-45c69b6a">sample_size</span></p></th>
-<th class="cl-45c77f6d"><p class="cl-45c778c8"><span class="cl-45c69b6a">var</span></p></th>
-<th class="cl-45c77f76"><p class="cl-45c778be"><span class="cl-45c69b6a">percent_below</span></p></th>
+<th class="cl-ebdaecc2"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">sample_size</span></p></th>
+<th class="cl-ebdaecc3"><p class="cl-ebdae66f"><span class="cl-ebda0d2a">var</span></p></th>
+<th class="cl-ebdaeccc"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">percent_below</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45c77f77"><p class="cl-45c778be"><span class="cl-45c69b6a">25</span></p></td>
-<td class="cl-45c77f78"><p class="cl-45c778c8"><span class="cl-45c69b6a">response</span></p></td>
-<td class="cl-45c77f79"><p class="cl-45c778be"><span class="cl-45c69b6a">0.110</span></p></td>
+<td class="cl-ebdaeccd"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">25</span></p></td>
+<td class="cl-ebdaecce"><p class="cl-ebdae66f"><span class="cl-ebda0d2a">response</span></p></td>
+<td class="cl-ebdaecd6"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">0.110</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45c77f77"><p class="cl-45c778be"><span class="cl-45c69b6a">30</span></p></td>
-<td class="cl-45c77f78"><p class="cl-45c778c8"><span class="cl-45c69b6a">response</span></p></td>
-<td class="cl-45c77f79"><p class="cl-45c778be"><span class="cl-45c69b6a">0.176</span></p></td>
+<td class="cl-ebdaeccd"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">30</span></p></td>
+<td class="cl-ebdaecce"><p class="cl-ebdae66f"><span class="cl-ebda0d2a">response</span></p></td>
+<td class="cl-ebdaecd6"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">0.176</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45c77f77"><p class="cl-45c778be"><span class="cl-45c69b6a">35</span></p></td>
-<td class="cl-45c77f78"><p class="cl-45c778c8"><span class="cl-45c69b6a">response</span></p></td>
-<td class="cl-45c77f79"><p class="cl-45c778be"><span class="cl-45c69b6a">0.288</span></p></td>
+<td class="cl-ebdaeccd"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">35</span></p></td>
+<td class="cl-ebdaecce"><p class="cl-ebdae66f"><span class="cl-ebda0d2a">response</span></p></td>
+<td class="cl-ebdaecd6"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">0.288</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45c77f77"><p class="cl-45c778be"><span class="cl-45c69b6a">40</span></p></td>
-<td class="cl-45c77f78"><p class="cl-45c778c8"><span class="cl-45c69b6a">response</span></p></td>
-<td class="cl-45c77f79"><p class="cl-45c778be"><span class="cl-45c69b6a">0.442</span></p></td>
+<td class="cl-ebdaeccd"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">40</span></p></td>
+<td class="cl-ebdaecce"><p class="cl-ebdae66f"><span class="cl-ebda0d2a">response</span></p></td>
+<td class="cl-ebdaecd6"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">0.442</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45c77f77"><p class="cl-45c778be"><span class="cl-45c69b6a">45</span></p></td>
-<td class="cl-45c77f78"><p class="cl-45c778c8"><span class="cl-45c69b6a">response</span></p></td>
-<td class="cl-45c77f79"><p class="cl-45c778be"><span class="cl-45c69b6a">0.604</span></p></td>
+<td class="cl-ebdaeccd"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">45</span></p></td>
+<td class="cl-ebdaecce"><p class="cl-ebdae66f"><span class="cl-ebda0d2a">response</span></p></td>
+<td class="cl-ebdaecd6"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">0.604</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45c77f80"><p class="cl-45c778be"><span class="cl-45c69b6a">50</span></p></td>
-<td class="cl-45c77f81"><p class="cl-45c778c8"><span class="cl-45c69b6a">response</span></p></td>
-<td class="cl-45c77f82"><p class="cl-45c778be"><span class="cl-45c69b6a">0.720</span></p></td>
+<td class="cl-ebdaecd7"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">50</span></p></td>
+<td class="cl-ebdaecd8"><p class="cl-ebdae66f"><span class="cl-ebda0d2a">response</span></p></td>
+<td class="cl-ebdaecd9"><p class="cl-ebdae66e"><span class="cl-ebda0d2a">0.720</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -459,33 +452,33 @@ correction.</p>
 <span></span>
 <span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">final_scores</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/autofit.html" class="external-link">autofit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-45d6f00a{}.cl-45d4d8b0{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-45d5aef2{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-45d5b546{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45d5b547{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45d5b548{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45d5b550{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45d5b551{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45d5b552{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45d5b553{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45d5b554{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45d5b55a{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-45d6f00a">
+<style>.cl-ebea7d36{}.cl-ebe86cc6{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ebe9427c{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ebe948b2{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebe948b3{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebe948b4{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebe948b5{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebe948bc{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebe948bd{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebe948be{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebe948bf{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebe948c0{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-ebea7d36">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-45d5b546"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">percent_below</span></p></th>
-<th class="cl-45d5b547"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">sample_size</span></p></th>
-<th class="cl-45d5b548"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">corrected_sample_size</span></p></th>
+<th class="cl-ebe948b2"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">percent_below</span></p></th>
+<th class="cl-ebe948b3"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">sample_size</span></p></th>
+<th class="cl-ebe948b4"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">corrected_sample_size</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45d5b550"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">82.6</span></p></td>
-<td class="cl-45d5b551"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">55</span></p></td>
-<td class="cl-45d5b552"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">45.47975</span></p></td>
+<td class="cl-ebe948b5"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">82.6</span></p></td>
+<td class="cl-ebe948bc"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">55</span></p></td>
+<td class="cl-ebe948bd"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">45.47975</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45d5b550"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">88.6</span></p></td>
-<td class="cl-45d5b551"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">60</span></p></td>
-<td class="cl-45d5b552"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">50.61284</span></p></td>
+<td class="cl-ebe948b5"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">88.6</span></p></td>
+<td class="cl-ebe948bc"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">60</span></p></td>
+<td class="cl-ebe948bd"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">50.61284</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45d5b550"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">93.4</span></p></td>
-<td class="cl-45d5b551"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">65</span></p></td>
-<td class="cl-45d5b552"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">55.82046</span></p></td>
+<td class="cl-ebe948b5"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">93.4</span></p></td>
+<td class="cl-ebe948bc"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">65</span></p></td>
+<td class="cl-ebe948bd"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">55.82046</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45d5b553"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">97.2</span></p></td>
-<td class="cl-45d5b554"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">70</span></p></td>
-<td class="cl-45d5b55a"><p class="cl-45d5aef2"><span class="cl-45d4d8b0">60.93349</span></p></td>
+<td class="cl-ebe948be"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">97.2</span></p></td>
+<td class="cl-ebe948bf"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">70</span></p></td>
+<td class="cl-ebe948c0"><p class="cl-ebe9427c"><span class="cl-ebe86cc6">60.93349</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -512,43 +505,43 @@ correction.</p>
 <span></span>
 <span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">final_sample2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/autofit.html" class="external-link">autofit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-45f268da{}.cl-45f04a96{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-45f124fc{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-45f124fd{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-45f12b50{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45f12b51{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45f12b5a{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45f12b5b{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45f12b5c{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45f12b5d{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45f12b64{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45f12b65{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45f12b66{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-45f268da">
+<style>.cl-ebf85690{}.cl-ebf62d7a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ebf70b5a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ebf70b5b{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ebf711f4{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebf711f5{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebf711f6{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebf711fe{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebf711ff{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebf71200{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebf71201{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebf71208{width:0.914in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ebf71209{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-ebf85690">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-45f12b50"><p class="cl-45f124fc"><span class="cl-45f04a96">sample_size</span></p></th>
-<th class="cl-45f12b51"><p class="cl-45f124fd"><span class="cl-45f04a96">var</span></p></th>
-<th class="cl-45f12b5a"><p class="cl-45f124fc"><span class="cl-45f04a96">percent_below</span></p></th>
+<th class="cl-ebf711f4"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">sample_size</span></p></th>
+<th class="cl-ebf711f5"><p class="cl-ebf70b5b"><span class="cl-ebf62d7a">var</span></p></th>
+<th class="cl-ebf711f6"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">percent_below</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45f12b5b"><p class="cl-45f124fc"><span class="cl-45f04a96">25</span></p></td>
-<td class="cl-45f12b5c"><p class="cl-45f124fd"><span class="cl-45f04a96">response</span></p></td>
-<td class="cl-45f12b5d"><p class="cl-45f124fc"><span class="cl-45f04a96">0.336</span></p></td>
+<td class="cl-ebf711fe"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">25</span></p></td>
+<td class="cl-ebf711ff"><p class="cl-ebf70b5b"><span class="cl-ebf62d7a">response</span></p></td>
+<td class="cl-ebf71200"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">0.336</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45f12b5b"><p class="cl-45f124fc"><span class="cl-45f04a96">30</span></p></td>
-<td class="cl-45f12b5c"><p class="cl-45f124fd"><span class="cl-45f04a96">response</span></p></td>
-<td class="cl-45f12b5d"><p class="cl-45f124fc"><span class="cl-45f04a96">0.408</span></p></td>
+<td class="cl-ebf711fe"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">30</span></p></td>
+<td class="cl-ebf711ff"><p class="cl-ebf70b5b"><span class="cl-ebf62d7a">response</span></p></td>
+<td class="cl-ebf71200"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">0.408</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45f12b5b"><p class="cl-45f124fc"><span class="cl-45f04a96">35</span></p></td>
-<td class="cl-45f12b5c"><p class="cl-45f124fd"><span class="cl-45f04a96">response</span></p></td>
-<td class="cl-45f12b5d"><p class="cl-45f124fc"><span class="cl-45f04a96">0.506</span></p></td>
+<td class="cl-ebf711fe"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">35</span></p></td>
+<td class="cl-ebf711ff"><p class="cl-ebf70b5b"><span class="cl-ebf62d7a">response</span></p></td>
+<td class="cl-ebf71200"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">0.506</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45f12b5b"><p class="cl-45f124fc"><span class="cl-45f04a96">40</span></p></td>
-<td class="cl-45f12b5c"><p class="cl-45f124fd"><span class="cl-45f04a96">response</span></p></td>
-<td class="cl-45f12b5d"><p class="cl-45f124fc"><span class="cl-45f04a96">0.626</span></p></td>
+<td class="cl-ebf711fe"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">40</span></p></td>
+<td class="cl-ebf711ff"><p class="cl-ebf70b5b"><span class="cl-ebf62d7a">response</span></p></td>
+<td class="cl-ebf71200"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">0.626</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45f12b5b"><p class="cl-45f124fc"><span class="cl-45f04a96">45</span></p></td>
-<td class="cl-45f12b5c"><p class="cl-45f124fd"><span class="cl-45f04a96">response</span></p></td>
-<td class="cl-45f12b5d"><p class="cl-45f124fc"><span class="cl-45f04a96">0.712</span></p></td>
+<td class="cl-ebf711fe"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">45</span></p></td>
+<td class="cl-ebf711ff"><p class="cl-ebf70b5b"><span class="cl-ebf62d7a">response</span></p></td>
+<td class="cl-ebf71200"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">0.712</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45f12b64"><p class="cl-45f124fc"><span class="cl-45f04a96">50</span></p></td>
-<td class="cl-45f12b65"><p class="cl-45f124fd"><span class="cl-45f04a96">response</span></p></td>
-<td class="cl-45f12b66"><p class="cl-45f124fc"><span class="cl-45f04a96">0.822</span></p></td>
+<td class="cl-ebf71201"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">50</span></p></td>
+<td class="cl-ebf71208"><p class="cl-ebf70b5b"><span class="cl-ebf62d7a">response</span></p></td>
+<td class="cl-ebf71209"><p class="cl-ebf70b5a"><span class="cl-ebf62d7a">0.822</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -566,33 +559,33 @@ correction.</p>
 <span></span>
 <span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">final_scores2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/autofit.html" class="external-link">autofit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-4600312c{}.cl-45fe132e{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-45feed76{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-45fef3fc{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef3fd{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef3fe{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef406{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef407{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef408{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef410{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef411{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef412{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef413{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef41a{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45fef41b{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-4600312c">
+<style>.cl-ec059940{}.cl-ec036ada{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ec044e1e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ec045530{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec045531{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec04553a{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec04553b{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec04553c{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec04553d{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec045544{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec045545{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec045546{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec04554e{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec04554f{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec045558{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-ec059940">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-45fef3fc"><p class="cl-45feed76"><span class="cl-45fe132e">percent_below</span></p></th>
-<th class="cl-45fef3fd"><p class="cl-45feed76"><span class="cl-45fe132e">sample_size</span></p></th>
-<th class="cl-45fef3fe"><p class="cl-45feed76"><span class="cl-45fe132e">corrected_sample_size</span></p></th>
+<th class="cl-ec045530"><p class="cl-ec044e1e"><span class="cl-ec036ada">percent_below</span></p></th>
+<th class="cl-ec045531"><p class="cl-ec044e1e"><span class="cl-ec036ada">sample_size</span></p></th>
+<th class="cl-ec04553a"><p class="cl-ec044e1e"><span class="cl-ec036ada">corrected_sample_size</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45fef406"><p class="cl-45feed76"><span class="cl-45fe132e">82.2</span></p></td>
-<td class="cl-45fef407"><p class="cl-45feed76"><span class="cl-45fe132e">50</span></p></td>
-<td class="cl-45fef408"><p class="cl-45feed76"><span class="cl-45fe132e">46.04663</span></p></td>
+<td class="cl-ec04553b"><p class="cl-ec044e1e"><span class="cl-ec036ada">82.2</span></p></td>
+<td class="cl-ec04553c"><p class="cl-ec044e1e"><span class="cl-ec036ada">50</span></p></td>
+<td class="cl-ec04553d"><p class="cl-ec044e1e"><span class="cl-ec036ada">46.04663</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45fef410"><p class="cl-45feed76"><span class="cl-45fe132e">89.8</span></p></td>
-<td class="cl-45fef411"><p class="cl-45feed76"><span class="cl-45fe132e">55</span></p></td>
-<td class="cl-45fef412"><p class="cl-45feed76"><span class="cl-45fe132e">51.50307</span></p></td>
+<td class="cl-ec045544"><p class="cl-ec044e1e"><span class="cl-ec036ada">89.8</span></p></td>
+<td class="cl-ec045545"><p class="cl-ec044e1e"><span class="cl-ec036ada">55</span></p></td>
+<td class="cl-ec045546"><p class="cl-ec044e1e"><span class="cl-ec036ada">51.50307</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45fef406"><p class="cl-45feed76"><span class="cl-45fe132e">93.8</span></p></td>
-<td class="cl-45fef407"><p class="cl-45feed76"><span class="cl-45fe132e">60</span></p></td>
-<td class="cl-45fef408"><p class="cl-45feed76"><span class="cl-45fe132e">56.99324</span></p></td>
+<td class="cl-ec04553b"><p class="cl-ec044e1e"><span class="cl-ec036ada">93.8</span></p></td>
+<td class="cl-ec04553c"><p class="cl-ec044e1e"><span class="cl-ec036ada">60</span></p></td>
+<td class="cl-ec04553d"><p class="cl-ec044e1e"><span class="cl-ec036ada">56.99324</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-45fef413"><p class="cl-45feed76"><span class="cl-45fe132e">98.0</span></p></td>
-<td class="cl-45fef41a"><p class="cl-45feed76"><span class="cl-45fe132e">65</span></p></td>
-<td class="cl-45fef41b"><p class="cl-45feed76"><span class="cl-45fe132e">62.40286</span></p></td>
+<td class="cl-ec04554e"><p class="cl-ec044e1e"><span class="cl-ec036ada">98.0</span></p></td>
+<td class="cl-ec04554f"><p class="cl-ec044e1e"><span class="cl-ec036ada">65</span></p></td>
+<td class="cl-ec045558"><p class="cl-ec044e1e"><span class="cl-ec036ada">62.40286</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -619,7 +612,7 @@ Other considerations could include fatigue on the number of ratings each
 person has to complete.</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -630,15 +623,15 @@ person has to complete.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

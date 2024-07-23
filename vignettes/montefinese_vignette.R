@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------
+## ----setup, include = FALSE------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup, include=FALSE---------
+## ----vignette-setup, include=FALSE-----------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -17,7 +17,7 @@ library(reshape)
 library(semanticprimeR)
 set.seed(0329032)
 
-## ------------------------------------------
+## --------------------------------------------------------
 DF <- import("data/montefinese_data.csv") 
 
 names(DF) <- make.names(names(DF),unique = TRUE)
@@ -35,12 +35,12 @@ DF <- DF %>%
 
 head(DF)
 
-## ------------------------------------------
+## --------------------------------------------------------
 metadata <- import("data/montefinese_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
 
-## ----subset and restructure----------------
+## ----subset and restructure------------------------------
 ### create  subset for REL+
 DF_RELpos <- subset(DF, StimType == "REL+")
 
@@ -50,7 +50,7 @@ DF_RELneg <- subset(DF, StimType == "REL-")
 ### create  subset for UNREL
 DF_UNREL <- subset(DF, StimType == "UNREL")
 
-## ----compute se for REL+ and REL-----------
+## ----compute se for REL+ and REL-------------------------
 
 # individual SEs for REL+ condition 
 cutoff_relpos <- calculate_cutoff(population = DF_RELpos,
@@ -85,7 +85,7 @@ SE3 <- tapply(DF_UNREL$Response, DF_UNREL$item, function (x) { sd(x)/sqrt(length
 SE3
 cutoff_unrel$cutoff
 
-## ----power three different conditions------
+## ----power three different conditions--------------------
 # sequence of sample sizes to try
 nsim <- 10 # small for cran
 samplesize_values <- seq(25, 300, 5)
@@ -174,7 +174,7 @@ for (p in 1:nsim){
 }
 
 
-## ----summary analysis part1----------------
+## ----summary analysis part1------------------------------
 # multiply by correction 
 cutoff <- quantile(SE1, probs = .4)
 
@@ -193,7 +193,7 @@ final_sample <-
 
 flextable(final_sample %>% head()) %>% autofit()
 
-## ------------------------------------------
+## --------------------------------------------------------
 final_table_pos <- calculate_correction(
   proportion_summary = final_sample,
   pilot_sample_size = length(unique(DF_RELpos$ssID)),
@@ -203,7 +203,7 @@ final_table_pos <- calculate_correction(
 flextable(final_table_pos) %>% 
   autofit()
 
-## ----summary analysis part2----------------
+## ----summary analysis part2------------------------------
 cutoff <- quantile(SE2, probs = .4)
 
 final_sample2 <- 
@@ -221,7 +221,7 @@ final_sample2 <-
 
 flextable(final_sample2 %>% head()) %>% autofit()
 
-## ------------------------------------------
+## --------------------------------------------------------
 final_table_neg <- calculate_correction(
   proportion_summary = final_sample2,
   pilot_sample_size = length(unique(DF_RELneg$ssID)),
@@ -231,7 +231,7 @@ final_table_neg <- calculate_correction(
 flextable(final_table_neg) %>% 
   autofit()
 
-## ----summary analysis part3----------------
+## ----summary analysis part3------------------------------
 cutoff <- quantile(SE3, probs = .4)
 
 final_sample3 <- 
@@ -249,7 +249,7 @@ final_sample3 <-
 
 flextable(final_sample3 %>% head()) %>% autofit()
 
-## ------------------------------------------
+## --------------------------------------------------------
 final_table_unrel <- calculate_correction(
   proportion_summary = final_sample3,
   pilot_sample_size = length(unique(DF_UNREL$ssID)),

@@ -46,7 +46,7 @@ largest possible score?}
 should it be rounded to?}
 }
 \value{
-\itemize{
+\describe{
  \item{"population"}{The population scores with the number of items
 and scores specified}
 }

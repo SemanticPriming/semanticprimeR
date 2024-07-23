@@ -1,10 +1,13 @@
-## ----setup, include = FALSE----------------
+## ----setup, include = FALSE------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ------------------------------------------
+## ----echo = F--------------------------------------------
+filelocation <- "/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR"
+
+## --------------------------------------------------------
 library(dplyr)
 library(semanticprimeR)
 library(udpipe)
@@ -12,7 +15,7 @@ library(stopwords)
 library(tibble)
 library(rio)
 
-## ------------------------------------------
+## --------------------------------------------------------
 df <- simulate_population(mu = 25, # mean priming in ms
                     mu_sigma = 5, # standard deviation of the item means
                     sigma = 10, # population standard deviation for items
@@ -26,7 +29,7 @@ df <- simulate_population(mu = 25, # mean priming in ms
 
 head(df)
 
-## ------------------------------------------
+## --------------------------------------------------------
 cutoff <- calculate_cutoff(population = df, # pilot data or simulated data
   grouping_items = "item", # name of the item indicator column
   score = "score", # name of the dependent variable column
@@ -38,7 +41,7 @@ cutoff$sd_items # standard deviation of the standard errors
 cutoff$cutoff # 40% decile score
 cutoff$prop_var # proportion of possible variance 
 
-## ----eval = F------------------------------
+## ----eval = F--------------------------------------------
 #  samples <- bootstrap_samples(start = 20, # starting sample size
 #    stop = 400, # stopping sample size
 #    increase = 5, # increase bootstrapped samples by this amount
@@ -49,12 +52,12 @@ cutoff$prop_var # proportion of possible variance
 #  
 #  save(samples, file = "data/simulatePriming.RData")
 
-## ------------------------------------------
+## --------------------------------------------------------
 # since that's a slow function, we wrote out the data and read it back in
-load("data/simulatePriming.Rdata")
+load(paste0(filelocation,"/vignettes/data/simulatePriming.Rdata"))
 head(samples[[1]])
 
-## ------------------------------------------
+## --------------------------------------------------------
 proportion_summary <- calculate_proportion(samples = samples, # samples list
   cutoff = cutoff$cutoff, # cut off score 
   grouping_items = "item", # item column name
@@ -62,7 +65,7 @@ proportion_summary <- calculate_proportion(samples = samples, # samples list
 
 head(proportion_summary)
 
-## ------------------------------------------
+## --------------------------------------------------------
 corrected_summary <- calculate_correction(
   proportion_summary = proportion_summary, # prop from above
   pilot_sample_size = 100, # number of participants in the pilot data 
@@ -71,23 +74,23 @@ corrected_summary <- calculate_correction(
 
 corrected_summary
 
-## ------------------------------------------
+## --------------------------------------------------------
 data("subsData")
 head(tibble(subsData))
 
-## ----eval = F------------------------------
+## ----eval = F--------------------------------------------
 #  af_freq <- import_subs(
 #    language = "af",
 #    what = "subs_count"
 #  )
 
-## ----echo = F, message = F-----------------
-af_freq <- import("subs_count/af/dedup.af.words.unigrams.txt")
+## ----echo = F, message = F-------------------------------
+af_freq <- import(paste0(filelocation,"/vignettes/subs_count/af/dedup.af.words.unigrams.txt"))
 
-## ------------------------------------------
+## --------------------------------------------------------
 head(af_freq)
 
-## ------------------------------------------
+## --------------------------------------------------------
 # tag with udpipe
 af_tagged <- udpipe(af_freq$unigram, 
                     object = subsData$udpipe_model[subsData$language_code == "af"], 
@@ -95,7 +98,7 @@ af_tagged <- udpipe(af_freq$unigram,
 
 head(tibble(af_tagged))
 
-## ------------------------------------------
+## --------------------------------------------------------
 # word_choice
 word_choice <- c("NOUN", "VERB", "ADJ", "ADV")
 
@@ -128,19 +131,19 @@ af_final <- af_final[!duplicated(af_final$lemma), ]
 # grab top 10K
 af_top <- af_final[1:10000 , ]
 
-## ----eval = F------------------------------
+## ----eval = F--------------------------------------------
 #  af_dims <- import_subs(
 #    language = "af",
 #    what = "subs_vec"
 #  )
 
-## ----echo = F, message = F-----------------
+## ----echo = F, message = F-------------------------------
 af_dims <- read.table("subs_vec/af/subs.af.1e6.txt", quote = "\"")
 
-## ------------------------------------------
+## --------------------------------------------------------
 head(tibble(af_dims))
 
-## ------------------------------------------
+## --------------------------------------------------------
 # lower case
 af_dims$V1 <- tolower(af_dims[ , 1]) # first column is always the tokens
 
@@ -152,7 +155,7 @@ rownames(af_dims) <- af_dims[ , 1]
 af_dims <- af_dims[ , -1]
 head(tibble(af_dims))
 
-## ------------------------------------------
+## --------------------------------------------------------
 af_cosine <- 
   calculate_similarity(
     words = af_final$sentence, # the tokens you want to filter
@@ -160,42 +163,45 @@ af_cosine <-
     by = 1 # 1 for rows, 2 for columns 
 )
 
-## ------------------------------------------
+## --------------------------------------------------------
 # get the top 5 related words 
 af_top_sim <- semanticprimeR::top_n(af_cosine, 6)
 af_top_sim <- subset(af_top_sim, cue!=target)
 
 head(af_top_sim)
 
-## ------------------------------------------
+## --------------------------------------------------------
 af_top_sim$fake_cue <- fake_simple(af_top_sim$cue)
 # you'd want to also do this based on target depending on your study 
 head(af_top_sim)
 
-## ----message=FALSE-------------------------
+## ----message=FALSE---------------------------------------
 af_wuggy <- fake_Wuggy(
   wordlist = af_final$sentence, # full valid options in language
-  language_hyp = "../inst/latex/hyph-af.tex", # path to hyphenation.tex 
+  language_hyp = paste0(filelocation,"/inst/latex/hyph-af.tex"), # path to hyphenation.tex 
   lang = "af", # two letter language code
   replacewords <- unique(af_top_sim$cue[1:20]) # words you want to create pseudowords for  
 )
 
 head(tibble(af_wuggy))
 
-## ------------------------------------------
+
+getwd()
+
+## --------------------------------------------------------
 data("primeData")
 head(primeData)
 
-## ----eval = F------------------------------
+## ----eval = F--------------------------------------------
 #  es_words <- import_prime("es_words.csv")
 
-## ----echo = F------------------------------
-es_words <- import('procedure_stimuli/es/es_words.csv')
+## ----echo = F--------------------------------------------
+es_words <- import(paste0(filelocation, '/vignettes/procedure_stimuli/es/es_words.csv'))
 
-## ------------------------------------------
+## --------------------------------------------------------
 head(es_words)
 
-## ------------------------------------------
+## --------------------------------------------------------
 data("labData")
 head(tibble(labData))
 
@@ -203,7 +209,7 @@ head(tibble(labData))
 
 # ?labData # use this to learn about the dataset 
 
-## ------------------------------------------
+## --------------------------------------------------------
 saved <- import_lab(language = "English", variables = c("aoa", "freq"))
 # possible datasets that are English, aoa, and frequency
 head(tibble(saved))
@@ -212,31 +218,31 @@ saved <- import_lab(language = "Spanish", variables = c("aoa"))
 
 head(tibble(saved))
 
-## ----eval = F------------------------------
+## ----eval = F--------------------------------------------
 #  es_aos <- import_lab(bibtexID = "Alonso2015", citation = TRUE)
 
-## ----echo = F------------------------------
+## ----echo = F--------------------------------------------
 # save(es_aos, file = "lab_data/es_aos.Rdata")
-load("lab_data/es_aos.Rdata")
+load(paste0(filelocation, "/vignettes/lab_data/es_aos.Rdata"))
 
-## ------------------------------------------
+## --------------------------------------------------------
 es_aos$citation
 
 head(tibble(es_aos$loaded_data))
 
-## ----eval = F------------------------------
+## ----eval = F--------------------------------------------
 #  es_sim <- import_lab(bibtexID = "Cabana2024_R1", citation = TRUE)
 
-## ----echo = F------------------------------
+## ----echo = F--------------------------------------------
 # save(es_sim, file = "lab_data/es_sim.Rdata")
-load("lab_data/es_sim.Rdata")
+load(paste0(filelocation,"/vignettes/lab_data/es_sim.Rdata"))
 
-## ------------------------------------------
+## --------------------------------------------------------
 es_sim$citation
 
 head(tibble(es_sim$loaded_data))
 
-## ------------------------------------------
+## --------------------------------------------------------
 es_words_merged <- es_words %>%
   # merge with the cue word (will be .x variables)
   left_join(es_aos$loaded_data, 
@@ -251,6 +257,6 @@ es_words_merged <- es_words %>%
 
 head(tibble(es_words_merged))
 
-## ----eval = F------------------------------
+## ----eval = F--------------------------------------------
 #  df <- processData("data.sqlite")
 

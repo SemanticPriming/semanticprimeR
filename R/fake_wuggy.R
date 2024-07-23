@@ -22,7 +22,7 @@
 #' @importFrom stringdist stringdist
 #'
 #' @return A dataset of original tokens and suggested pseudowords.
-#' \itemize{
+#' \describe{
 #'  \item{"word_id"}{Number id for each unique word}
 #'  \item{"first"}{First syllable in pairs of syllables.}
 #'  \item{"original_pair"}{Pair of syllables together.}

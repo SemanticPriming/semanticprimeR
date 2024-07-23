@@ -5,66 +5,58 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="semanticprimeR">
 <title>Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA) • semanticprimeR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)">
-<meta property="og:description" content="semanticprimeR">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">semanticprimeR</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/ambrosini_vignette.html">Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)</a>
-    <a class="dropdown-item" href="../articles/barzykowski_vignette.html">Power and Sample Size Simulation: Cue Word Valence Data Example</a>
-    <a class="dropdown-item" href="../articles/batres_vignette.html">Power and Sample Size Simulation: Attractiveness Ratings Example</a>
-    <a class="dropdown-item" href="../articles/geller_vignette.html">Power and Sample Size Simulation: Overconfidence for picture cues in foreign language learning</a>
-    <a class="dropdown-item" href="../articles/heyman_vignette.html">Power and Sample Size Simulation: Reaction Time Example (raw RT)</a>
-    <a class="dropdown-item" href="../articles/mcfall_vignette.html">Power and Sample Size Simulation: EAMMi2</a>
-    <a class="dropdown-item" href="../articles/moat_vignette.html">Power and Sample Size Simulation: Seeing is Believing</a>
-    <a class="dropdown-item" href="../articles/montefinese_vignette.html">Power and Sample Size Simulatio: Online search trends and word-related emotional response during COVID-19 lockdown in Italy</a>
-    <a class="dropdown-item" href="../articles/package_functions.html">semanticprimeR Package Functions</a>
-    <a class="dropdown-item" href="../articles/roer_vignette.html">Power and Sample Size Simulation: Survival Processing Usefulness</a>
-    <a class="dropdown-item" href="../articles/suchow_vignette.html">Power and Sample Size Simulation: Superficial Face Judgment</a>
-    <a class="dropdown-item" href="../articles/ulloa_vignette.html">Power and Sample Size Simulation: Liking effect induced by gaze</a>
-    <a class="dropdown-item" href="../articles/vanpaemel_vignette.html">Power and Sample Size Simulation: Typicality, goodness, imageability, and familiarity of stimuli across 16 categories</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/ambrosini_vignette.html">Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)</a></li>
+    <li><a class="dropdown-item" href="../articles/barzykowski_vignette.html">Power and Sample Size Simulation: Cue Word Valence Data Example</a></li>
+    <li><a class="dropdown-item" href="../articles/batres_vignette.html">Power and Sample Size Simulation: Attractiveness Ratings Example</a></li>
+    <li><a class="dropdown-item" href="../articles/geller_vignette.html">Power and Sample Size Simulation: Overconfidence for picture cues in foreign language learning</a></li>
+    <li><a class="dropdown-item" href="../articles/heyman_vignette.html">Power and Sample Size Simulation: Reaction Time Example (raw RT)</a></li>
+    <li><a class="dropdown-item" href="../articles/mcfall_vignette.html">Power and Sample Size Simulation: EAMMi2</a></li>
+    <li><a class="dropdown-item" href="../articles/moat_vignette.html">Power and Sample Size Simulation: Seeing is Believing</a></li>
+    <li><a class="dropdown-item" href="../articles/montefinese_vignette.html">Power and Sample Size Simulatio: Online search trends and word-related emotional response during COVID-19 lockdown in Italy</a></li>
+    <li><a class="dropdown-item" href="../articles/package_functions.html">semanticprimeR Package Functions</a></li>
+    <li><a class="dropdown-item" href="../articles/roer_vignette.html">Power and Sample Size Simulation: Survival Processing Usefulness</a></li>
+    <li><a class="dropdown-item" href="../articles/suchow_vignette.html">Power and Sample Size Simulation: Superficial Face Judgment</a></li>
+    <li><a class="dropdown-item" href="../articles/ulloa_vignette.html">Power and Sample Size Simulation: Liking effect induced by gaze</a></li>
+    <li><a class="dropdown-item" href="../articles/vanpaemel_vignette.html">Power and Sample Size Simulation: Typicality, goodness, imageability, and familiarity of stimuli across 16 categories</a></li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -73,13 +65,14 @@
 <link href="ambrosini_vignette_files/tabwid-1.1.3/tabwid.css" rel="stylesheet">
 <script src="ambrosini_vignette_files/tabwid-1.1.3/tabwid.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)</h1>
+
+      <h1>Power and Sample Size Simulation: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)</h1>
                         <h4 data-toc-skip class="author">Mahmoud
 M.Elsherif</h4>
             
             <h4 data-toc-skip class="date">2024-07-23</h4>
       
-      
+
       <div class="d-none name"><code>ambrosini_vignette.Rmd</code></div>
     </div>
 
@@ -240,38 +233,38 @@ comparison, subjective rating</p>
 <span></span>
 <span><span class="fu">flextable</span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">autofit</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-1b34d8bc{}.cl-1b32714e{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1b3361f8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-1b3369aa{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369ab{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369b4{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369b5{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369b6{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369b7{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369b8{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369be{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369bf{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369c0{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369c1{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369c2{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369c8{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369c9{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369ca{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369cb{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369cc{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b3369cd{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-1b34d8bc">
+<style>.cl-c10366b4{}.cl-c1010c02{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c101f6ee{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c101fe5a{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe64{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe65{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe66{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe67{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe68{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe6e{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe6f{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe70{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe71{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe72{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe73{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe74{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe78{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe79{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe7a{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe7b{width:2.289in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c101fe7c{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-c10366b4">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-1b3369aa"><p class="cl-1b3361f8"><span class="cl-1b32714e">Variable Name</span></p></th>
-<th class="cl-1b3369ab"><p class="cl-1b3361f8"><span class="cl-1b32714e">Variable Description</span></p></th>
-<th class="cl-1b3369b4"><p class="cl-1b3361f8"><span class="cl-1b32714e">Type (numeric, character, logical, etc.)</span></p></th>
+<th class="cl-c101fe5a"><p class="cl-c101f6ee"><span class="cl-c1010c02">Variable Name</span></p></th>
+<th class="cl-c101fe64"><p class="cl-c101f6ee"><span class="cl-c1010c02">Variable Description</span></p></th>
+<th class="cl-c101fe65"><p class="cl-c101f6ee"><span class="cl-c1010c02">Type (numeric, character, logical, etc.)</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1b3369b5"><p class="cl-1b3361f8"><span class="cl-1b32714e">items</span></p></td>
-<td class="cl-1b3369b6"><p class="cl-1b3361f8"><span class="cl-1b32714e">Item number</span></p></td>
-<td class="cl-1b3369b7"><p class="cl-1b3361f8"><span class="cl-1b32714e">Numeric</span></p></td>
+<td class="cl-c101fe66"><p class="cl-c101f6ee"><span class="cl-c1010c02">items</span></p></td>
+<td class="cl-c101fe67"><p class="cl-c101f6ee"><span class="cl-c1010c02">Item number</span></p></td>
+<td class="cl-c101fe68"><p class="cl-c101f6ee"><span class="cl-c1010c02">Numeric</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1b3369b8"><p class="cl-1b3361f8"><span class="cl-1b32714e">Eng_Word</span></p></td>
-<td class="cl-1b3369be"><p class="cl-1b3361f8"><span class="cl-1b32714e">English translation of the item</span></p></td>
-<td class="cl-1b3369bf"><p class="cl-1b3361f8"><span class="cl-1b32714e">Character</span></p></td>
+<td class="cl-c101fe6e"><p class="cl-c101f6ee"><span class="cl-c1010c02">Eng_Word</span></p></td>
+<td class="cl-c101fe6f"><p class="cl-c101f6ee"><span class="cl-c1010c02">English translation of the item</span></p></td>
+<td class="cl-c101fe70"><p class="cl-c101f6ee"><span class="cl-c1010c02">Character</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1b3369c0"><p class="cl-1b3361f8"><span class="cl-1b32714e">Ita_Word</span></p></td>
-<td class="cl-1b3369c1"><p class="cl-1b3361f8"><span class="cl-1b32714e">Italian translation of the item</span></p></td>
-<td class="cl-1b3369c2"><p class="cl-1b3361f8"><span class="cl-1b32714e">Character</span></p></td>
+<td class="cl-c101fe71"><p class="cl-c101f6ee"><span class="cl-c1010c02">Ita_Word</span></p></td>
+<td class="cl-c101fe72"><p class="cl-c101f6ee"><span class="cl-c1010c02">Italian translation of the item</span></p></td>
+<td class="cl-c101fe73"><p class="cl-c101f6ee"><span class="cl-c1010c02">Character</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1b3369c8"><p class="cl-1b3361f8"><span class="cl-1b32714e">SS_ID</span></p></td>
-<td class="cl-1b3369c9"><p class="cl-1b3361f8"><span class="cl-1b32714e">Subject ID Number</span></p></td>
-<td class="cl-1b3369ca"><p class="cl-1b3361f8"><span class="cl-1b32714e">Numeric</span></p></td>
+<td class="cl-c101fe74"><p class="cl-c101f6ee"><span class="cl-c1010c02">SS_ID</span></p></td>
+<td class="cl-c101fe78"><p class="cl-c101f6ee"><span class="cl-c1010c02">Subject ID Number</span></p></td>
+<td class="cl-c101fe79"><p class="cl-c101f6ee"><span class="cl-c1010c02">Numeric</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1b3369cb"><p class="cl-1b3361f8"><span class="cl-1b32714e">Rating</span></p></td>
-<td class="cl-1b3369cc"><p class="cl-1b3361f8"><span class="cl-1b32714e">Age of acquisition rating</span></p></td>
-<td class="cl-1b3369cd"><p class="cl-1b3361f8"><span class="cl-1b32714e">Numeric</span></p></td>
+<td class="cl-c101fe7a"><p class="cl-c101f6ee"><span class="cl-c1010c02">Rating</span></p></td>
+<td class="cl-c101fe7b"><p class="cl-c101f6ee"><span class="cl-c1010c02">Age of acquisition rating</span></p></td>
+<td class="cl-c101fe7c"><p class="cl-c101f6ee"><span class="cl-c1010c02">Numeric</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -365,33 +358,33 @@ SEs for items below our critical score of 0.405?</p>
 <span><span class="fu">flextable</span><span class="op">(</span><span class="va">final_table</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">autofit</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-1bde0e96{}.cl-1bdb49b8{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1bdcb064{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-1bdcb6cc{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1bdcb6cd{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1bdcb6ce{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1bdcb6cf{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1bdcb6d6{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1bdcb6d7{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1bdcb6d8{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1bdcb6d9{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1bdcb6da{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-1bde0e96">
+<style>.cl-c1a9c43c{}.cl-c1a71ca0{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1a7fbde{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1a80282{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a80283{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a80284{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a80285{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a8028c{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a8028d{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a8028e{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a80296{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a80297{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-c1a9c43c">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-1bdcb6cc"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">percent_below</span></p></th>
-<th class="cl-1bdcb6cd"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">sample_size</span></p></th>
-<th class="cl-1bdcb6ce"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">corrected_sample_size</span></p></th>
+<th class="cl-c1a80282"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">percent_below</span></p></th>
+<th class="cl-c1a80283"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">sample_size</span></p></th>
+<th class="cl-c1a80284"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">corrected_sample_size</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1bdcb6cf"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">80.40000</span></p></td>
-<td class="cl-1bdcb6d6"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">45</span></p></td>
-<td class="cl-1bdcb6d7"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">43.27286</span></p></td>
+<td class="cl-c1a80285"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">80.40000</span></p></td>
+<td class="cl-c1a8028c"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">45</span></p></td>
+<td class="cl-c1a8028d"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">43.27286</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1bdcb6cf"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">88.80000</span></p></td>
-<td class="cl-1bdcb6d6"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">55</span></p></td>
-<td class="cl-1bdcb6d7"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">54.58167</span></p></td>
+<td class="cl-c1a80285"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">88.80000</span></p></td>
+<td class="cl-c1a8028c"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">55</span></p></td>
+<td class="cl-c1a8028d"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">54.58167</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1bdcb6cf"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">91.86667</span></p></td>
-<td class="cl-1bdcb6d6"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">60</span></p></td>
-<td class="cl-1bdcb6d7"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">59.97526</span></p></td>
+<td class="cl-c1a80285"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">91.86667</span></p></td>
+<td class="cl-c1a8028c"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">60</span></p></td>
+<td class="cl-c1a8028d"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">59.97526</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-1bdcb6d8"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">97.20000</span></p></td>
-<td class="cl-1bdcb6d9"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">70</span></p></td>
-<td class="cl-1bdcb6da"><p class="cl-1bdcb064"><span class="cl-1bdb49b8">70.19716</span></p></td>
+<td class="cl-c1a8028e"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">97.20000</span></p></td>
+<td class="cl-c1a80296"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">70</span></p></td>
+<td class="cl-c1a80297"><p class="cl-c1a7fbde"><span class="cl-c1a71ca0">70.19716</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -418,7 +411,7 @@ influenced by the other variables that we used to select the stimuli in
 the study.</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -429,15 +422,15 @@ the study.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

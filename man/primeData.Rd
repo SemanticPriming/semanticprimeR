@@ -8,7 +8,7 @@
 A data frame of links and information about the
 SPAML project.
 
- \itemize{
+ \describe{
    \item{type}{which type of dataset you would like to view/load.}
    \item{filename}{the name of the file of the dataset.}
    \item{language}{the language of the stimuli/materials in the data.}

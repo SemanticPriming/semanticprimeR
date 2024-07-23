@@ -17,7 +17,7 @@
 #' @import dplyr
 #'
 #' @return
-#' \itemize{
+#' \describe{
 #'  \item{"samples"}{The bootstrapped samples for each tested sample
 #'  size. }
 #' }

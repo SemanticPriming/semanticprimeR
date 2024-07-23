@@ -32,7 +32,7 @@ each potential sample}
 by for the simulation, usually this column is the item column}
 }
 \value{
-\itemize{
+\describe{
  \item{"samples"}{The bootstrapped samples for each tested sample
  size. }
 }

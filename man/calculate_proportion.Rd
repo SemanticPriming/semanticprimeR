@@ -19,7 +19,7 @@ by for the cutoff calculation, usually this column is the item column}
 cutoff score SE}
 }
 \value{
-\itemize{
+\describe{
  \item{"summary_DF"}{Summary of the proportion of items
 below the standard error cutoff score. }
 }

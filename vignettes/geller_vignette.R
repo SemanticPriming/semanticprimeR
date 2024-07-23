@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------
+## ----setup, include = FALSE------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup------------------------
+## ----vignette-setup--------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Set a random seed
@@ -99,14 +99,14 @@ item_power <- function(data, # name of data frame
 
 }
 
-## ------------------------------------------
+## --------------------------------------------------------
 #read in data
 DF <- import("data/geller_data.xlsx") %>% 
   select(Experiment, Subject, `CueType[1Word,2Pic]`, Stimulus, EncodeJOL)
   
 str(DF)
 
-## ------------------------------------------
+## --------------------------------------------------------
 metadata <- tibble::tribble(
              ~Variable.Name,                                                                  ~Variable.Description, ~`Type (numeric,.character,.logical,.etc.)`,
                "Experiment",                                                 "Experiment 1 (1) or 2 (2) ONLY USE 1",                                          NA,
@@ -118,7 +118,7 @@ metadata <- tibble::tribble(
 
 flextable(metadata) %>% autofit()
 
-## ------------------------------------------
+## --------------------------------------------------------
 DF <- DF %>% 
   filter(Experiment == 1) %>%
   filter(!is.na(EncodeJOL))
@@ -133,13 +133,13 @@ var1 <- item_power(data = DF, # name of data frame
             sample_increase = 5,
             decile = .4)
 
-## ------------------------------------------
+## --------------------------------------------------------
 # individual SEs
 var1$SE
 
 var1$cutoff
 
-## ------------------------------------------
+## --------------------------------------------------------
 cutoff <- calculate_cutoff(population = DF, 
                            grouping_items = "Stimulus",
                            score = "EncodeJOL",

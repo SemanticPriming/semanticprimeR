@@ -15,7 +15,7 @@
 #' @import dplyr
 #'
 #' @return
-#' \itemize{
+#' \describe{
 #'  \item{"corrected_summary"}{The corrected sample size for the
 #'  number of people needed for accurately measured items.}
 #' }

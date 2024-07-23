@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------
+## ----setup, include = FALSE------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup, include=FALSE---------
+## ----vignette-setup, include=FALSE-----------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -15,7 +15,7 @@ library(tidyr)
 library(semanticprimeR)
 set.seed(84930)
 
-## ------------------------------------------
+## --------------------------------------------------------
 DF <- import("data/roer_data.xlsx")
 drops <- c("Scenario")
 DF <- DF[ , !(names(DF) %in% drops)]
@@ -23,18 +23,18 @@ DF <- cbind(Participant_Number = 1:nrow(DF) , DF)
 
 str(DF)
 
-## ------------------------------------------
+## --------------------------------------------------------
 metadata <- import("data/roer_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
 
-## ------------------------------------------
+## --------------------------------------------------------
 DF_long <- pivot_longer(DF, cols = -c(Participant_Number)) %>% 
   dplyr:: rename(item = name, score = value)
 
 flextable(head(DF_long)) %>% autofit()
 
-## ------------------------------------------
+## --------------------------------------------------------
 # individual SEs
 SE <- tapply(DF_long$score, DF_long$item, function (x) { sd(x)/sqrt(length(x)) })
 SE
@@ -51,7 +51,7 @@ cutoff_score <- calculate_cutoff(population = DF_long,
 
 cutoff_score$cutoff
 
-## ------------------------------------------
+## --------------------------------------------------------
 # sequence of sample sizes to try
 nsim <- 10 # small for cran
 samplesize_values <- seq(20, 500, 5)
@@ -102,7 +102,7 @@ final_sample <-
 
 flextable(final_sample %>% head()) %>% autofit()               
 
-## ------------------------------------------
+## --------------------------------------------------------
 final_table <- calculate_correction(
   proportion_summary = final_sample,
   pilot_sample_size = DF_long %>% group_by(item) %>% 

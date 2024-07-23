@@ -18,7 +18,7 @@
 #'
 #' @return
 #'
-#' \itemize{
+#' \describe{
 #'  \item{"se_items"}{The standard errors for each of your items.}
 #'  \item{"sd_items"}{The standard deviation of the standard
 #'  errors of your items.}
