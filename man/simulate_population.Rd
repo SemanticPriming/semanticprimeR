@@ -47,7 +47,7 @@ should it be rounded to?}
 }
 \value{
 \describe{
- \item{"population"}{The population scores with the number of items
+ \item{population}{The population scores with the number of items
 and scores specified}
 }
 }

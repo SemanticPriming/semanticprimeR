@@ -20,7 +20,7 @@ cutoff score SE}
 }
 \value{
 \describe{
- \item{"summary_DF"}{Summary of the proportion of items
+ \item{summary_DF}{Summary of the proportion of items
 below the standard error cutoff score. }
 }
 }

@@ -24,27 +24,27 @@ your pseudowords.}
 \value{
 A dataset of original tokens and suggested pseudowords.
 \describe{
- \item{"word_id"}{Number id for each unique word}
- \item{"first"}{First syllable in pairs of syllables.}
- \item{"original_pair"}{Pair of syllables together.}
- \item{"second"}{Second syllable in the pairs of syllables.}
- \item{"syll"}{Number of syllables in the token.}
- \item{"original_freq"}{Frequency of the syllable pair.}
- \item{"replacement_pair"}{Replacement option wherein
+ \item{word_id}{Number id for each unique word}
+ \item{first}{First syllable in pairs of syllables.}
+ \item{original_pair}{Pair of syllables together.}
+ \item{second}{Second syllable in the pairs of syllables.}
+ \item{syll}{Number of syllables in the token.}
+ \item{original_freq}{Frequency of the syllable pair.}
+ \item{replacement_pair}{Replacement option wherein
  one of the syllables has been changed. }
- \item{"replacement_syll"}{The replacement syllable.}
- \item{"replacement_freq"}{The frequency of the replacement
+ \item{replacement_syll}{The replacement syllable.}
+ \item{replacement_freq}{The frequency of the replacement
  syllable pair. }
- \item{"freq_diff"}{The difference in frequency of the transition
+ \item{freq_diff}{The difference in frequency of the transition
  pair.}
- \item{"char_diff"}{Number of characters difference in the original
+ \item{char_diff}{Number of characters difference in the original
  pair and the replacement pair. }
- \item{"letter_diff"}{Number of letters difference in the original
+ \item{letter_diff}{Number of letters difference in the original
  pair and the replacement pair. If the replacement includes the
  same letters, the difference would be zero. These values are
  excluded from being options.}
- \item{"original_word"}{The original token.}
- \item{"replacement_word"}{The final replacement token.}
+ \item{original_word}{The original token.}
+ \item{replacement_word}{The final replacement token.}
 }
 }
 \description{

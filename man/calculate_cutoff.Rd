@@ -23,12 +23,12 @@ calculate the proportion of variability in your items}
 }
 \value{
 \describe{
- \item{"se_items"}{The standard errors for each of your items.}
- \item{"sd_items"}{The standard deviation of the standard
+ \item{se_items}{The standard errors for each of your items.}
+ \item{sd_items}{The standard deviation of the standard
  errors of your items.}
- \item{"cutoff"}{The cutoff score for your estimation of sample
+ \item{cutoff}{The cutoff score for your estimation of sample
  size by item.}
- \item{"prop_var"}{The proportion of variability found in your
+ \item{prop_var}{The proportion of variability found in your
  items, used to calculate the revised sample from simulations.}
 }
 }

@@ -18,7 +18,7 @@
 #'
 #' @return
 #' \describe{
-#'  \item{"samples"}{The bootstrapped samples for each tested sample
+#'  \item{samples}{The bootstrapped samples for each tested sample
 #'  size. }
 #' }
 #'

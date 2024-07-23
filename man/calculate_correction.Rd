@@ -25,7 +25,7 @@ items standard errors.}
 }
 \value{
 \describe{
- \item{"corrected_summary"}{The corrected sample size for the
+ \item{corrected_summary}{The corrected sample size for the
  number of people needed for accurately measured items.}
 }
 }
