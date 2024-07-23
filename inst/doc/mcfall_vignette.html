@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Christopher L. Aberson" />
+
+<meta name="date" content="2024-07-23" />
+
+<title>Power and Sample Size Simulation: EAMMi2</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<style type="text/css">.tabwid {
+font-size: initial;
+padding-bottom: 1em;
+}
+.tabwid table{
+border-spacing:0px !important;
+border-collapse:collapse;
+line-height:1;
+margin-left:auto;
+margin-right:auto;
+border-width: 0;
+border-color: transparent;
+caption-side: top;
+}
+.tabwid-caption-bottom table{
+caption-side: bottom;
+}
+.tabwid_left table{
+margin-left:0;
+}
+.tabwid_right table{
+margin-right:0;
+}
+.tabwid td, .tabwid th {
+padding: 0;
+}
+.tabwid a {
+text-decoration: none;
+}
+.tabwid thead {
+background-color: transparent;
+}
+.tabwid tfoot {
+background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+margin: 0 0 !important;
+}
+</style>
+<script>document.addEventListener("DOMContentLoaded", function(event) {
+  var els = document.querySelectorAll(".tabwid");
+  var tabwid_link = document.querySelector('link[href*="tabwid.css"]')
+  if (tabwid_link === null) {
+    const tabwid_styles = document.evaluate("//style[contains(., 'tabwid')]", document, null, XPathResult.ANY_TYPE, null );
+    tabwid_link = tabwid_styles.iterateNext();
+  }
+
+  Array.prototype.forEach.call(els, function(template) {
+      const dest = document.createElement("div");
+      template.parentNode.insertBefore(dest, template.nextSibling)
+      dest.setAttribute("class", "flextable-shadow-host");
+      const fantome = dest.attachShadow({mode: 'open'});
+      fantome.appendChild(template);
+      if (tabwid_link !== null) {
+        fantome.appendChild(tabwid_link.cloneNode(true));
+      }
+  });
+});
+
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Power and Sample Size Simulation:
+EAMMi2</h1>
+<h4 class="author">Christopher L. Aberson</h4>
+<h4 class="date">2024-07-23</h4>
+
+
+
+<div id="vignette-setup" class="section level3">
+<h3>Vignette Setup:</h3>
+</div>
+<div id="projectdata-title" class="section level3">
+<h3>Project/Data Title:</h3>
+<p>Emerging Adulthood Measured at Multiple Institutions 2: The Next
+Generation (EAMMi2)</p>
+<p>Data provided by: Joe McFall</p>
+</div>
+<div id="projectdata-description" class="section level3">
+<h3>Project/Data Description:</h3>
+<p>Collaborators from 32 academic institutions primarily in the United
+States collected data from emerging adults (Nraw = 4220, Nprocessed =
+3134). Participants completed self-report measures assessing markers of
+adulthood, IDEA inventory of dimensions of emerging adulthood,
+subjective well-being, mindfulness, belonging, self-efficacy, disability
+identity, somatic health, perceived stress, perceived social support,
+social media use, political affiliation, beliefs about the American
+dream, interpersonal transgressions, narcissism, interpersonal
+exploitativeness, beliefs about marriage, and demographics.</p>
+</div>
+<div id="methods-description" class="section level3">
+<h3>Methods Description:</h3>
+<p>Project organizers recruited contributors through social media
+(Facebook &amp; Twitter) and listserv invitations (Society of
+Personality and Social Psychology, Society of Teaching Psychology).</p>
+</div>
+<div id="data-location" class="section level3">
+<h3>Data Location:</h3>
+<p><a href="https://osf.io/qtqpb/" class="uri">https://osf.io/qtqpb/</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>EAMMi2<span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/mcfall_data.sav.zip&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;moa1#&quot;</span>), <span class="fu">starts_with</span>(<span class="st">&quot;moa2#&quot;</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">str</span>(EAMMi2)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    3134 obs. of  40 variables:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_1 : num  3 4 4 4 4 4 3 4 4 1 ...</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_financialindependence&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_2 : num  4 4 4 3 2 3 2 3 3 2 ...</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_nolongerhom&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_3 : num  3 4 4 4 4 4 1 2 4 1 ...</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_finishededucation&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_4 : num  2 1 4 3 3 NA 1 1 4 1 ...</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_married&quot;</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_5 : num  3 1 4 3 3 NA 1 1 4 1 ...</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_havechild&quot;</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_6 : num  4 3 3 4 3 4 1 2 4 1 ...</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_settledcareer&quot;</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_7 : num  4 2 1 4 4 4 1 1 3 4 ...</span></span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_avoiddrunk&quot;</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_8 : num  4 3 4 4 4 4 4 1 3 4 ...</span></span>
+<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_avoiddrugs&quot;</span></span>
+<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_9 : num  4 4 4 4 2 4 4 1 2 4 ...</span></span>
+<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_usecontraception&quot;</span></span>
+<span id="cb1-55"><a href="#cb1-55" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-56"><a href="#cb1-56" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-57"><a href="#cb1-57" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-58"><a href="#cb1-58" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-59"><a href="#cb1-59" tabindex="-1"></a><span class="co">#&gt;  $ moa1#1_10: num  2 2 4 3 3 3 1 1 3 1 ...</span></span>
+<span id="cb1-60"><a href="#cb1-60" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_committedlongterm&quot;</span></span>
+<span id="cb1-61"><a href="#cb1-61" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-62"><a href="#cb1-62" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-63"><a href="#cb1-63" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-64"><a href="#cb1-64" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-65"><a href="#cb1-65" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_1 : num  1 2 2 3 2 1 2 1 2 3 ...</span></span>
+<span id="cb1-66"><a href="#cb1-66" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_financialindependence&quot;</span></span>
+<span id="cb1-67"><a href="#cb1-67" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-68"><a href="#cb1-68" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-69"><a href="#cb1-69" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-70"><a href="#cb1-70" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-71"><a href="#cb1-71" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_2 : num  3 1 3 1 2 3 2 2 1 3 ...</span></span>
+<span id="cb1-72"><a href="#cb1-72" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_nolongerhome&quot;</span></span>
+<span id="cb1-73"><a href="#cb1-73" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-74"><a href="#cb1-74" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-75"><a href="#cb1-75" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-76"><a href="#cb1-76" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;achieved&quot;</span></span>
+<span id="cb1-77"><a href="#cb1-77" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_3 : num  1 2 2 2 1 1 2 1 1 3 ...</span></span>
+<span id="cb1-78"><a href="#cb1-78" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_finishededucation&quot;</span></span>
+<span id="cb1-79"><a href="#cb1-79" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-80"><a href="#cb1-80" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-81"><a href="#cb1-81" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-82"><a href="#cb1-82" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;achieved&quot;</span></span>
+<span id="cb1-83"><a href="#cb1-83" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_4 : num  2 1 3 1 1 NA 2 1 1 3 ...</span></span>
+<span id="cb1-84"><a href="#cb1-84" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_married&quot;</span></span>
+<span id="cb1-85"><a href="#cb1-85" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-86"><a href="#cb1-86" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-87"><a href="#cb1-87" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-88"><a href="#cb1-88" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;achieved&quot;</span></span>
+<span id="cb1-89"><a href="#cb1-89" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_5 : num  3 1 3 1 1 NA 2 1 1 2 ...</span></span>
+<span id="cb1-90"><a href="#cb1-90" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_havechild&quot;</span></span>
+<span id="cb1-91"><a href="#cb1-91" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-92"><a href="#cb1-92" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-93"><a href="#cb1-93" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-94"><a href="#cb1-94" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;achieved&quot;</span></span>
+<span id="cb1-95"><a href="#cb1-95" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_6 : num  2 2 1 1 1 1 2 1 1 3 ...</span></span>
+<span id="cb1-96"><a href="#cb1-96" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_settledcareer&quot;</span></span>
+<span id="cb1-97"><a href="#cb1-97" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-98"><a href="#cb1-98" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-99"><a href="#cb1-99" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-100"><a href="#cb1-100" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;achieved&quot;</span></span>
+<span id="cb1-101"><a href="#cb1-101" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_7 : num  3 2 1 3 2 3 2 1 1 3 ...</span></span>
+<span id="cb1-102"><a href="#cb1-102" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_avoiddrunk&quot;</span></span>
+<span id="cb1-103"><a href="#cb1-103" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-104"><a href="#cb1-104" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-105"><a href="#cb1-105" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-106"><a href="#cb1-106" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;achieved&quot;</span></span>
+<span id="cb1-107"><a href="#cb1-107" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_8 : num  3 3 3 3 3 3 2 1 1 3 ...</span></span>
+<span id="cb1-108"><a href="#cb1-108" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_avoiddrugs&quot;</span></span>
+<span id="cb1-109"><a href="#cb1-109" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-110"><a href="#cb1-110" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-111"><a href="#cb1-111" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-112"><a href="#cb1-112" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;achieved&quot;</span></span>
+<span id="cb1-113"><a href="#cb1-113" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_9 : num  3 3 3 3 3 3 2 3 3 3 ...</span></span>
+<span id="cb1-114"><a href="#cb1-114" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_usecontraception&quot;</span></span>
+<span id="cb1-115"><a href="#cb1-115" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-116"><a href="#cb1-116" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-117"><a href="#cb1-117" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-118"><a href="#cb1-118" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-119"><a href="#cb1-119" tabindex="-1"></a><span class="co">#&gt;  $ moa1#2_10: num  3 1 3 1 1 1 2 2 1 2 ...</span></span>
+<span id="cb1-120"><a href="#cb1-120" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_committedlongterm&quot;</span></span>
+<span id="cb1-121"><a href="#cb1-121" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-122"><a href="#cb1-122" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-123"><a href="#cb1-123" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-124"><a href="#cb1-124" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;achieved&quot;</span></span>
+<span id="cb1-125"><a href="#cb1-125" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_1 : num  4 4 3 4 4 3 1 4 4 4 ...</span></span>
+<span id="cb1-126"><a href="#cb1-126" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_indepedentdecisions&quot;</span></span>
+<span id="cb1-127"><a href="#cb1-127" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-128"><a href="#cb1-128" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-129"><a href="#cb1-129" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-130"><a href="#cb1-130" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-131"><a href="#cb1-131" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_2 : num  4 4 4 4 4 3 1 3 4 4 ...</span></span>
+<span id="cb1-132"><a href="#cb1-132" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_supportfamily&quot;</span></span>
+<span id="cb1-133"><a href="#cb1-133" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-134"><a href="#cb1-134" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-135"><a href="#cb1-135" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-136"><a href="#cb1-136" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-137"><a href="#cb1-137" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_3 : num  3 3 4 3 4 1 1 2 4 4 ...</span></span>
+<span id="cb1-138"><a href="#cb1-138" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_carechildren&quot;</span></span>
+<span id="cb1-139"><a href="#cb1-139" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-140"><a href="#cb1-140" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-141"><a href="#cb1-141" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-142"><a href="#cb1-142" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-143"><a href="#cb1-143" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_4 : num  4 4 4 4 3 4 1 4 3 4 ...</span></span>
+<span id="cb1-144"><a href="#cb1-144" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_acceptresponsibility&quot;</span></span>
+<span id="cb1-145"><a href="#cb1-145" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-146"><a href="#cb1-146" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-147"><a href="#cb1-147" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-148"><a href="#cb1-148" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-149"><a href="#cb1-149" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_5 : num  4 3 4 3 3 4 1 3 4 2 ...</span></span>
+<span id="cb1-150"><a href="#cb1-150" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_employfulltime&quot;</span></span>
+<span id="cb1-151"><a href="#cb1-151" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-152"><a href="#cb1-152" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-153"><a href="#cb1-153" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-154"><a href="#cb1-154" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-155"><a href="#cb1-155" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_6 : num  4 4 4 4 4 4 1 2 3 4 ...</span></span>
+<span id="cb1-156"><a href="#cb1-156" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_avoiddrunkdriving&quot;</span></span>
+<span id="cb1-157"><a href="#cb1-157" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-158"><a href="#cb1-158" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-159"><a href="#cb1-159" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-160"><a href="#cb1-160" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-161"><a href="#cb1-161" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_7 : num  3 4 4 3 2 2 1 3 3 4 ...</span></span>
+<span id="cb1-162"><a href="#cb1-162" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_parentasequal&quot;</span></span>
+<span id="cb1-163"><a href="#cb1-163" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-164"><a href="#cb1-164" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-165"><a href="#cb1-165" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-166"><a href="#cb1-166" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-167"><a href="#cb1-167" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_8 : num  4 3 4 4 4 4 1 4 4 4 ...</span></span>
+<span id="cb1-168"><a href="#cb1-168" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_emotionalcontrol&quot;</span></span>
+<span id="cb1-169"><a href="#cb1-169" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-170"><a href="#cb1-170" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-171"><a href="#cb1-171" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-172"><a href="#cb1-172" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-173"><a href="#cb1-173" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_9 : num  3 3 4 4 3 4 1 3 4 2 ...</span></span>
+<span id="cb1-174"><a href="#cb1-174" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_considerothers&quot;</span></span>
+<span id="cb1-175"><a href="#cb1-175" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-176"><a href="#cb1-176" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-177"><a href="#cb1-177" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-178"><a href="#cb1-178" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-179"><a href="#cb1-179" tabindex="-1"></a><span class="co">#&gt;  $ moa2#1_10: num  2 4 2 3 4 1 1 4 4 1 ...</span></span>
+<span id="cb1-180"><a href="#cb1-180" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;imp_supportparentsfinance&quot;</span></span>
+<span id="cb1-181"><a href="#cb1-181" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.0&quot;</span></span>
+<span id="cb1-182"><a href="#cb1-182" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-183"><a href="#cb1-183" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 1 4</span></span>
+<span id="cb1-184"><a href="#cb1-184" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;not important&quot; &quot;important&quot;</span></span>
+<span id="cb1-185"><a href="#cb1-185" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_1 : num  3 3 2 3 2 3 2 2 3 3 ...</span></span>
+<span id="cb1-186"><a href="#cb1-186" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;achi_independentdecisions&quot;</span></span>
+<span id="cb1-187"><a href="#cb1-187" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-188"><a href="#cb1-188" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-189"><a href="#cb1-189" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-190"><a href="#cb1-190" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-191"><a href="#cb1-191" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_2 : num  2 1 2 2 1 1 2 1 1 2 ...</span></span>
+<span id="cb1-192"><a href="#cb1-192" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_supportfamily&quot;</span></span>
+<span id="cb1-193"><a href="#cb1-193" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-194"><a href="#cb1-194" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-195"><a href="#cb1-195" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-196"><a href="#cb1-196" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-197"><a href="#cb1-197" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_3 : num  3 1 3 2 2 1 2 1 3 3 ...</span></span>
+<span id="cb1-198"><a href="#cb1-198" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_carechildren&quot;</span></span>
+<span id="cb1-199"><a href="#cb1-199" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-200"><a href="#cb1-200" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-201"><a href="#cb1-201" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-202"><a href="#cb1-202" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-203"><a href="#cb1-203" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_4 : num  2 3 2 3 3 3 2 2 2 3 ...</span></span>
+<span id="cb1-204"><a href="#cb1-204" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_acceptresponsibility&quot;</span></span>
+<span id="cb1-205"><a href="#cb1-205" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-206"><a href="#cb1-206" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-207"><a href="#cb1-207" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-208"><a href="#cb1-208" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-209"><a href="#cb1-209" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_5 : num  3 1 1 2 2 3 2 1 3 3 ...</span></span>
+<span id="cb1-210"><a href="#cb1-210" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_employfulltime&quot;</span></span>
+<span id="cb1-211"><a href="#cb1-211" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-212"><a href="#cb1-212" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-213"><a href="#cb1-213" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-214"><a href="#cb1-214" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-215"><a href="#cb1-215" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_6 : num  3 3 3 3 2 3 2 3 2 3 ...</span></span>
+<span id="cb1-216"><a href="#cb1-216" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_avoiddrunkdriving&quot;</span></span>
+<span id="cb1-217"><a href="#cb1-217" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-218"><a href="#cb1-218" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-219"><a href="#cb1-219" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-220"><a href="#cb1-220" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-221"><a href="#cb1-221" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_7 : num  3 3 3 2 2 1 2 1 3 2 ...</span></span>
+<span id="cb1-222"><a href="#cb1-222" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_parentasequal&quot;</span></span>
+<span id="cb1-223"><a href="#cb1-223" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-224"><a href="#cb1-224" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-225"><a href="#cb1-225" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-226"><a href="#cb1-226" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-227"><a href="#cb1-227" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_8 : num  2 3 2 3 2 1 2 2 3 2 ...</span></span>
+<span id="cb1-228"><a href="#cb1-228" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_emotionalcontrol&quot;</span></span>
+<span id="cb1-229"><a href="#cb1-229" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-230"><a href="#cb1-230" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-231"><a href="#cb1-231" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-232"><a href="#cb1-232" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-233"><a href="#cb1-233" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_9 : num  2 3 2 3 3 3 2 2 3 2 ...</span></span>
+<span id="cb1-234"><a href="#cb1-234" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_considerothers&quot;</span></span>
+<span id="cb1-235"><a href="#cb1-235" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-236"><a href="#cb1-236" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-237"><a href="#cb1-237" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-238"><a href="#cb1-238" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span>
+<span id="cb1-239"><a href="#cb1-239" tabindex="-1"></a><span class="co">#&gt;  $ moa2#2_10: num  1 1 1 2 1 1 2 1 3 3 ...</span></span>
+<span id="cb1-240"><a href="#cb1-240" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;label&quot;)= chr &quot;ach_supportparentsfinances&quot;</span></span>
+<span id="cb1-241"><a href="#cb1-241" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F12.1&quot;</span></span>
+<span id="cb1-242"><a href="#cb1-242" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;display_width&quot;)= int 12</span></span>
+<span id="cb1-243"><a href="#cb1-243" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 3</span></span>
+<span id="cb1-244"><a href="#cb1-244" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;no&quot; &quot;somewhat&quot; &quot;yes&quot;</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/mcfall_vignette.R</p>
+</div>
+<div id="date-published" class="section level3">
+<h3>Date Published:</h3>
+<p>2018-01-09</p>
+</div>
+<div id="dataset-citation" class="section level3">
+<h3>Dataset Citation:</h3>
+<p>Grahe, J. E., Chalk, H. M., Cramblet Alvarez, L. D., Faas, C.,
+Hermann, A., McFall, J. P., &amp; Molyneux, K. (2018, January 10).
+EAMMi2 Public Data. Retrieved from: <a href="https://osf.io/x7mp2/" class="uri">https://osf.io/x7mp2/</a>.</p>
+</div>
+<div id="keywords" class="section level3">
+<h3>Keywords:</h3>
+<p>self report, emerging adulthood</p>
+</div>
+<div id="use-license" class="section level3">
+<h3>Use License:</h3>
+<p>CC-By Attribution 4.0 International</p>
+</div>
+<div id="geographic-description---citystatecountry-of-participants" class="section level3">
+<h3>Geographic Description - City/State/Country of Participants:</h3>
+<p>Mostly United States but any English speaker could complete.</p>
+</div>
+<div id="column-metadata" class="section level3">
+<h3>Column Metadata:</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>EAMMi2metadata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/mcfall_metadata.csv&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">flextable</span>(EAMMi2metadata) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-b265ec46{}.cl-b2627a0c{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b263a38c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b263ad64{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad65{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad66{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad67{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad6e{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad6f{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad70{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad71{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad78{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad79{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad7a{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad82{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad83{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad8c{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad8d{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad8e{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad8f{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad90{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad91{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad96{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad97{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ad98{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ada0{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ada1{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ada2{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adaa{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adab{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adac{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adad{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adb4{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adb5{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adb6{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adb7{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adbe{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adbf{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adc0{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adc1{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adc8{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adc9{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adca{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263add2{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263add3{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263add4{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263add5{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263addc{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263addd{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adde{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263addf{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ade6{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ade7{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ade8{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ade9{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adea{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adeb{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adf0{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adf1{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adf2{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adfa{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adfb{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263adfc{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ae04{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ae05{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ae06{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ae07{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ae0e{width:2.145in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b263ae0f{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b265ec46"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b263ad64"><p class="cl-b263a38c"><span class="cl-b2627a0c">Variable</span></p></th><th class="cl-b263ad65"><p class="cl-b263a38c"><span class="cl-b2627a0c">Label</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b263ad66"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_1</span></p></td><td class="cl-b263ad67"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_financialindependence</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_2</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_nolongerhom</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad66"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_3</span></p></td><td class="cl-b263ad67"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_finishededucation</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_4</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_married</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_5</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_havechild</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_6</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_settledcareer</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_7</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_avoiddrunk</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_8</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_avoiddrugs</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad78"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_9</span></p></td><td class="cl-b263ad79"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_usecontraception</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#1_10</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_committedlongterm</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad66"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_1</span></p></td><td class="cl-b263ad67"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_financialindependence</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_2</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_nolongerhome</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_3</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_finishededucation</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_4</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_married</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_5</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_havechild</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_6</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_settledcareer</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_7</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_avoiddrunk</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_8</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_avoiddrugs</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_9</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_usecontraception</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa1#2_10</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_committedlongterm</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_1</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_indepedentdecisions</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_2</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_supportfamily</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_3</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_carechildren</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8f"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_4</span></p></td><td class="cl-b263ad90"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_acceptresponsibility</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_5</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_employfulltime</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_6</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_avoiddrunkdriving</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad78"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_7</span></p></td><td class="cl-b263ad79"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_parentasequal</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad78"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_8</span></p></td><td class="cl-b263ad79"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_emotionalcontrol</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_9</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_considerothers</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad66"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#1_10</span></p></td><td class="cl-b263ad67"><p class="cl-b263a38c"><span class="cl-b2627a0c">imp_supportparentsfinance</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_1</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">achi_independentdecisions</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_2</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_supportfamily</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_3</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_carechildren</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8f"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_4</span></p></td><td class="cl-b263ad90"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_acceptresponsibility</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_5</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_employfulltime</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_6</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_avoiddrunkdriving</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_7</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_parentasequal</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_8</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_emotionalcontrol</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_9</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_considerothers</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad66"><p class="cl-b263a38c"><span class="cl-b2627a0c">moa2#2_10</span></p></td><td class="cl-b263ad67"><p class="cl-b263a38c"><span class="cl-b2627a0c">ach_supportparentsfinances</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8f"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA_1</span></p></td><td class="cl-b263ad90"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA-manypossibility</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad78"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA_2</span></p></td><td class="cl-b263ad79"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA-exploration</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad91"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA_3</span></p></td><td class="cl-b263ad96"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA-stressed</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA_4</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA-highpressure</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad97"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA_5</span></p></td><td class="cl-b263ad98"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA-definingself</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad91"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA_6</span></p></td><td class="cl-b263ad96"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA-beliefsvalues</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada0"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA_7</span></p></td><td class="cl-b263ada1"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA-someways</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA_8</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">IDEA-graduallyadult</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">swb_1</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">SWB-ideal</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">swb_2</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">SWB-excellent</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">swb_3</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">SWB-satisfied</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">swb_4</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">SWB-important</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">swb_5</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">SWB-changenothing</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">swb_6</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">SWB-highselfesteem</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_1</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-emotnotconscious</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_2</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-breakspill</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_3</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-difficultfocus</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_4</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-walknoattention</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_5</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-notnoticetension</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad97"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_6</span></p></td><td class="cl-b263ad98"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-forgetnames</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_7</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-runautomatic</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_8</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-rushactivities</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad97"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_9</span></p></td><td class="cl-b263ad98"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-goalfocus</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8f"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_10</span></p></td><td class="cl-b263ad90"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-jobautomatically</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_11</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-listensametime</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_12</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-driveautomatic</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_13</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-preoccupied</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8f"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_14</span></p></td><td class="cl-b263ad90"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-withoutpayattention</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad7a"><p class="cl-b263a38c"><span class="cl-b2627a0c">mindful_15</span></p></td><td class="cl-b263ad82"><p class="cl-b263a38c"><span class="cl-b2627a0c">MIND-snackunaware</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_1</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_nobother</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_2</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_avoidrejection</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_3</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_seldomworry</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_4</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_needpeople</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_5</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_othersacceptme</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_6</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_notalone</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_7</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_OKalone</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_8</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_strongNEED</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_9</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_bothernotinplans</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad97"><p class="cl-b263a38c"><span class="cl-b2627a0c">belong_10</span></p></td><td class="cl-b263ad98"><p class="cl-b263a38c"><span class="cl-b2627a0c">Belong_feelingseasilyhurt</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">belnow</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">BELONG-feelIbelong</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_1</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-solvetryhard</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_2</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-getwhatwant</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_3</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-stick2goals</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_4</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-dealunexpected</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_5</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-resourceful</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_6</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-solvenecesseffort</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_7</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-remaincalm</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_8</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-findseveralsolutions</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_9</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-thinkofsolution</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad8d"><p class="cl-b263a38c"><span class="cl-b2627a0c">efficacy_10</span></p></td><td class="cl-b263ad8e"><p class="cl-b263a38c"><span class="cl-b2627a0c">EFF-whatevercomesmyway</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_1</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-specialforneed</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_2</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-specialjoysorry.</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_3</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-familyhelp</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_4</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-familyemotionalhelp</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_5</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-specialcomfort</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_6</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-friendshelp</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adb5"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_7</span></p></td><td class="cl-b263adb6"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-countonfriends</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_8</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-talkfamily</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_9</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-friendsjoysorrow</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_10</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-specialcaresfeelings</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_11</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-familyhelpdecisions</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">support_12</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">SUP-friendstalkproblems</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_1</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-avoiddrifting</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_2</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-friendsplanstonight</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adb7"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_3</span></p></td><td class="cl-b263adbe"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-friendsintouch</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_4</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-friendsupto</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_5</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-Reconnectwithpeople</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adb7"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_6</span></p></td><td class="cl-b263adbe"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-Findoutmore</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adb7"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_7</span></p></td><td class="cl-b263adbe"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-someonetoknowbetter</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adb7"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_8</span></p></td><td class="cl-b263adbe"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-makenewfriends</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_9</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-getintouch</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_10</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-getinformation</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adb7"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMedia_11</span></p></td><td class="cl-b263adbe"><p class="cl-b263a38c"><span class="cl-b2627a0c">SocMed-shareinformation</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad78"><p class="cl-b263a38c"><span class="cl-b2627a0c">usdream_1</span></p></td><td class="cl-b263ad79"><p class="cl-b263a38c"><span class="cl-b2627a0c">AmDreamImport</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">usdream_2</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">AmDreamAchieve</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad83"><p class="cl-b263a38c"><span class="cl-b2627a0c">usdream_3</span></p></td><td class="cl-b263ad8c"><p class="cl-b263a38c"><span class="cl-b2627a0c">attentionchechshould be1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adbf"><p class="cl-b263a38c"><span class="cl-b2627a0c">transgres_1</span></p></td><td class="cl-b263adc0"><p class="cl-b263a38c"><span class="cl-b2627a0c">trangress-lietoyou</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adc1"><p class="cl-b263a38c"><span class="cl-b2627a0c">transgres_2</span></p></td><td class="cl-b263adc8"><p class="cl-b263a38c"><span class="cl-b2627a0c">transgress-rumors</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adc9"><p class="cl-b263a38c"><span class="cl-b2627a0c">transgres_3</span></p></td><td class="cl-b263adca"><p class="cl-b263a38c"><span class="cl-b2627a0c">transgress-goteven</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">transgres_4</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">transgress-degraded</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add2"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI1</span></p></td><td class="cl-b263add3"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add2"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI2</span></p></td><td class="cl-b263add3"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add4"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI3</span></p></td><td class="cl-b263add5"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add2"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI4</span></p></td><td class="cl-b263add3"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263addc"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI5</span></p></td><td class="cl-b263addd"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adde"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI6</span></p></td><td class="cl-b263addf"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add2"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI7</span></p></td><td class="cl-b263add3"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ade6"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI8</span></p></td><td class="cl-b263ade7"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI8</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ade8"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI9</span></p></td><td class="cl-b263ade9"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI9</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add4"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI10</span></p></td><td class="cl-b263add5"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI10</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add2"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI11</span></p></td><td class="cl-b263add3"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI11</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add2"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI12</span></p></td><td class="cl-b263add3"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI12</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263add4"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI13</span></p></td><td class="cl-b263add5"><p class="cl-b263a38c"><span class="cl-b2627a0c">NPI13</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad78"><p class="cl-b263a38c"><span class="cl-b2627a0c">exploit_1</span></p></td><td class="cl-b263ad79"><p class="cl-b263a38c"><span class="cl-b2627a0c">EXP-benefitfromothers</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad66"><p class="cl-b263a38c"><span class="cl-b2627a0c">exploit_2</span></p></td><td class="cl-b263ad67"><p class="cl-b263a38c"><span class="cl-b2627a0c">EXP-profitfromothers</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">exploit_3</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">EXP-usingothers</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ1</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-disabilityinterferes</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adea"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ2</span></p></td><td class="cl-b263adeb"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-dontthinkdisabled</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adea"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ3</span></p></td><td class="cl-b263adeb"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-lackconfidence</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ4</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-proudtobedisabled</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adea"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ5</span></p></td><td class="cl-b263adeb"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-ashamed</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ6</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-notreducedenjoy</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ7</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-limitedfriendships</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adab"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ8</span></p></td><td class="cl-b263adac"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-sourcestrength</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ9</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-accomplishmore</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ10</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-notaproblem</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adea"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ11</span></p></td><td class="cl-b263adeb"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-normallife</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ12</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-betterperson</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ada2"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ13</span></p></td><td class="cl-b263adaa"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-importantpart</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ14</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-proudofdisability</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">POQ15</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">DISID-disabilityenriches</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_1</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys_stomach</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_2</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-back</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_3</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-appendages</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_4</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-headaches</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_5</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-chest</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_6</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-dizziness</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_7</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-fainting</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_8</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-heartpound</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_9</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-shortness</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_10</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-constipation</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_11</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-nausea</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_12</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-tired</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adad"><p class="cl-b263a38c"><span class="cl-b2627a0c">physSx_13</span></p></td><td class="cl-b263adb4"><p class="cl-b263a38c"><span class="cl-b2627a0c">Phys-troublesleeping</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_1</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-beenupset</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adf0"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_2</span></p></td><td class="cl-b263adf1"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-unablecontrol</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adf2"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_3</span></p></td><td class="cl-b263adfa"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-nervous</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adfb"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_4</span></p></td><td class="cl-b263adfc"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-confident</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263adbf"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_5</span></p></td><td class="cl-b263adc0"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-goingmyway</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad70"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_6</span></p></td><td class="cl-b263ad71"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-couldnotcope</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ae04"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_7</span></p></td><td class="cl-b263ae05"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-controlirritations</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad97"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_8</span></p></td><td class="cl-b263ad98"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-ontopofthings</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ad6e"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_9</span></p></td><td class="cl-b263ad6f"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-beenangered</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ae06"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress_10</span></p></td><td class="cl-b263ae07"><p class="cl-b263a38c"><span class="cl-b2627a0c">stress-feltdifficulties</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b263ae0e"><p class="cl-b263a38c"><span class="cl-b2627a0c">Variables in the working file</span></p></td><td class="cl-b263ae0f"><p class="cl-b263a38c"><span class="cl-b2627a0c"></span></p></td></tr></tbody></table></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>EAMMi2 <span class="ot">&lt;-</span> EAMMi2[<span class="fu">complete.cases</span>(EAMMi2),]</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>EAMMi2long <span class="ot">&lt;-</span> EAMMi2 <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">score =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="fu">flextable</span>(<span class="fu">head</span>(EAMMi2long)) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-b27f5bb8{}.cl-b27d3cca{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b27e1910{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b27e191a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b27e1ff0{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b27e1ffa{width:0.659in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b27e1ffb{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b27e1ffc{width:0.659in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b27e1ffd{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b27e2004{width:0.659in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b27f5bb8"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b27e1ff0"><p class="cl-b27e1910"><span class="cl-b27d3cca">item</span></p></th><th class="cl-b27e1ffa"><p class="cl-b27e191a"><span class="cl-b27d3cca">score</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b27e1ffb"><p class="cl-b27e1910"><span class="cl-b27d3cca">moa1#1_1</span></p></td><td class="cl-b27e1ffc"><p class="cl-b27e191a"><span class="cl-b27d3cca">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27e1ffb"><p class="cl-b27e1910"><span class="cl-b27d3cca">moa1#1_1</span></p></td><td class="cl-b27e1ffc"><p class="cl-b27e191a"><span class="cl-b27d3cca">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27e1ffb"><p class="cl-b27e1910"><span class="cl-b27d3cca">moa1#1_1</span></p></td><td class="cl-b27e1ffc"><p class="cl-b27e191a"><span class="cl-b27d3cca">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27e1ffb"><p class="cl-b27e1910"><span class="cl-b27d3cca">moa1#1_1</span></p></td><td class="cl-b27e1ffc"><p class="cl-b27e191a"><span class="cl-b27d3cca">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27e1ffb"><p class="cl-b27e1910"><span class="cl-b27d3cca">moa1#1_1</span></p></td><td class="cl-b27e1ffc"><p class="cl-b27e191a"><span class="cl-b27d3cca">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27e1ffd"><p class="cl-b27e1910"><span class="cl-b27d3cca">moa1#1_1</span></p></td><td class="cl-b27e2004"><p class="cl-b27e191a"><span class="cl-b27d3cca">3</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/mcfall_vignette.R</p>
+</div>
+<div id="aipe-analysis" class="section level3">
+<h3>AIPE Analysis:</h3>
+<div id="stopping-rule" class="section level4">
+<h4>Stopping Rule</h4>
+<p>What the usual standard error for the data that could be considered
+for our stopping rule?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fu">tapply</span>(EAMMi2long<span class="sc">$</span>score, EAMMi2long<span class="sc">$</span>item, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">min</span>(SE)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.04956958</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">quantile</span>(SE, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;        40% </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 0.09805288</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="fu">max</span>(SE)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; [1] 0.1781767</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co"># we can also use semanticprimer&#39;s function</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>cutoff_score <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> EAMMi2long,</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>                                 <span class="at">grouping_items =</span> <span class="st">&quot;item&quot;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>                                 <span class="at">score =</span> <span class="st">&quot;score&quot;</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>                                 <span class="at">minimum =</span> <span class="fu">min</span>(EAMMi2long<span class="sc">$</span>score),</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>                                 <span class="at">maximum =</span> <span class="fu">max</span>(EAMMi2long<span class="sc">$</span>score))</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>cutoff_score<span class="sc">$</span>cutoff</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt;        40% </span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; 0.09805288</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/mcfall_vignette.R</p>
+<p>The items have a range of 0.0495696 to 0.1781767. We could use the
+40% decile SE = 0.0980529 as our critical value for our stopping rule
+given the manuscript results. We could also have a set SE to a specific
+item if we do not believe we have representative pilot data in this
+example. You should also consider the scale when estimating these values
+(i.e., 1-7 scales will have smaller estimates than 1-100 scales).</p>
+</div>
+<div id="minimum-sample-size" class="section level4">
+<h4>Minimum Sample Size</h4>
+<p>To estimate minimum sample size, we should figure out what number of
+participants it would take to achieve 80% of the SEs for items below our
+critical score of 0.0980529?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># sequence of sample sizes to try</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># small for cran</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>samplesize_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">200</span>, <span class="dv">5</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># create a blank table for us to save the values in </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values)<span class="sc">*</span>nsim, </span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(EAMMi2long<span class="sc">$</span>item)))</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table)</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>sim_table<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>iterate <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim){</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>  <span class="co"># loop over sample sizes</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(samplesize_values)){</span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>      </span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>    <span class="co"># temp dataframe that samples and summarizes</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> EAMMi2long <span class="sc">%&gt;%</span> </span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>      <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>      <span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">se =</span> <span class="fu">sd</span>(score)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(score))) </span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>    </span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>    <span class="fu">colnames</span>(sim_table)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(EAMMi2long<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp<span class="sc">$</span>item</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>    sim_table[iterate, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(EAMMi2long<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp<span class="sc">$</span>se</span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>    sim_table[iterate, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a>    sim_table[iterate, <span class="st">&quot;nsim&quot;</span>] <span class="ot">&lt;-</span> p</span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>    </span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a>    iterate <span class="ot">&lt;-</span> iterate <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a>  }</span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>}</span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a>final_sample <span class="ot">&lt;-</span> </span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a>  sim_table <span class="sc">%&gt;%</span> </span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, nsim)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>  <span class="fu">group_by</span>(sample_size, nsim) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(value <span class="sc">&lt;=</span> cutoff)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(EAMMi2long<span class="sc">$</span>item))) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a>  <span class="co"># then summarize all down averaging percents</span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">mean</span>(percent_below)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by</span></span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a><span class="co">#&gt; &#39;sample_size&#39;. You can override using the</span></span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a><span class="co">#&gt; `.groups` argument.</span></span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a><span class="fu">flextable</span>(final_sample <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-b35012ee{}.cl-b34de1f4{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b34ec204{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b34ec8d0{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec8da{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec8db{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec8dc{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec8e4{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec8e5{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec8e6{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec8e7{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec8f8{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b34ec902{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b35012ee"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b34ec8d0"><p class="cl-b34ec204"><span class="cl-b34de1f4">sample_size</span></p></th><th class="cl-b34ec8da"><p class="cl-b34ec204"><span class="cl-b34de1f4">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b34ec8db"><p class="cl-b34ec204"><span class="cl-b34de1f4">20</span></p></td><td class="cl-b34ec8dc"><p class="cl-b34ec204"><span class="cl-b34de1f4">0.1125</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b34ec8db"><p class="cl-b34ec204"><span class="cl-b34de1f4">25</span></p></td><td class="cl-b34ec8dc"><p class="cl-b34ec204"><span class="cl-b34de1f4">0.1425</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b34ec8e4"><p class="cl-b34ec204"><span class="cl-b34de1f4">30</span></p></td><td class="cl-b34ec8e5"><p class="cl-b34ec204"><span class="cl-b34de1f4">0.1950</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b34ec8db"><p class="cl-b34ec204"><span class="cl-b34de1f4">35</span></p></td><td class="cl-b34ec8dc"><p class="cl-b34ec204"><span class="cl-b34de1f4">0.2225</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b34ec8e6"><p class="cl-b34ec204"><span class="cl-b34de1f4">40</span></p></td><td class="cl-b34ec8e7"><p class="cl-b34ec204"><span class="cl-b34de1f4">0.3050</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b34ec8f8"><p class="cl-b34ec204"><span class="cl-b34de1f4">45</span></p></td><td class="cl-b34ec902"><p class="cl-b34ec204"><span class="cl-b34de1f4">0.3475</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/mcfall_vignette.R</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>final_table <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">proportion_summary =</span> final_sample,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">pilot_sample_size =</span> EAMMi2long <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">sample_size =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">avg_sample =</span> <span class="fu">mean</span>(sample_size)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(avg_sample),</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="at">proportion_variability =</span> cutoff_score<span class="sc">$</span>prop_var</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="fu">flextable</span>(final_table) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-b35a48fe{}.cl-b35833e8{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b3590a66{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b359109c{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b35910a6{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b35910a7{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b35910a8{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b35910a9{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b35910aa{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b35910b0{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b35910b1{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b35910d8{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b35a48fe"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b359109c"><p class="cl-b3590a66"><span class="cl-b35833e8">percent_below</span></p></th><th class="cl-b35910a6"><p class="cl-b3590a66"><span class="cl-b35833e8">sample_size</span></p></th><th class="cl-b35910a7"><p class="cl-b3590a66"><span class="cl-b35833e8">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b35910a8"><p class="cl-b3590a66"><span class="cl-b35833e8">81.00</span></p></td><td class="cl-b35910a9"><p class="cl-b3590a66"><span class="cl-b35833e8">100</span></p></td><td class="cl-b35910aa"><p class="cl-b3590a66"><span class="cl-b35833e8">79.10863</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b35910a8"><p class="cl-b3590a66"><span class="cl-b35833e8">85.50</span></p></td><td class="cl-b35910a9"><p class="cl-b3590a66"><span class="cl-b35833e8">110</span></p></td><td class="cl-b35910aa"><p class="cl-b3590a66"><span class="cl-b35833e8">86.31167</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b35910a8"><p class="cl-b3590a66"><span class="cl-b35833e8">90.25</span></p></td><td class="cl-b35910a9"><p class="cl-b3590a66"><span class="cl-b35833e8">125</span></p></td><td class="cl-b35910aa"><p class="cl-b3590a66"><span class="cl-b35833e8">96.91896</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b35910b0"><p class="cl-b3590a66"><span class="cl-b35833e8">97.25</span></p></td><td class="cl-b35910b1"><p class="cl-b3590a66"><span class="cl-b35833e8">155</span></p></td><td class="cl-b35910d8"><p class="cl-b3590a66"><span class="cl-b35833e8">116.99286</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/mcfall_vignette.R</p>
+<p>Based on these simulations, we can decide our minimum sample size is
+likely close to 79.</p>
+</div>
+<div id="maximum-sample-size" class="section level4">
+<h4>Maximum Sample Size</h4>
+<p>In this example, we could set our maximum sample size for 90% power,
+which would equate to 97 participants.</p>
+</div>
+<div id="final-sample-size" class="section level4">
+<h4>Final Sample Size</h4>
+<p>In any estimate for sample size, you should also consider the
+potential for missing data and/or unusable data due to any other
+exclusion criteria in your study (i.e., attention checks, speeding,
+getting the answer right, etc.). Another important note is that these
+estimates are driven by the number of items. Fewer items would require
+smaller sample sizes to achieve minimum power. Note: Several redundant
+(e.g., reverse coded items) and/or not useful variables (various checks)
+were omitted.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

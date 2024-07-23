@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Necdet Gürkan &amp; Yangyang Yu" />
+
+<meta name="date" content="2024-07-23" />
+
+<title>Power and Sample Size Simulation: Liking effect induced by gaze</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<style type="text/css">.tabwid {
+font-size: initial;
+padding-bottom: 1em;
+}
+.tabwid table{
+border-spacing:0px !important;
+border-collapse:collapse;
+line-height:1;
+margin-left:auto;
+margin-right:auto;
+border-width: 0;
+border-color: transparent;
+caption-side: top;
+}
+.tabwid-caption-bottom table{
+caption-side: bottom;
+}
+.tabwid_left table{
+margin-left:0;
+}
+.tabwid_right table{
+margin-right:0;
+}
+.tabwid td, .tabwid th {
+padding: 0;
+}
+.tabwid a {
+text-decoration: none;
+}
+.tabwid thead {
+background-color: transparent;
+}
+.tabwid tfoot {
+background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+margin: 0 0 !important;
+}
+</style>
+<script>document.addEventListener("DOMContentLoaded", function(event) {
+  var els = document.querySelectorAll(".tabwid");
+  var tabwid_link = document.querySelector('link[href*="tabwid.css"]')
+  if (tabwid_link === null) {
+    const tabwid_styles = document.evaluate("//style[contains(., 'tabwid')]", document, null, XPathResult.ANY_TYPE, null );
+    tabwid_link = tabwid_styles.iterateNext();
+  }
+
+  Array.prototype.forEach.call(els, function(template) {
+      const dest = document.createElement("div");
+      template.parentNode.insertBefore(dest, template.nextSibling)
+      dest.setAttribute("class", "flextable-shadow-host");
+      const fantome = dest.attachShadow({mode: 'open'});
+      fantome.appendChild(template);
+      if (tabwid_link !== null) {
+        fantome.appendChild(tabwid_link.cloneNode(true));
+      }
+  });
+});
+
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Power and Sample Size Simulation: Liking
+effect induced by gaze</h1>
+<h4 class="author">Necdet Gürkan &amp; Yangyang Yu</h4>
+<h4 class="date">2024-07-23</h4>
+
+
+
+<div id="vignette-setup" class="section level3">
+<h3>Vignette Setup:</h3>
+</div>
+<div id="projectdata-title" class="section level3">
+<h3>Project/Data Title:</h3>
+<p>Liking effect induced by gaze</p>
+<p>Data provided by: José Luis Ulloa, Clara Marchetti, Marine Taffou
+&amp; Nathalie George</p>
+</div>
+<div id="projectdata-description" class="section level3">
+<h3>Project/Data Description:</h3>
+<p>This dataset resulted from a study aiming at investigating how gaze
+perception can influence preferences. Previous studies suggest that we
+like more the objects that are looked-at by others than non-looked-at
+objects (a so-called liking effect). We extended previous studies to
+investigate both abstract and manipulable objects. Participants
+performed a categorization task (for items that were cued or not by
+gaze). Next, participants evaluated how much they liked the items. We
+tested if the liking effect could be observed for non-manipulable
+(alphanumeric characters) as well as for manipulable items (common
+tools).</p>
+</div>
+<div id="methods-description" class="section level3">
+<h3>Methods Description:</h3>
+<p>Participants were students at Heinrich-Heine-Universität Düsseldorf,
+Germany that were paid for participating or received course credit.
+Their ages ranged from 18 to 55 years. The words to-be-rated consisted
+of 30 typical members of 30 categories drawn from the updated Battig and
+Montague norms (Van Overschelde, Rawson, &amp; Dunlosky, 2004).</p>
+</div>
+<div id="data-location" class="section level3">
+<h3>Data Location:</h3>
+<p>Data included within this vignette.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>DF <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/ulloa_data.csv&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>drops <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;RT&quot;</span>, <span class="st">&quot;side&quot;</span>, <span class="st">&quot;aff-ness&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>DF <span class="ot">&lt;-</span> DF[ , <span class="sc">!</span>(<span class="fu">names</span>(DF) <span class="sc">%in%</span> drops)]</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">head</span>(DF)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;   suj congr item liking</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; 1   1 valid    G      4</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; 2   1 valid    G      3</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; 3   1 valid    G      1</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; 4   1 valid    G      3</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; 5   1 valid    K      8</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; 6   1 valid    K      6</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+</div>
+<div id="date-published" class="section level3">
+<h3>Date Published:</h3>
+<p>No official publication, see citation below.</p>
+</div>
+<div id="dataset-citation" class="section level3">
+<h3>Dataset Citation:</h3>
+<p>José Luis Ulloa, Clara Marchetti, Marine Taffou &amp; Nathalie George
+(2014): Only your eyes tell me what you like: Exploring the liking
+effect induced by other’s gaze, Cognition &amp; Emotion, DOI:
+10.1080/02699931.2014.919899</p>
+</div>
+<div id="keywords" class="section level3">
+<h3>Keywords:</h3>
+<p>Social attention; Gaze; Pointing gesture; Liking; Cueing.</p>
+</div>
+<div id="use-license" class="section level3">
+<h3>Use License:</h3>
+<p>CC-BY</p>
+</div>
+<div id="geographic-description---citystatecountry-of-participants" class="section level3">
+<h3>Geographic Description - City/State/Country of Participants:</h3>
+<p>Paris, France</p>
+</div>
+<div id="column-metadata" class="section level3">
+<h3>Column Metadata:</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/ulloa_metadata.xlsx&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">flextable</span>(metadata) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-cafffe54{}.cl-cafdac9e{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-cafe9d7a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cafea4d2{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea4fa{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea4fb{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea504{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea536{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea540{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea541{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea542{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea54a{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea54b{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea554{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea55e{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea55f{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea572{width:3.275in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cafea57c{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-cafffe54"><thead><tr style="overflow-wrap:break-word;"><th class="cl-cafea4d2"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">Variable Name</span></p></th><th class="cl-cafea4fa"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">Variable Description</span></p></th><th class="cl-cafea4fb"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">Type (numeric, character, logical, etc.)</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-cafea504"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">suj</span></p></td><td class="cl-cafea536"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">Unique number assigned to each participant</span></p></td><td class="cl-cafea540"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cafea541"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">congr</span></p></td><td class="cl-cafea542"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">valid vs invalid</span></p></td><td class="cl-cafea54a"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">Character</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cafea54b"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">item</span></p></td><td class="cl-cafea554"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">G, K, S, L</span></p></td><td class="cl-cafea55e"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">Character</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cafea55f"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">liking</span></p></td><td class="cl-cafea572"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">rating response</span></p></td><td class="cl-cafea57c"><p class="cl-cafe9d7a"><span class="cl-cafdac9e">Numeric</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+</div>
+<div id="aipe-analysis" class="section level3">
+<h3>AIPE Analysis</h3>
+<p>In this dataset, there are valid and invalid cue-targeting variable.
+In valid cue-targeting condition, stimulus is on the same side of the
+gaze. In invalid cue-targeting condition, stimulus was on the opposite
+side of the gaze. We consider these two different conditions
+separately.</p>
+<div id="stopping-rule" class="section level4">
+<h4>Stopping Rule</h4>
+<p>What the usual standard error for the data that could be considered
+for our stopping rule using the 40% decile?</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">### create  subset for valid cue-targeting</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>DF_valid <span class="ot">&lt;-</span> <span class="fu">subset</span>(DF, congr <span class="sc">==</span> <span class="st">&quot;valid&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">group_by</span>(suj, item) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">liking =</span> <span class="fu">mean</span>(liking, <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;suj&#39;.</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; You can override using the `.groups`</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; argument.</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="do">### create  subset for invalid cue-targeting</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>DF_invalid <span class="ot">&lt;-</span> <span class="fu">subset</span>(DF, congr <span class="sc">==</span> <span class="st">&quot;invalid&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="fu">group_by</span>(suj, item) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">liking =</span> <span class="fu">mean</span>(liking, <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;suj&#39;.</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; You can override using the `.groups`</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; argument.</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># individual SEs for valid cue-targeting condition </span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>SE1 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(DF_valid<span class="sc">$</span>liking, DF_valid<span class="sc">$</span>item, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>SE1</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;         G         K         L         S </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 0.2013228 0.1779694 0.1801060 0.2286006</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>cutoff1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE1, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>cutoff1</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 0.1843494</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co"># individual SEs for invalid cue-targeting condition</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>SE2 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(DF_invalid<span class="sc">$</span>liking, DF_invalid<span class="sc">$</span>item, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>SE2</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt;         G         K         L         S </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; 0.1982333 0.1749820 0.1724613 0.2132725</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>cutoff2 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE2, <span class="at">probs =</span> .<span class="dv">4</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>cutoff2</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; 0.1796323</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># sequence of sample sizes to try</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># small for cran</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>samplesize_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">25</span>, <span class="dv">200</span>, <span class="dv">5</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># create a blank table for us to save the values in </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values)<span class="sc">*</span>nsim, </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_valid<span class="sc">$</span>item)))</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table)</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>sim_table<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>sim_table<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="st">&quot;liking&quot;</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co"># make a second table for the second variable</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>sim_table2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values)<span class="sc">*</span>nsim, </span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_valid<span class="sc">$</span>item)))</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>sim_table2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table2)</span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>sim_table2<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>sim_table2<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="st">&quot;liking&quot;</span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>iterate <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim){</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>  </span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>  <span class="co"># loop over sample sizes for age and outdoor trait</span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(samplesize_values)){</span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>      </span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a>    <span class="co"># temp dataframe for age trait that samples and summarizes</span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a>    temp_valid <span class="ot">&lt;-</span> DF_valid <span class="sc">%&gt;%</span> </span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">se1 =</span> <span class="fu">sd</span>(liking)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(liking))) </span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a>    </span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a>    <span class="co"># </span></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>    <span class="fu">colnames</span>(sim_table)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_valid<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_valid<span class="sc">$</span>item</span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>    sim_table[iterate, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_valid<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_valid<span class="sc">$</span>se1</span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>    sim_table[iterate, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a>    sim_table[iterate, <span class="st">&quot;nsim&quot;</span>] <span class="ot">&lt;-</span> p</span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a>    </span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a>    <span class="co"># temp dataframe for outdoor trait that samples and summarizes</span></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>    </span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a>    temp_invalid <span class="ot">&lt;-</span>DF_invalid <span class="sc">%&gt;%</span> </span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">se2 =</span> <span class="fu">sd</span>(liking)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(liking))) </span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a>  </span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a>    <span class="co"># </span></span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a>    <span class="fu">colnames</span>(sim_table)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_invalid<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_invalid<span class="sc">$</span>item</span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a>    sim_table2[iterate, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_invalid<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp_invalid<span class="sc">$</span>se2</span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a>    sim_table2[iterate, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a>    sim_table2[iterate, <span class="st">&quot;nsim&quot;</span>] <span class="ot">&lt;-</span> p</span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a>    </span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a>    iterate <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> iterate</span>
+<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a>  }</span>
+<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a>  </span>
+<span id="cb5-62"><a href="#cb5-62" tabindex="-1"></a>}</span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+<p>Calculate the cutoff score with information necessary for
+correction.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>cutoff_valid <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF_valid, </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                 <span class="at">grouping_items =</span> <span class="st">&quot;item&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                 <span class="at">score =</span> <span class="st">&quot;liking&quot;</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                 <span class="at">minimum =</span> <span class="fu">min</span>(DF_valid<span class="sc">$</span>liking),</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>                 <span class="at">maximum =</span> <span class="fu">max</span>(DF_valid<span class="sc">$</span>liking))</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># same as above</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>cutoff_valid<span class="sc">$</span>cutoff</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; 0.1843494</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>cutoff_invalid <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF_invalid, </span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>                 <span class="at">grouping_items =</span> <span class="st">&quot;item&quot;</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>                 <span class="at">score =</span> <span class="st">&quot;liking&quot;</span>, </span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>                 <span class="at">minimum =</span> <span class="fu">min</span>(DF_valid<span class="sc">$</span>liking),</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>                 <span class="at">maximum =</span> <span class="fu">max</span>(DF_valid<span class="sc">$</span>liking))</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>cutoff_invalid<span class="sc">$</span>cutoff</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; 0.1796323</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="do">### for valid cue-targeting condition</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>final_sample_valid <span class="ot">&lt;-</span> </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  sim_table <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, var, nsim)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">se =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var, nsim) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(se <span class="sc">&lt;=</span> cutoff1)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_valid<span class="sc">$</span>item))) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  <span class="co"># then summarize all down averaging percents</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">mean</span>(percent_below)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; &#39;sample_size&#39;, &#39;var&#39;. You can override using</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; the `.groups` argument.</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt; &#39;sample_size&#39;. You can override using the</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt; `.groups` argument.</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="fu">flextable</span>(final_sample_valid <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-cbf299d4{}.cl-cbf0438c{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-cbf133b4{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cbf133e6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cbf13b5c{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cbf13b66{width:0.633in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cbf13b67{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cbf13b7a{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cbf13b84{width:0.633in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cbf13bb6{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cbf13bf2{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cbf13bfc{width:0.633in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cbf13c06{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-cbf299d4"><thead><tr style="overflow-wrap:break-word;"><th class="cl-cbf13b5c"><p class="cl-cbf133b4"><span class="cl-cbf0438c">sample_size</span></p></th><th class="cl-cbf13b66"><p class="cl-cbf133e6"><span class="cl-cbf0438c">var</span></p></th><th class="cl-cbf13b67"><p class="cl-cbf133b4"><span class="cl-cbf0438c">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-cbf13b7a"><p class="cl-cbf133b4"><span class="cl-cbf0438c">25</span></p></td><td class="cl-cbf13b84"><p class="cl-cbf133e6"><span class="cl-cbf0438c">liking</span></p></td><td class="cl-cbf13bb6"><p class="cl-cbf133b4"><span class="cl-cbf0438c">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cbf13b7a"><p class="cl-cbf133b4"><span class="cl-cbf0438c">30</span></p></td><td class="cl-cbf13b84"><p class="cl-cbf133e6"><span class="cl-cbf0438c">liking</span></p></td><td class="cl-cbf13bb6"><p class="cl-cbf133b4"><span class="cl-cbf0438c">0.250</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cbf13b7a"><p class="cl-cbf133b4"><span class="cl-cbf0438c">35</span></p></td><td class="cl-cbf13b84"><p class="cl-cbf133e6"><span class="cl-cbf0438c">liking</span></p></td><td class="cl-cbf13bb6"><p class="cl-cbf133b4"><span class="cl-cbf0438c">0.300</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cbf13b7a"><p class="cl-cbf133b4"><span class="cl-cbf0438c">40</span></p></td><td class="cl-cbf13b84"><p class="cl-cbf133e6"><span class="cl-cbf0438c">liking</span></p></td><td class="cl-cbf13bb6"><p class="cl-cbf133b4"><span class="cl-cbf0438c">0.425</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cbf13b7a"><p class="cl-cbf133b4"><span class="cl-cbf0438c">45</span></p></td><td class="cl-cbf13b84"><p class="cl-cbf133e6"><span class="cl-cbf0438c">liking</span></p></td><td class="cl-cbf13bb6"><p class="cl-cbf133b4"><span class="cl-cbf0438c">0.625</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cbf13bf2"><p class="cl-cbf133b4"><span class="cl-cbf0438c">50</span></p></td><td class="cl-cbf13bfc"><p class="cl-cbf133e6"><span class="cl-cbf0438c">liking</span></p></td><td class="cl-cbf13c06"><p class="cl-cbf133b4"><span class="cl-cbf0438c">0.825</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+<p>Calculate the final corrected scores:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>final_scores <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(<span class="at">proportion_summary =</span> final_sample_valid,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                     <span class="at">pilot_sample_size =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF<span class="sc">$</span>suj)),</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                     <span class="at">proportion_variability =</span> cutoff_valid<span class="sc">$</span>prop_var)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># only show first four rows since all 100</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="fu">flextable</span>(final_scores <span class="sc">%&gt;%</span> </span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>            <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>            <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-cc02bc2e{}.cl-cbfd8b6e{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-cc016568{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cc016c7a{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc016c7b{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc016c84{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc016c85{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc016c86{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc016ca2{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc016cc0{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc016cca{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc016ccb{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-cc02bc2e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-cc016c7a"><p class="cl-cc016568"><span class="cl-cbfd8b6e">percent_below</span></p></th><th class="cl-cc016c7b"><p class="cl-cc016568"><span class="cl-cbfd8b6e">sample_size</span></p></th><th class="cl-cc016c84"><p class="cl-cc016568"><span class="cl-cbfd8b6e">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-cc016c85"><p class="cl-cc016568"><span class="cl-cbfd8b6e">82.5</span></p></td><td class="cl-cc016c86"><p class="cl-cc016568"><span class="cl-cbfd8b6e">50</span></p></td><td class="cl-cc016ca2"><p class="cl-cc016568"><span class="cl-cbfd8b6e">44.43666</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc016c85"><p class="cl-cc016568"><span class="cl-cbfd8b6e">92.5</span></p></td><td class="cl-cc016c86"><p class="cl-cc016568"><span class="cl-cbfd8b6e">55</span></p></td><td class="cl-cc016ca2"><p class="cl-cc016568"><span class="cl-cbfd8b6e">50.02481</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc016c85"><p class="cl-cc016568"><span class="cl-cbfd8b6e">92.5</span></p></td><td class="cl-cc016c86"><p class="cl-cc016568"><span class="cl-cbfd8b6e">55</span></p></td><td class="cl-cc016ca2"><p class="cl-cc016568"><span class="cl-cbfd8b6e">50.02481</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc016cc0"><p class="cl-cc016568"><span class="cl-cbfd8b6e">95.0</span></p></td><td class="cl-cc016cca"><p class="cl-cc016568"><span class="cl-cbfd8b6e">60</span></p></td><td class="cl-cc016ccb"><p class="cl-cc016568"><span class="cl-cbfd8b6e">55.49695</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="do">### for valid cue-targeting condition</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>final_sample_invalid <span class="ot">&lt;-</span> </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  sim_table2 <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, var, nsim)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">se =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var, nsim) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(se <span class="sc">&lt;=</span> cutoff2)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_invalid<span class="sc">$</span>item))) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  <span class="co"># then summarize all down averaging percents</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size, var) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">mean</span>(percent_below)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; &#39;sample_size&#39;, &#39;var&#39;. You can override using</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt; the `.groups` argument.</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; &#39;sample_size&#39;. You can override using the</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; `.groups` argument.</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="fu">flextable</span>(final_sample_invalid <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-cc108e08{}.cl-cc0e3c98{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-cc0f2928{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cc0f2964{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cc0f3120{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc0f312a{width:0.633in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc0f313e{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc0f3148{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc0f3152{width:0.633in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc0f3153{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc0f3154{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc0f3155{width:0.633in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc0f3156{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-cc108e08"><thead><tr style="overflow-wrap:break-word;"><th class="cl-cc0f3120"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">sample_size</span></p></th><th class="cl-cc0f312a"><p class="cl-cc0f2964"><span class="cl-cc0e3c98">var</span></p></th><th class="cl-cc0f313e"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-cc0f3148"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">25</span></p></td><td class="cl-cc0f3152"><p class="cl-cc0f2964"><span class="cl-cc0e3c98">liking</span></p></td><td class="cl-cc0f3153"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc0f3148"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">30</span></p></td><td class="cl-cc0f3152"><p class="cl-cc0f2964"><span class="cl-cc0e3c98">liking</span></p></td><td class="cl-cc0f3153"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">0.250</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc0f3148"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">35</span></p></td><td class="cl-cc0f3152"><p class="cl-cc0f2964"><span class="cl-cc0e3c98">liking</span></p></td><td class="cl-cc0f3153"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">0.400</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc0f3148"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">40</span></p></td><td class="cl-cc0f3152"><p class="cl-cc0f2964"><span class="cl-cc0e3c98">liking</span></p></td><td class="cl-cc0f3153"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">0.600</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc0f3148"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">45</span></p></td><td class="cl-cc0f3152"><p class="cl-cc0f2964"><span class="cl-cc0e3c98">liking</span></p></td><td class="cl-cc0f3153"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">0.675</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc0f3154"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">50</span></p></td><td class="cl-cc0f3155"><p class="cl-cc0f2964"><span class="cl-cc0e3c98">liking</span></p></td><td class="cl-cc0f3156"><p class="cl-cc0f2928"><span class="cl-cc0e3c98">0.825</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+<p>Calculate the final corrected scores:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>final_scores2 <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(<span class="at">proportion_summary =</span> final_sample_invalid,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>                     <span class="at">pilot_sample_size =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF<span class="sc">$</span>suj)),</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>                     <span class="at">proportion_variability =</span> cutoff_invalid<span class="sc">$</span>prop_var)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># only show first four rows since all 100</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="fu">flextable</span>(final_scores2 <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>            <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>            <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-cc1daea8{}.cl-cc1b60f8{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-cc1c4d7e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cc1c54d6{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c54d7{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c54d8{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c54f4{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c54f5{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c54f6{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c54f7{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c54fe{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c5512{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c551c{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c5526{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c5530{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c5531{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c553a{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cc1c553b{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-cc1daea8"><thead><tr style="overflow-wrap:break-word;"><th class="cl-cc1c54d6"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">percent_below</span></p></th><th class="cl-cc1c54d7"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">sample_size</span></p></th><th class="cl-cc1c54d8"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-cc1c54f4"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">82.5</span></p></td><td class="cl-cc1c54f5"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">50</span></p></td><td class="cl-cc1c54f6"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">44.78681</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc1c54f7"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">87.5</span></p></td><td class="cl-cc1c54fe"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">55</span></p></td><td class="cl-cc1c5512"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">50.23831</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc1c551c"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">92.5</span></p></td><td class="cl-cc1c5526"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">60</span></p></td><td class="cl-cc1c5530"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">55.67221</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cc1c5531"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">100.0</span></p></td><td class="cl-cc1c553a"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">65</span></p></td><td class="cl-cc1c553b"><p class="cl-cc1c4d7e"><span class="cl-cc1b60f8">61.41225</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/ulloa_vignette.R</p>
+</div>
+<div id="minimum-sample-size" class="section level4">
+<h4>Minimum Sample Size</h4>
+<p>Based on these simulations, we can decide our minimum sample size for
+80% is likely close to 44 for the valid trials or 45 for the invalid
+trials, depending on rounding.</p>
+</div>
+<div id="maximum-sample-size" class="section level4">
+<h4>Maximum Sample Size</h4>
+<p>In this example, we could set our maximum sample size for 95% items
+below the criterion, which would equate to 55 for the valid trials or 61
+for invalid trials. In this case, values are equal because the percent
+below jumps from 75% to 100%.</p>
+</div>
+<div id="final-sample-size" class="section level4">
+<h4>Final Sample Size</h4>
+<p>In any estimate for sample size for this study, the dataset has a
+large variance in ratings. This dataset need to more sample for items in
+each conditions. In fact, we experimented combining two conditions
+(valid &amp; invalid cue-targeting) which did not result in any
+difference.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

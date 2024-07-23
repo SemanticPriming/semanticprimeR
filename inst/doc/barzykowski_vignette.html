@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Erin M. Buchanan" />
+
+<meta name="date" content="2024-07-23" />
+
+<title>Power and Sample Size Simulation: Cue Word Valence Data Example</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<style type="text/css">.tabwid {
+font-size: initial;
+padding-bottom: 1em;
+}
+.tabwid table{
+border-spacing:0px !important;
+border-collapse:collapse;
+line-height:1;
+margin-left:auto;
+margin-right:auto;
+border-width: 0;
+border-color: transparent;
+caption-side: top;
+}
+.tabwid-caption-bottom table{
+caption-side: bottom;
+}
+.tabwid_left table{
+margin-left:0;
+}
+.tabwid_right table{
+margin-right:0;
+}
+.tabwid td, .tabwid th {
+padding: 0;
+}
+.tabwid a {
+text-decoration: none;
+}
+.tabwid thead {
+background-color: transparent;
+}
+.tabwid tfoot {
+background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+margin: 0 0 !important;
+}
+</style>
+<script>document.addEventListener("DOMContentLoaded", function(event) {
+  var els = document.querySelectorAll(".tabwid");
+  var tabwid_link = document.querySelector('link[href*="tabwid.css"]')
+  if (tabwid_link === null) {
+    const tabwid_styles = document.evaluate("//style[contains(., 'tabwid')]", document, null, XPathResult.ANY_TYPE, null );
+    tabwid_link = tabwid_styles.iterateNext();
+  }
+
+  Array.prototype.forEach.call(els, function(template) {
+      const dest = document.createElement("div");
+      template.parentNode.insertBefore(dest, template.nextSibling)
+      dest.setAttribute("class", "flextable-shadow-host");
+      const fantome = dest.attachShadow({mode: 'open'});
+      fantome.appendChild(template);
+      if (tabwid_link !== null) {
+        fantome.appendChild(tabwid_link.cloneNode(true));
+      }
+  });
+});
+
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Power and Sample Size Simulation: Cue Word
+Valence Data Example</h1>
+<h4 class="author">Erin M. Buchanan</h4>
+<h4 class="date">2024-07-23</h4>
+
+
+
+<div id="vignette-setup" class="section level3">
+<h3>Vignette Setup:</h3>
+</div>
+<div id="projectdata-title" class="section level3">
+<h3>Project/Data Title:</h3>
+<p>Cue Word Triggered Memory’s Phenomenological</p>
+<p>Data provided by: Krystian Barzykowski</p>
+</div>
+<div id="projectdata-description" class="section level3">
+<h3>Project/Data Description:</h3>
+<p>Participants participated in a voluntary memory task, where they were
+provided with a word cue in response to which they were about to recall
+an autobiographical memory. The item set consists of 30 word cues that
+were rated/classified by 142 separate participants.</p>
+</div>
+<div id="methods-description" class="section level3">
+<h3>Methods Description:</h3>
+<p>They briefly described the content of their thoughts recalled in
+response to the word-cue and rated it on a 7-point scale: (a) to what
+extent the content was accompanied by unexpected physiological
+sensations (henceforth, called physiological sensation), (b) to what
+extent they had deliberately tried to bring the thought to mind
+(henceforth, called effort), (c) clarity (i.e. how clearly and well an
+individual remembered a given memory/mental content), (d) how detailed
+the content was, (e) how specific and concrete the content was, (f)
+intensity of emotions experienced in response to the content, (g) how
+surprising the content was, (h) how personal it was, and (i) the
+relevance to current life situation (not included).</p>
+</div>
+<div id="data-location" class="section level3">
+<h3>Data Location:</h3>
+<p>Data included within this vignette.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>DF <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">6</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">8</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">9</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">10</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">11</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">12</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">13</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">14</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">15</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">16</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">17</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">18</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">19</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">20</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">21</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">22</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">23</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">24</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">25</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">26</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">27</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">28</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">29</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">import</span>(<span class="st">&quot;data/barzykowski_data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">30</span>)) </span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="fu">str</span>(DF)</span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    918 obs. of  11 variables:</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="co">#&gt;  $ Participant&#39;s ID      : num  12 13 14 15 16 17 18 19 20 21 ...</span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="co">#&gt;  $ Cue no                : num  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="co">#&gt;  $ Physiological reaction: num  1 1 1 1 1 1 2 2 4 2 ...</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="co">#&gt;  $ Effort                : num  4 4 7 4 1 2 4 4 2 3 ...</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a><span class="co">#&gt;  $ Vividness             : num  5 6 1 4 2 7 3 6 3 3 ...</span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a><span class="co">#&gt;  $ Clarity               : num  2 4 1 4 6 7 4 5 4 4 ...</span></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a><span class="co">#&gt;  $ Detailidness          : num  5 5 1 4 4 7 2 3 3 2 ...</span></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a><span class="co">#&gt;  $ Concretness           : num  2 4 3 5 4 7 5 5 3 2 ...</span></span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a><span class="co">#&gt;  $ Emotional Intensity   : num  3 1 2 2 1 6 2 1 2 1 ...</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a><span class="co">#&gt;  $ How surprising        : num  5 2 1 1 4 4 3 2 5 1 ...</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a><span class="co">#&gt;  $ Personal nature       : num  2 1 4 3 1 5 1 1 2 1 ...</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/barzykowski_vignette.R</p>
+</div>
+<div id="date-published" class="section level3">
+<h3>Date Published:</h3>
+<p>No official publication, see citation below.</p>
+</div>
+<div id="dataset-citation" class="section level3">
+<h3>Dataset Citation:</h3>
+<p>The cues were used in study published here: Barzykowski, K.,
+Niedźwieńska, A., &amp; Mazzoni, G. (2019). How intention to retrieve a
+memory and expectation that it will happen influence retrieval of
+autobiographical memories. Consciousness and Cognition, 72, 31-48. DOI:
+<a href="https://doi.org/10.1016/j.concog.2019.03.011" class="uri">https://doi.org/10.1016/j.concog.2019.03.011</a></p>
+</div>
+<div id="keywords" class="section level3">
+<h3>Keywords:</h3>
+<p>cue-word, valence, memory retrieval</p>
+</div>
+<div id="use-license" class="section level3">
+<h3>Use License:</h3>
+<p>Open access with reference to original paper
+(Attribution-NonCommercial-ShareAlike CC BY-NC-SA)</p>
+</div>
+<div id="geographic-description---citystatecountry-of-participants" class="section level3">
+<h3>Geographic Description - City/State/Country of Participants:</h3>
+<p>Poland, Kraków</p>
+</div>
+<div id="column-metadata" class="section level3">
+<h3>Column Metadata:</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/barzykowski_metadata.xlsx&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">flextable</span>(metadata) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-ab6e92a8{}.cl-ab6b51a6{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ab6d229c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ab6d29ae{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29af{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29c2{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29c3{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29c4{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29cc{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29d6{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29d7{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29d8{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29ea{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29fe{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d29ff{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a00{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a01{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a12{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a13{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a14{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a15{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a1c{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a1d{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a26{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a30{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a31{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a3a{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a3b{width:1.763in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a44{width:9.041in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab6d2a45{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-ab6e92a8"><thead><tr style="overflow-wrap:break-word;"><th class="cl-ab6d29ae"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Variable Name</span></p></th><th class="cl-ab6d29af"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Variable Description</span></p></th><th class="cl-ab6d29c2"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Type (numeric, character, logical, etc.)</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-ab6d29c3"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Participant&#39;s ID</span></p></td><td class="cl-ab6d29c4"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Participants’ identification number</span></p></td><td class="cl-ab6d29cc"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d29d6"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Cue no</span></p></td><td class="cl-ab6d29d7"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Number of the specific cue they saw</span></p></td><td class="cl-ab6d29d8"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d29ea"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Physiological reaction</span></p></td><td class="cl-ab6d29fe"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">To what extent the content was accompanied by unexpected physiological sensations (henceforth, called physiological sensation)</span></p></td><td class="cl-ab6d29ff"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d29ea"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Effort</span></p></td><td class="cl-ab6d29fe"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">To what extent they had deliberately tried to bring the thought to mind (henceforth, called effort)</span></p></td><td class="cl-ab6d29ff"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d2a00"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Vividness</span></p></td><td class="cl-ab6d2a01"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">How vivid the thought was</span></p></td><td class="cl-ab6d2a12"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d2a13"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Clarity</span></p></td><td class="cl-ab6d2a14"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Clarity (i.e. how clearly and well an individual remembered a given memory/mental content)</span></p></td><td class="cl-ab6d2a15"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d2a1c"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Detailidness</span></p></td><td class="cl-ab6d2a1d"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">How detailed the content was</span></p></td><td class="cl-ab6d2a26"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d29c3"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Concretness</span></p></td><td class="cl-ab6d29c4"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">How specific and concrete the content was</span></p></td><td class="cl-ab6d29cc"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d29d6"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Emotional Intensity</span></p></td><td class="cl-ab6d29d7"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Intensity of emotions experienced in response to the content</span></p></td><td class="cl-ab6d29d8"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d2a30"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">How surprising</span></p></td><td class="cl-ab6d2a31"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">How surprising the</span><br><span class="cl-ab6b51a6">content was</span></p></td><td class="cl-ab6d2a3a"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ab6d2a3b"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Personal nature</span></p></td><td class="cl-ab6d2a44"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">How personal it was</span></p></td><td class="cl-ab6d2a45"><p class="cl-ab6d229c"><span class="cl-ab6b51a6">Numeric (1 to 7 scale)</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/barzykowski_vignette.R</p>
+</div>
+<div id="aipe-analysis" class="section level3">
+<h3>AIPE Analysis:</h3>
+<p>Note that the data is already in long format (each item has one row),
+and therefore, we do not need to restructure the data.</p>
+<div id="stopping-rule" class="section level4">
+<h4>Stopping Rule</h4>
+<p>In this example, we have multiple variables to choose from for our
+analysis. We could include several to find the sample size rules for
+further study. In this example, we’ll use the variables with the least
+and most variability and take the average of the 40% decile as suggested
+in our manuscript. This choice is somewhat arbitrary - in a real study,
+you could choose to use only the variables you were interested in and
+pick the most conservative values or simply average together estimates
+from all variables.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">apply</span>(DF[ , <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)], <span class="dv">2</span>, sd)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; Physiological reaction </span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;               1.691892 </span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;                 Effort </span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;               1.577815 </span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;              Vividness </span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;               1.651065 </span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;                Clarity </span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;               1.651066 </span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;           Detailidness </span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt;               1.696818 </span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt;            Concretness </span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt;               1.646454 </span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;    Emotional Intensity </span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;               1.753200 </span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;         How surprising </span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;               1.500973 </span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;        Personal nature </span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt;               1.889276</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/barzykowski_vignette.R</p>
+<p>These are Likert type items. The variance within them appears roughly
+equal. The lowest variance appears to be How surprising, and the maximum
+appears to be Personal nature.</p>
+<p>Run the function proposed in the manuscript:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># set seed</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8548</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># Function for simulation</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>var1 <span class="ot">&lt;-</span> <span class="fu">item_power</span>(<span class="at">data =</span> DF, <span class="co"># name of data frame</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>            <span class="at">dv_col =</span> <span class="st">&quot;How surprising&quot;</span>, <span class="co"># name of DV column as a character</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>            <span class="at">item_col =</span> <span class="st">&quot;Cue no&quot;</span>, <span class="co"># number of items column as a character</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>            <span class="at">nsim =</span> <span class="dv">10</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>            <span class="at">sample_start =</span> <span class="dv">20</span>, </span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>            <span class="at">sample_stop =</span> <span class="dv">100</span>, </span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>            <span class="at">sample_increase =</span> <span class="dv">5</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>            <span class="at">decile =</span> .<span class="dv">4</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; &#39;sample_size&#39;. You can override using the</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; `.groups` argument.</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>var2 <span class="ot">&lt;-</span> <span class="fu">item_power</span>(DF, <span class="co"># name of data frame</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>            <span class="st">&quot;Personal nature&quot;</span>, <span class="co"># name of DV column as a character</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>            <span class="at">item_col =</span> <span class="st">&quot;Cue no&quot;</span>, <span class="co"># number of items column as a character</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>            <span class="at">nsim =</span> <span class="dv">10</span>, </span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>            <span class="at">sample_start =</span> <span class="dv">20</span>, </span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>            <span class="at">sample_stop =</span> <span class="dv">100</span>, </span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>            <span class="at">sample_increase =</span> <span class="dv">5</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>            <span class="at">decile =</span> .<span class="dv">4</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; &#39;sample_size&#39;. You can override using the</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt; `.groups` argument.</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/barzykowski_vignette.R</p>
+<p>What the usual standard error for the data that could be considered
+for our stopping rule?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># individual SEs for how surprising </span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>var1<span class="sc">$</span>SE</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;         1         2         3         4 </span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; 0.2654025 0.1843656 0.2395449 0.2463527 </span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;         5         6         7         8 </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 0.2478174 0.2702634 0.2385878 0.1781742 </span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt;         9        10        11        12 </span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 0.2643095 0.2784668 0.2803546 0.2595053 </span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;        13        14        15        16 </span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; 0.2568655 0.2387265 0.3268158 0.2692327 </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;        17        18        19        20 </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; 0.3114397 0.3007016 0.2886410 0.2815891 </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt;        21        22        23        24 </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; 0.2677375 0.1979609 0.2478808 0.2986490 </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;        25        26        27        28 </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; 0.3589899 0.2982066 0.2921602 0.3035231 </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt;        29        30 </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; 0.2643255 0.3249033</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co"># var 1 cut off</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>var1<span class="sc">$</span>cutoff</span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; 0.2643191</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co"># individual SEs for personal nature</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>var2<span class="sc">$</span>SE</span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt;         1         2         3         4 </span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt; 0.2870153 0.2839809 0.2432371 0.3319512 </span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt;         5         6         7         8 </span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#&gt; 0.3600411 0.4064413 0.3389511 0.3191424 </span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#&gt;         9        10        11        12 </span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="co">#&gt; 0.2502489 0.3696715 0.3708976 0.2800560 </span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co">#&gt;        13        14        15        16 </span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="co">#&gt; 0.2674643 0.2832563 0.4580862 0.2836613 </span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a><span class="co">#&gt;        17        18        19        20 </span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co">#&gt; 0.3588157 0.3122039 0.3498098 0.3617125 </span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a><span class="co">#&gt;        21        22        23        24 </span></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a><span class="co">#&gt; 0.3435939 0.3702658 0.3156137 0.2744988 </span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a><span class="co">#&gt;        25        26        27        28 </span></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="co">#&gt; 0.4125648 0.3298670 0.3760496 0.3258969 </span></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="co">#&gt;        29        30 </span></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a><span class="co">#&gt; 0.2797701 0.3615385</span></span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a><span class="co"># var 2 cut off</span></span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>var2<span class="sc">$</span>cutoff</span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a><span class="co">#&gt; 0.3177309</span></span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a><span class="co"># overall cutoff</span></span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">mean</span>(var1<span class="sc">$</span>cutoff, var2<span class="sc">$</span>cutoff)</span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a>cutoff</span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a><span class="co">#&gt; [1] 0.2643191</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/barzykowski_vignette.R</p>
+<p>The average SE cutoff across both variables is 0.264.</p>
+</div>
+<div id="minimum-sample-size" class="section level4">
+<h4>Minimum Sample Size</h4>
+<p>How large does the sample have to be for 80% to 95% of the items to
+be below our stopping SE rule?</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>cutoff_personal <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF, </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                           <span class="at">grouping_items =</span> <span class="st">&quot;Cue no&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                           <span class="at">score =</span> <span class="st">&quot;Personal nature&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                           <span class="at">minimum =</span> <span class="fu">as.numeric</span>(<span class="fu">min</span>(DF<span class="sc">$</span><span class="st">`</span><span class="at">Personal nature</span><span class="st">`</span>)),</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>                           <span class="at">maximum =</span> <span class="fu">as.numeric</span>(<span class="fu">max</span>(DF<span class="sc">$</span><span class="st">`</span><span class="at">Personal nature</span><span class="st">`</span>)))</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># showing how this is the same as the person calculated version versus semanticprimeR&#39;s function</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>cutoff_personal<span class="sc">$</span>cutoff</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; 0.3177309</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>final_table_personal <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="at">proportion_summary =</span> var1<span class="sc">$</span>final_sample,</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>  <span class="at">pilot_sample_size =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF<span class="sc">$</span><span class="st">`</span><span class="at">Participant&#39;s ID</span><span class="st">`</span>)),</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>  <span class="at">proportion_variability =</span> cutoff_personal<span class="sc">$</span>prop_var</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  )</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="fu">flextable</span>(final_table_personal) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-ac2df7a6{}.cl-ac2bd66a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ac2cb256{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ac2cb8e6{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb8e7{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb8f0{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb8f1{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb8fa{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb8fb{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb8fc{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb904{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb905{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb906{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb907{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac2cb90e{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-ac2df7a6"><thead><tr style="overflow-wrap:break-word;"><th class="cl-ac2cb8e6"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">percent_below</span></p></th><th class="cl-ac2cb8e7"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">sample_size</span></p></th><th class="cl-ac2cb8f0"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-ac2cb8f1"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">83.33333</span></p></td><td class="cl-ac2cb8fa"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">40</span></p></td><td class="cl-ac2cb8fb"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">31.06408</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ac2cb8fc"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">91.66667</span></p></td><td class="cl-ac2cb904"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">45</span></p></td><td class="cl-ac2cb905"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">37.55466</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ac2cb8fc"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">91.66667</span></p></td><td class="cl-ac2cb904"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">45</span></p></td><td class="cl-ac2cb905"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">37.55466</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ac2cb906"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">97.66667</span></p></td><td class="cl-ac2cb907"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">50</span></p></td><td class="cl-ac2cb90e"><p class="cl-ac2cb256"><span class="cl-ac2bd66a">44.05820</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/barzykowski_vignette.R</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>cutoff_surprising <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF, </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>                           <span class="at">grouping_items =</span> <span class="st">&quot;Cue no&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                           <span class="at">score =</span> <span class="st">&quot;How surprising&quot;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>                           <span class="at">minimum =</span> <span class="fu">as.numeric</span>(<span class="fu">min</span>(DF<span class="sc">$</span><span class="st">`</span><span class="at">How surprising</span><span class="st">`</span>)),</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>                           <span class="at">maximum =</span> <span class="fu">as.numeric</span>(<span class="fu">max</span>(DF<span class="sc">$</span><span class="st">`</span><span class="at">How surprising</span><span class="st">`</span>)))</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># showing how this is the same as the person calculated version versus semanticprimeR&#39;s function</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>cutoff_surprising<span class="sc">$</span>cutoff</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;       40% </span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 0.2643191</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>final_table_surprising <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  <span class="at">proportion_summary =</span> var2<span class="sc">$</span>final_sample,</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  <span class="at">pilot_sample_size =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF<span class="sc">$</span><span class="st">`</span><span class="at">Participant&#39;s ID</span><span class="st">`</span>)),</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>  <span class="at">proportion_variability =</span> cutoff_surprising<span class="sc">$</span>prop_var</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>  )</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="fu">flextable</span>(final_table_surprising) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-ac37137c{}.cl-ac34eb42{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ac35c7a6{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ac35ce4a{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce4b{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce54{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce55{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce56{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce5e{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce5f{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce68{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce69{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce6a{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce6b{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac35ce72{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-ac37137c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-ac35ce4a"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">percent_below</span></p></th><th class="cl-ac35ce4b"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">sample_size</span></p></th><th class="cl-ac35ce54"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-ac35ce55"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">89</span></p></td><td class="cl-ac35ce56"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">45</span></p></td><td class="cl-ac35ce5e"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">37.88715</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ac35ce55"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">89</span></p></td><td class="cl-ac35ce56"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">45</span></p></td><td class="cl-ac35ce5e"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">37.88715</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ac35ce5f"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">97</span></p></td><td class="cl-ac35ce68"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">50</span></p></td><td class="cl-ac35ce69"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">44.40287</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ac35ce6a"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">97</span></p></td><td class="cl-ac35ce6b"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">50</span></p></td><td class="cl-ac35ce72"><p class="cl-ac35c7a6"><span class="cl-ac34eb42">44.40287</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/barzykowski_vignette.R</p>
+<p>In this scenario, we could go with the point wherein they both meet
+the 80% criterion, which is <span class="math inline">\(n_{personal}\)</span> = 31 to <span class="math inline">\(n_{surprising}\)</span> = 38. In these scenarios,
+it is probably better to estimate a larger sample.</p>
+</div>
+<div id="maximum-sample-size" class="section level4">
+<h4>Maximum Sample Size</h4>
+<p>If you decide to use 95% power as your criterion, you would see that
+items need somewhere between <span class="math inline">\(n_{personal}\)</span> = 44 to <span class="math inline">\(n_{surprising}\)</span> = 44 participants for both
+variables. In this case, you could choose to make the larger value for
+participants your maximum sample size to ensure both variables reach the
+criterion.</p>
+</div>
+<div id="final-sample-size" class="section level4">
+<h4>Final Sample Size</h4>
+<p>You should also consider any potential for missing data and/or
+unusable data given the requirements for your study. Given that
+participants are likely to see all items in this study, we could use the
+minimum, stopping rule, and maximum defined above. However, one should
+consider that not all participants will be able to respond to all items
+within a memory.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

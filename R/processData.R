@@ -10,6 +10,7 @@
 #'
 #' @import RSQLite dplyr DBI purrr readr
 #' @importFrom jsonlite fromJSON
+#' @importFrom methods is
 #'
 #' @keywords metadata, datasets, linguistic norms
 #'
@@ -21,12 +22,12 @@
 
 processData <- function(database) {
 
-  require("DBI")
-  require("RSQLite")
-  require("dplyr")
-  require("purrr")
+  requireNamespace("DBI")
+  requireNamespace("RSQLite")
+  requireNamespace("dplyr")
+  requireNamespace("purrr")
   # require("jsonlite")
-  require("readr")
+  requireNamespace("readr")
 
   con <- dbConnect(
     drv=RSQLite::SQLite(),
@@ -97,7 +98,7 @@ processData <- function(database) {
       return(input %>%
                fromJSON(flatten=T) %>% {
                  # Coerce lists
-                 if (class(.) == 'list') {
+                 if (is(class(.) == 'list')) {
                    discard(., is.null) %>%
                      as_tibble()
                  } else {

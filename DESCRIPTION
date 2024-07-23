@@ -5,15 +5,25 @@ Version: 0.1.0
 Authors@R: c(person("Erin M.", "Buchanan", role = c("aut", "cre"),
                      email = "buchananlab@gmail.com",
                      comment = c(ORCID = "0000-0002-9689-4189")))
-Depends: R (>= 3.1.0)
+Depends: R (>= 3.5.0)
 Imports: 
+    DBI,
     dplyr,
+    jsonlite,
+    lsa,
+    purrr,
     quanteda,
+    readr,
+    rio,
+    RSQLite,
     stringdist,
     stringr,
     sylly,
     tidyr,
-    tidytext
+    tidytext,
+    utils,
+    janitor,
+    methods
 Suggests: 
     knitr,
     rmarkdown,
@@ -23,14 +33,16 @@ Suggests:
     psych,
     reshape,
     reshape2,
-    rio,
-    tibble
+    tibble,
+    stopwords,
+    udpipe
 Maintainer: Erin M. Buchanan <buchananlab@gmail.com>
 Description: This package supports the SPAML (Semantic Priming 
     Across Many Languages) project and associated papers that are 
     connected to that project. The package currently includes 
     information on how to calculate sample size by using AIPE, 
-    bootstrapping, and simulation. More coming soon!
+    bootstrapping, and simulation, and data information for the 
+    SPAML project!
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true

@@ -52,3 +52,5 @@ vignettes/*.pdf
 /vignettes/wiki_count
 /vignettes/wiki_vec
 data/lab_data.csv
+/vignettes/procedure_stimuli
+/vignettes/lab_data

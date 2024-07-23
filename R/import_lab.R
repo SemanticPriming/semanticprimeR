@@ -28,7 +28,7 @@
 #'  and variable names}
 #' }
 #'
-#' @import rio
+#' @import rio utils
 #'
 #' @keywords metadata, datasets, linguistic norms
 #'
@@ -47,7 +47,7 @@ import_lab <- function( bibtexID = NULL,
                         variables = NULL
                         ) {
 
-  data("labData")
+  labData
   labData <- subset(labData, included == "yes")
   labData$link <- paste0("https://github.com/SemanticPriming/semanticprimeR/releases/download/v0.0.1/",
                          labData$bibtex, ".csv")

@@ -62,6 +62,8 @@ fake_Wuggy <- function(wordlist,
                      lang,
                      replacewords){
 
+  requireNamespace("dplyr")
+
   if (is.null(wordlist)){ stop("You must include a wordlist
     of the valid tokens.") }
   if (is.null(language_hyp)){ stop("You must include a set of
@@ -78,8 +80,6 @@ fake_Wuggy <- function(wordlist,
   hyp_words <- sylly::hyphen(as.character(wordlist), hyph.pattern = language_hyp)
   hyp_words <- hyp_words@hyphen
   hyp_words$word <- tolower(hyp_words$word)
-
-  require(dplyr)
 
   # for multiple syllable words
   multiple <- hyp_words %>% dplyr::filter(syll > 1)

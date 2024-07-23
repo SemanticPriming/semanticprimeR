@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Necdet Gürkan &amp; Yangyang Yu" />
+
+<meta name="date" content="2024-07-23" />
+
+<title>Power and Sample Size Simulation: Survival Processing Usefulness</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<style type="text/css">.tabwid {
+font-size: initial;
+padding-bottom: 1em;
+}
+.tabwid table{
+border-spacing:0px !important;
+border-collapse:collapse;
+line-height:1;
+margin-left:auto;
+margin-right:auto;
+border-width: 0;
+border-color: transparent;
+caption-side: top;
+}
+.tabwid-caption-bottom table{
+caption-side: bottom;
+}
+.tabwid_left table{
+margin-left:0;
+}
+.tabwid_right table{
+margin-right:0;
+}
+.tabwid td, .tabwid th {
+padding: 0;
+}
+.tabwid a {
+text-decoration: none;
+}
+.tabwid thead {
+background-color: transparent;
+}
+.tabwid tfoot {
+background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+margin: 0 0 !important;
+}
+</style>
+<script>document.addEventListener("DOMContentLoaded", function(event) {
+  var els = document.querySelectorAll(".tabwid");
+  var tabwid_link = document.querySelector('link[href*="tabwid.css"]')
+  if (tabwid_link === null) {
+    const tabwid_styles = document.evaluate("//style[contains(., 'tabwid')]", document, null, XPathResult.ANY_TYPE, null );
+    tabwid_link = tabwid_styles.iterateNext();
+  }
+
+  Array.prototype.forEach.call(els, function(template) {
+      const dest = document.createElement("div");
+      template.parentNode.insertBefore(dest, template.nextSibling)
+      dest.setAttribute("class", "flextable-shadow-host");
+      const fantome = dest.attachShadow({mode: 'open'});
+      fantome.appendChild(template);
+      if (tabwid_link !== null) {
+        fantome.appendChild(tabwid_link.cloneNode(true));
+      }
+  });
+});
+
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Power and Sample Size Simulation: Survival
+Processing Usefulness</h1>
+<h4 class="author">Necdet Gürkan &amp; Yangyang Yu</h4>
+<h4 class="date">2024-07-23</h4>
+
+
+
+<div id="vignette-setup" class="section level3">
+<h3>Vignette Setup:</h3>
+</div>
+<div id="projectdata-title" class="section level3">
+<h3>Project/Data Title:</h3>
+<p>The survival processing effect</p>
+<p>Data provided by: Röer, Bell &amp; Buchner (2013)</p>
+</div>
+<div id="projectdata-description" class="section level3">
+<h3>Project/Data Description:</h3>
+<p>The data come from a conceptual replication study on the survival
+processing effect. The survival processing effect refers to the finding
+that rating words according to their relevance in a survival-related
+scenario leads to better retention than processing words in a number of
+other fictional scenarios. Participants were randomly assigned to one of
+the rating scenarios (survival, afterlife, moving). The to-be-rated
+words were presented individually in a random order on the computer
+screen. Each word remained on the screen for five seconds. Participants
+rated the words by clicking on a 5-point scale that ranged from
+completely useless (1) to very useful (5), which was displayed right
+below the word.</p>
+</div>
+<div id="methods-description" class="section level3">
+<h3>Methods Description:</h3>
+<p>Participants were students at Heinrich Heine University Düsseldorf,
+Germany that were paid for participating or received course credit.
+Their ages ranged from 18 to 55 years. The words to-be-rated consisted
+of 30 typical members of 30 categories drawn from the updated Battig and
+Montague norms (Van Overschelde, Rawson, &amp; Dunlosky, 2004).</p>
+</div>
+<div id="data-location" class="section level3">
+<h3>Data Location:</h3>
+<p>Data included within this vignette. We drop the scenario column
+because the standard deviation and mean of item ratings across the
+scenarios were identical. We also add a participant column to keep this
+script similar to other ones.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>DF <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/roer_data.xlsx&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>drops <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Scenario&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>DF <span class="ot">&lt;-</span> DF[ , <span class="sc">!</span>(<span class="fu">names</span>(DF) <span class="sc">%in%</span> drops)]</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>DF <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Participant_Number =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(DF) , DF)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">str</span>(DF)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    218 obs. of  31 variables:</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;  $ Participant_Number: int  1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;  $ Item_1            : num  1 3 3 2 3 3 3 1 4 1 ...</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt;  $ Item_2            : num  2 5 4 1 4 5 4 3 5 3 ...</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;  $ Item_3            : num  5 3 1 5 2 2 5 2 3 4 ...</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt;  $ Item_4            : num  1 4 2 0 3 2 2 1 4 2 ...</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;  $ Item_5            : num  3 5 1 5 1 3 5 2 0 4 ...</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;  $ Item_6            : num  1 3 2 1 4 1 5 2 2 1 ...</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt;  $ Item_7            : num  4 2 4 1 4 4 4 1 5 3 ...</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt;  $ Item_8            : num  3 5 5 4 4 2 5 5 2 3 ...</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt;  $ Item_9            : num  1 5 4 5 4 2 4 1 3 3 ...</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt;  $ Item_10           : num  0 5 5 5 0 5 5 4 0 4 ...</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt;  $ Item_11           : num  3 5 4 5 3 1 5 5 2 1 ...</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt;  $ Item_12           : num  3 5 5 5 5 1 3 5 1 1 ...</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt;  $ Item_13           : num  1 1 3 1 2 1 1 4 1 1 ...</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt;  $ Item_14           : num  1 2 1 4 1 2 2 1 2 5 ...</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt;  $ Item_15           : num  1 4 2 1 5 1 3 2 2 1 ...</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt;  $ Item_16           : num  4 5 4 2 3 3 4 3 3 4 ...</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt;  $ Item_17           : num  3 5 0 1 3 1 4 3 3 3 ...</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt;  $ Item_18           : num  2 5 4 1 5 5 5 2 5 4 ...</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt;  $ Item_19           : num  2 1 1 4 1 3 4 2 4 3 ...</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt;  $ Item_20           : num  5 3 4 5 2 4 5 3 3 2 ...</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt;  $ Item_21           : num  3 0 4 5 3 4 1 1 4 2 ...</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="co">#&gt;  $ Item_22           : num  3 5 1 1 2 3 5 4 3 4 ...</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="co">#&gt;  $ Item_23           : num  1 1 2 1 1 4 3 1 5 2 ...</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="co">#&gt;  $ Item_24           : num  1 4 4 2 3 2 4 5 2 0 ...</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co">#&gt;  $ Item_25           : num  2 5 5 3 5 1 5 4 3 4 ...</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="co">#&gt;  $ Item_26           : num  1 4 3 1 3 1 2 1 2 3 ...</span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="co">#&gt;  $ Item_27           : num  1 5 1 1 5 2 4 4 3 4 ...</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="co">#&gt;  $ Item_28           : num  1 5 1 1 4 2 3 5 2 3 ...</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="co">#&gt;  $ Item_29           : num  1 5 2 3 2 1 4 3 1 3 ...</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a><span class="co">#&gt;  $ Item_30           : num  3 5 4 1 1 2 5 4 4 5 ...</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/roer_vignette.R</p>
+</div>
+<div id="date-published" class="section level3">
+<h3>Date Published:</h3>
+<p>No official publication, see citation below.</p>
+</div>
+<div id="dataset-citation" class="section level3">
+<h3>Dataset Citation:</h3>
+<p>Röer, J. P., Bell, R., &amp; Buchner, A. (2013). Is the
+survival-processing memory advantage due to richness of encoding?
+Journal of Experimental Psychology: Learning, Memory, and Cognition, 39,
+1294-1302.</p>
+</div>
+<div id="keywords" class="section level3">
+<h3>Keywords:</h3>
+<p>usefulness; survival processing; adaptive memory; richness of
+encoding</p>
+</div>
+<div id="use-license" class="section level3">
+<h3>Use License:</h3>
+<p>CC BY-NC</p>
+</div>
+<div id="geographic-description---citystatecountry-of-participants" class="section level3">
+<h3>Geographic Description - City/State/Country of Participants:</h3>
+<p>Düsseldorf, Germany</p>
+</div>
+<div id="column-metadata" class="section level3">
+<h3>Column Metadata:</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/roer_metadata.xlsx&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">flextable</span>(metadata) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-c6b6cbde{}.cl-c6b1a816{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c6b29c80{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c6b2a39c{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6b2a39d{width:2.561in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6b2a39e{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6b2a3a6{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6b2a3a7{width:2.561in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6b2a3a8{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6b2a3b0{width:1.296in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6b2a3b1{width:2.561in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6b2a3b2{width:2.883in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-c6b6cbde"><thead><tr style="overflow-wrap:break-word;"><th class="cl-c6b2a39c"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Variable Name</span></p></th><th class="cl-c6b2a39d"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Variable Description</span></p></th><th class="cl-c6b2a39e"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Type (numeric, character, logical, etc.)</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-c6b2a3a6"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Items</span></p></td><td class="cl-c6b2a3a7"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Item ratings for item_1 to item_30</span></p></td><td class="cl-c6b2a3a8"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Numeric</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c6b2a3b0"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Scenario</span></p></td><td class="cl-c6b2a3b1"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Categorical scenarios- 1,2,3</span></p></td><td class="cl-c6b2a3b2"><p class="cl-c6b29c80"><span class="cl-c6b1a816">Numeric</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/roer_vignette.R</p>
+</div>
+<div id="aipe-analysis" class="section level3">
+<h3>AIPE Analysis:</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>DF_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(DF, <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(Participant_Number)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  dplyr<span class="sc">::</span> <span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">score =</span> value)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">flextable</span>(<span class="fu">head</span>(DF_long)) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-c6c22d4e{}.cl-c6bfd7f6{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c6c0c864{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c6c0c86e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c6c0cfb2{width:1.635in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6c0cfb3{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6c0cfb4{width:0.659in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6c0cfbc{width:1.635in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6c0cfbd{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6c0cfbe{width:0.659in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6c0cfbf{width:1.635in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6c0cfc6{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6c0cfc7{width:0.659in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-c6c22d4e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-c6c0cfb2"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">Participant_Number</span></p></th><th class="cl-c6c0cfb3"><p class="cl-c6c0c86e"><span class="cl-c6bfd7f6">item</span></p></th><th class="cl-c6c0cfb4"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">score</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-c6c0cfbc"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td><td class="cl-c6c0cfbd"><p class="cl-c6c0c86e"><span class="cl-c6bfd7f6">Item_1</span></p></td><td class="cl-c6c0cfbe"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c6c0cfbc"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td><td class="cl-c6c0cfbd"><p class="cl-c6c0c86e"><span class="cl-c6bfd7f6">Item_2</span></p></td><td class="cl-c6c0cfbe"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c6c0cfbc"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td><td class="cl-c6c0cfbd"><p class="cl-c6c0c86e"><span class="cl-c6bfd7f6">Item_3</span></p></td><td class="cl-c6c0cfbe"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c6c0cfbc"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td><td class="cl-c6c0cfbd"><p class="cl-c6c0c86e"><span class="cl-c6bfd7f6">Item_4</span></p></td><td class="cl-c6c0cfbe"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c6c0cfbc"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td><td class="cl-c6c0cfbd"><p class="cl-c6c0c86e"><span class="cl-c6bfd7f6">Item_5</span></p></td><td class="cl-c6c0cfbe"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c6c0cfbf"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td><td class="cl-c6c0cfc6"><p class="cl-c6c0c86e"><span class="cl-c6bfd7f6">Item_6</span></p></td><td class="cl-c6c0cfc7"><p class="cl-c6c0c864"><span class="cl-c6bfd7f6">1</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/roer_vignette.R</p>
+<div id="stopping-rule" class="section level4">
+<h4>Stopping Rule</h4>
+<p>What is the usual standard error for the data that could be
+considered for our stopping rule using the 40% decile?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># individual SEs</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fu">tapply</span>(DF_long<span class="sc">$</span>score, DF_long<span class="sc">$</span>item, <span class="cf">function</span> (x) { <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x)) })</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>SE</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;     Item_1    Item_10    Item_11    Item_12 </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 0.08860091 0.09743922 0.10419876 0.10725788 </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;    Item_13    Item_14    Item_15    Item_16 </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 0.07167329 0.11502337 0.09746261 0.09425595 </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;    Item_17    Item_18    Item_19     Item_2 </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 0.08981453 0.08968434 0.09817041 0.10421504 </span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt;    Item_20    Item_21    Item_22    Item_23 </span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 0.10768420 0.10195369 0.09891678 0.11403914 </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt;    Item_24    Item_25    Item_26    Item_27 </span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; 0.08751293 0.10279479 0.08015419 0.09612067 </span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt;    Item_28    Item_29     Item_3    Item_30 </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; 0.09697587 0.08758437 0.10963101 0.11319421 </span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt;     Item_4     Item_5     Item_6     Item_7 </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; 0.07944272 0.11514133 0.08852481 0.10163361 </span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt;     Item_8     Item_9 </span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; 0.09615698 0.09118122</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">quantile</span>(SE, <span class="at">probs =</span> .<span class="dv">40</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>cutoff</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt;        40% </span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; 0.09614246</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co"># we could also use the cutoff score function in semanticprimeR</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>cutoff_score <span class="ot">&lt;-</span> <span class="fu">calculate_cutoff</span>(<span class="at">population =</span> DF_long,</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>                                 <span class="at">grouping_items =</span> <span class="st">&quot;item&quot;</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>                                 <span class="at">score =</span> <span class="st">&quot;score&quot;</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>                                 <span class="at">minimum =</span> <span class="fu">min</span>(DF_long<span class="sc">$</span>score),</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>                                 <span class="at">maximum =</span> <span class="fu">max</span>(DF_long<span class="sc">$</span>score))</span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>cutoff_score<span class="sc">$</span>cutoff</span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt;        40% </span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; 0.09614246</span></span></code></pre></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/roer_vignette.R</p>
+<p>Using our 40% decile as a guide, we find that 0.096 is our target
+standard error for an accurately measured item.</p>
+</div>
+<div id="minimum-sample-size" class="section level4">
+<h4>Minimum Sample Size</h4>
+<p>To estimate the minimum sample size, we should figure out what number
+of participants it would take to achieve 80%, 85%, 90%, and 95% of the
+SEs for items below our critical score of 0.096.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># sequence of sample sizes to try</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># small for cran</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>samplesize_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">500</span>, <span class="dv">5</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># create a blank table for us to save the values in </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="fu">length</span>(samplesize_values)<span class="sc">*</span>nsim, </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>                    <span class="at">ncol =</span> <span class="fu">length</span>(<span class="fu">unique</span>(DF_long<span class="sc">$</span>item)))</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># make it a data frame</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>sim_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sim_table)</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co"># add a place for sample size values </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>sim_table<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>iterate <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim){</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>  <span class="co"># loop over sample sizes</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(samplesize_values)){</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>      </span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>    <span class="co"># temp dataframe that samples and summarizes</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> DF_long <span class="sc">%&gt;%</span> </span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>      <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>      <span class="fu">sample_n</span>(samplesize_values[i], <span class="at">replace =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">se =</span> <span class="fu">sd</span>(score)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(score))) </span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>    </span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a>    <span class="fu">colnames</span>(sim_table)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_long<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp<span class="sc">$</span>item</span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>    sim_table[iterate, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_long<span class="sc">$</span>item))] <span class="ot">&lt;-</span> temp<span class="sc">$</span>se</span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>    sim_table[iterate, <span class="st">&quot;sample_size&quot;</span>] <span class="ot">&lt;-</span> samplesize_values[i]</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>    sim_table[iterate, <span class="st">&quot;nsim&quot;</span>] <span class="ot">&lt;-</span> p</span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>    </span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a>    iterate <span class="ot">&lt;-</span> iterate <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>  }</span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a>}</span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>final_sample <span class="ot">&lt;-</span> </span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a>  sim_table <span class="sc">%&gt;%</span> </span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(sample_size, nsim)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">item =</span> name, <span class="at">se =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a>  <span class="fu">group_by</span>(sample_size, nsim) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">sum</span>(se <span class="sc">&lt;=</span> cutoff)<span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(DF_long<span class="sc">$</span>item))) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>  <span class="co"># then summarize all down averaging percents</span></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sample_size) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">percent_below =</span> <span class="fu">mean</span>(percent_below)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(percent_below) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by</span></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a><span class="co">#&gt; &#39;sample_size&#39;. You can override using the</span></span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a><span class="co">#&gt; `.groups` argument.</span></span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a><span class="fu">flextable</span>(final_sample <span class="sc">%&gt;%</span> <span class="fu">head</span>()) <span class="sc">%&gt;%</span> <span class="fu">autofit</span>()               </span></code></pre></div>
+<div class="tabwid"><style>.cl-c91c64d8{}.cl-c91a2f1a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c91b133a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c91b19ca{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19d4{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19d5{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19d6{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19de{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19df{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19e0{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19e8{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19e9{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c91b19f2{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-c91c64d8"><thead><tr style="overflow-wrap:break-word;"><th class="cl-c91b19ca"><p class="cl-c91b133a"><span class="cl-c91a2f1a">sample_size</span></p></th><th class="cl-c91b19d4"><p class="cl-c91b133a"><span class="cl-c91a2f1a">percent_below</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-c91b19d5"><p class="cl-c91b133a"><span class="cl-c91a2f1a">20</span></p></td><td class="cl-c91b19d6"><p class="cl-c91b133a"><span class="cl-c91a2f1a">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c91b19de"><p class="cl-c91b133a"><span class="cl-c91a2f1a">25</span></p></td><td class="cl-c91b19df"><p class="cl-c91b133a"><span class="cl-c91a2f1a">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c91b19de"><p class="cl-c91b133a"><span class="cl-c91a2f1a">30</span></p></td><td class="cl-c91b19df"><p class="cl-c91b133a"><span class="cl-c91a2f1a">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c91b19de"><p class="cl-c91b133a"><span class="cl-c91a2f1a">35</span></p></td><td class="cl-c91b19df"><p class="cl-c91b133a"><span class="cl-c91a2f1a">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c91b19e0"><p class="cl-c91b133a"><span class="cl-c91a2f1a">40</span></p></td><td class="cl-c91b19e8"><p class="cl-c91b133a"><span class="cl-c91a2f1a">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c91b19e9"><p class="cl-c91b133a"><span class="cl-c91a2f1a">45</span></p></td><td class="cl-c91b19f2"><p class="cl-c91b133a"><span class="cl-c91a2f1a">0</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/roer_vignette.R</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>final_table <span class="ot">&lt;-</span> <span class="fu">calculate_correction</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">proportion_summary =</span> final_sample,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">pilot_sample_size =</span> DF_long <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">sample_size =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">avg_sample =</span> <span class="fu">mean</span>(sample_size)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(avg_sample),</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="at">proportion_variability =</span> cutoff_score<span class="sc">$</span>prop_var</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="fu">flextable</span>(final_table) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  <span class="fu">autofit</span>()</span></code></pre></div>
+<div class="tabwid"><style>.cl-c9294022{}.cl-c92706d6{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c927ed1c{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c927f3d4{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3d5{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3d6{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3de{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3df{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3e0{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3e8{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3e9{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3ea{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3f2{width:1.279in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3f3{width:1.134in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c927f3f4{width:1.856in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-c9294022"><thead><tr style="overflow-wrap:break-word;"><th class="cl-c927f3d4"><p class="cl-c927ed1c"><span class="cl-c92706d6">percent_below</span></p></th><th class="cl-c927f3d5"><p class="cl-c927ed1c"><span class="cl-c92706d6">sample_size</span></p></th><th class="cl-c927f3d6"><p class="cl-c927ed1c"><span class="cl-c92706d6">corrected_sample_size</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-c927f3de"><p class="cl-c927ed1c"><span class="cl-c92706d6">80.33333</span></p></td><td class="cl-c927f3df"><p class="cl-c927ed1c"><span class="cl-c92706d6">270</span></p></td><td class="cl-c927f3e0"><p class="cl-c927ed1c"><span class="cl-c92706d6">60.18641</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c927f3de"><p class="cl-c927ed1c"><span class="cl-c92706d6">85.00000</span></p></td><td class="cl-c927f3df"><p class="cl-c927ed1c"><span class="cl-c92706d6">285</span></p></td><td class="cl-c927f3e0"><p class="cl-c927ed1c"><span class="cl-c92706d6">67.54308</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c927f3e8"><p class="cl-c927ed1c"><span class="cl-c92706d6">92.33333</span></p></td><td class="cl-c927f3e9"><p class="cl-c927ed1c"><span class="cl-c92706d6">300</span></p></td><td class="cl-c927f3ea"><p class="cl-c927ed1c"><span class="cl-c92706d6">75.18211</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c927f3f2"><p class="cl-c927ed1c"><span class="cl-c92706d6">95.33333</span></p></td><td class="cl-c927f3f3"><p class="cl-c927ed1c"><span class="cl-c92706d6">315</span></p></td><td class="cl-c927f3f4"><p class="cl-c927ed1c"><span class="cl-c92706d6">82.85322</span></p></td></tr></tbody></table></div>
+<p>/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR/vignettes/roer_vignette.R</p>
+<p>Based on these simulations, we can decide our minimum sample size is
+likely close to 60.</p>
+</div>
+<div id="maximum-sample-size" class="section level4">
+<h4>Maximum Sample Size</h4>
+<p>In this example, we could set our maximum sample size for 90% of
+items, which would equate to 75 participants.</p>
+</div>
+<div id="final-sample-size" class="section level4">
+<h4>Final Sample Size</h4>
+<p>We should consider any data loss or other issues related to survival
+processing when thinking about the final sample size requirements.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

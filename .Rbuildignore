@@ -6,3 +6,5 @@
 ^\.github$
 ^tests$
 ^LICENSE$
+lab_data
+inst/latex

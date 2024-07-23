@@ -34,6 +34,9 @@
     <loc>https://semanticpriming.github.io/semanticprimeR/articles/montefinese_vignette.html</loc>
   </url>
   <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/articles/package_functions.html</loc>
+  </url>
+  <url>
     <loc>https://semanticpriming.github.io/semanticprimeR/articles/roer_vignette.html</loc>
   </url>
   <url>
@@ -64,9 +67,42 @@
     <loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_proportion.html</loc>
   </url>
   <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/calculate_similarity.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/fake_Wuggy.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/fake_simple.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/import_lab.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/import_prime.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/import_subs.html</loc>
+  </url>
+  <url>
     <loc>https://semanticpriming.github.io/semanticprimeR/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/labData.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/primeData.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/processData.html</loc>
+  </url>
+  <url>
     <loc>https://semanticpriming.github.io/semanticprimeR/reference/simulate_population.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/subsData.html</loc>
+  </url>
+  <url>
+    <loc>https://semanticpriming.github.io/semanticprimeR/reference/top_n.html</loc>
   </url>
 </urlset>

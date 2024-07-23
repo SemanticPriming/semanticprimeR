@@ -18,7 +18,7 @@
 #' @return a dataset of either words by dimensions or the tokens
 #' including the frequency counts.
 #'
-#' @import rio
+#' @import rio utils
 #'
 #' @keywords metadata, datasets, linguistic norms
 #' @export
@@ -30,7 +30,7 @@
 
 import_subs <- function(language, what){
 
-  data("subsData")
+  subsData
 
   dir.create(paste(what), showWarnings = F)
   dir.create(paste0(what, "/", language), showWarnings = F)

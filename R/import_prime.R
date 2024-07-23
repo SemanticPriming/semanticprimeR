@@ -10,7 +10,7 @@
 #'
 #' @return a dataset or stimuli list in a dataframe.
 #'
-#' @import rio
+#' @import rio utils
 #'
 #' @keywords metadata, datasets, linguistic norms
 #' @export
@@ -20,7 +20,7 @@
 
 import_prime <- function(filename){
 
-  data("primeData")
+  primeData
   con <- primeData$location[ primeData$filename == filename ]
   if (nchar(con) < 3) { stop("Please make sure you've specified the
                              filename correctly.")}

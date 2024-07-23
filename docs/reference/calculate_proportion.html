@@ -3,7 +3,7 @@
 for data that would include repeated measures items.
 Additionally, the data can be rounded and/or truncated
 to ensure it matches a target scale - for example, a
-1-7 type rating scale."><title>Simulate Normal Population Scores for Multiple Items — calculate_proportion • semanticprimeR</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Simulate Normal Population Scores for Multiple Items — calculate_proportion"><meta property="og:description" content="This function allows you to create normal populations
+1-7 type rating scale."><title>Simulate Normal Population Scores for Multiple Items — calculate_proportion • semanticprimeR</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Simulate Normal Population Scores for Multiple Items — calculate_proportion"><meta property="og:description" content="This function allows you to create normal populations
 for data that would include repeated measures items.
 Additionally, the data can be rounded and/or truncated
 to ensure it matches a target scale - for example, a
@@ -14,7 +14,7 @@ to ensure it matches a target scale - for example, a
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">semanticprimeR</a>
 
@@ -40,6 +40,7 @@ to ensure it matches a target scale - for example, a
     <a class="dropdown-item" href="../articles/mcfall_vignette.html">Power and Sample Size Simulation: EAMMi2</a>
     <a class="dropdown-item" href="../articles/moat_vignette.html">Power and Sample Size Simulation: Seeing is Believing</a>
     <a class="dropdown-item" href="../articles/montefinese_vignette.html">Power and Sample Size Simulatio: Online search trends and word-related emotional response during COVID-19 lockdown in Italy</a>
+    <a class="dropdown-item" href="../articles/package_functions.html">semanticprimeR Package Functions</a>
     <a class="dropdown-item" href="../articles/roer_vignette.html">Power and Sample Size Simulation: Survival Processing Usefulness</a>
     <a class="dropdown-item" href="../articles/suchow_vignette.html">Power and Sample Size Simulation: Superficial Face Judgment</a>
     <a class="dropdown-item" href="../articles/ulloa_vignette.html">Power and Sample Size Simulation: Liking effect induced by gaze</a>
@@ -118,18 +119,18 @@ below the standard error cutoff score.</p></li>
 <span class="r-in"><span> maximum <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">se_items</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3692097 0.3118282 0.4500000 0.3871284 0.3661679 0.4381480 0.4057157</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.2890547 0.2562380 0.5040624 0.3618301 0.3788834 0.3524351 0.3871284</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.3026201 0.4236433 0.4039281 0.3872983 0.4031129 0.3234274 0.4223992</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] 0.3732856 0.3900067 0.4161225 0.4945758 0.3118282 0.4328607 0.3361939</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] 0.4750346 0.5160579</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3732856 0.3741657 0.4507304 0.3086473 0.3469794 0.3718729 0.4827280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.4672146 0.5155477 0.4222434 0.4103913 0.3692097 0.4259664 0.3524351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.4784844 0.4723959 0.3933660 0.4000000 0.4284304 0.3830281 0.3940345</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] 0.3026201 0.3589092 0.4328607 0.3900067 0.3879772 0.4095890 0.3857665</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] 0.4546543 0.4184873</span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">sd_items</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.06356322</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.05014582</span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">cutoff</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       40% </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3766443 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3891949 </span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">prop_var</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02118774</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01671527</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># step 3 simulate bootstrapped samples</span></span></span>
 <span class="r-in"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="bootstrap_samples.html">bootstrap_samples</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">20</span>, stop <span class="op">=</span> <span class="fl">100</span>,</span></span>
@@ -145,12 +146,12 @@ below the standard error cutoff score.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    sample_size percent_below</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>          20         0.500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          25         0.717</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          30         0.873</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>          35         0.954</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>          40         0.990</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>          45         0.999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>          20         0.489</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          25         0.734</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          30         0.905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>          35         0.978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>          40         0.998</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>          45         1    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>          50         1    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>          55         1    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>          60         1    </span>
@@ -169,11 +170,11 @@ below the standard error cutoff score.</p></li>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Erin M. Buchanan.</p>
+  <p>Developed by Erin M. Buchanan.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
     </footer></div>
