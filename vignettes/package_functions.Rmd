@@ -299,54 +299,76 @@ af_wuggy <- fake_Wuggy(
 head(af_wuggy)
 ```
 
-## Get Data
+## Get Priming Data
 
-- Get LAB data --> 
-  - finish up the saved labData file
-  - show how to load that data
-  - show how to merge that data
-  - add similarity values 
-- Get SPAML data --> 
-  - list of stimuli (procedure folder)
-  - matched data 
-  - similarity values from stimuli (merge these together, procedure folder)
-    - your similarity values 
-    
-    o	All averaged cosine: all cosine values in the same format/order as described above with the exception that repeated cue/target combinations were averaged together. 
-    	Cue target with b., m., v. to determine which dataset the cue and target originated from. 
-	Root cosine, raw cosine, affix cosine from this set of calculations
-	Old cosine from Buchanan et al.
-	JCN, LSA, FSG, BSG
+You can load one of the many files included in the SPAML release by using the `primeData` to see what we have available. The datasets are broken into a couple types:
 
-    
-    - https://github.com/AaltoImagingLanguage/SemanticNorms/tree/master
-    - nelson norms
-    - swow different languages
-    - vivas 2016
-    - kremer 2011
-    - montefinese 2012
-  - output data
-    /Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/SPAML-PSA/05_Data/data_processing/output_data/full_data
-/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/SPAML-PSA/05_Data/data_processing/output_data/item_data
-/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/SPAML-PSA/05_Data/data_processing/output_data/participant_data
-/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/SPAML-PSA/05_Data/data_processing/output_data/priming_data
-/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/SPAML-PSA/05_Data/data_processing/output_data/trial_data
+- `procedure_stimuli`: The stimuli from the study. Each dataset includes the ~5000 trials used in the study listed as cue-target paits with their `cue_type`/`target_type` (word/nonword) and trial `type` (related, unrelated, nonword). The cosine values from the subs2vec models are included when available for word pairs. If the value is blank or NA, you can assume one of the words did not exist in the subs2vec model or could not be matched. The subs2vec models were often filtered to only the top X words, and some stimuli selected may have be infrequent. 
+- `matched_stimuli`: The matched stimuli datasets fall into two types: "matched" which matches the original language to English, and "unique" which includes the word pair combo found in the datasets that makes each trial unique. Some targets were repeated due to translation - therefore, the unique datasets allow you to unambiguously match things together. The `matched_stimuli.csv` files has these all matched together if you want all languages at once. The missing data is the Arabic pairs we were asked to remove due to their taboo nature in that culture. 
+
+Each of the following files have codebooks found at: 
+https://github.com/SemanticPriming/SPAML/tree/master/05_Data/codebooks
+
+- `participant_data`: Information on the participants who completed each language. 
+- `full_data`: The "raw" data with only identifiers removed. 
+- `trial_data`: The trial level data showing only the trial blocks (i.e., excluding the other lines that indicate the timing and inter-trial interval).
+- `item_data`: The average results for each token/item, ignoring the condition presented. 
+- `priming_data`: The priming data in either `_trials` format (meaning these have been matched and labeled for trial type) or `_summary` format (meaning averages/summaries of the target trials matched by related and unrelated to create a priming score). 
+
+### Load Avaiable Data
 
 ```{r}
-get_data()
+data("primeData")
+head(primeData)
+```
 
+Once you decide what file you would like to download and import, you can use `import_prime()` to import that file. Note that some of the `full_data` datasets are quite large and may take a while download and/or import directly. You can also just use the direct links the primeData file to download them. Some files are heavily compressed in `.gz` format. I recommend 7-zip if you aren't familar with the command line to unzip these: https://www.wikihow.com/Extract-a-Gz-File
+
+You can also import them directly into *R* with the *rio* package (which is what this function does, but it does download the file each time, so I'd recommend one download and then put the import into your code directly with `rio::import("filepath")`).
+
+### Import Specific Data
+
+```{r}
+de_words <- import_prime("es_words.csv")
+head(es_words)
+```
+
+## Match to LAB Data
+
+### Load Available Data
+
+```{r}
+data("labData")
+head(labData)
+
+# import_lab() also loads this dataset 
+```
+
+### Load Filtered Metadata
+
+```{r}
+saved <- import_lab(language = "English", variables = c("aoa", "freq"))
+```
+
+### Load Specific Data
+
+```{r}
+saved <- import_lab(bibtexID = "Birchenough2017", citation = TRUE)
+```
+
+### Match To Prime Data
+
+```{r}
 
 ```
 
-## Process Data
+## Other Cool Stuff
 
-```{r}
-process_labjs()
-transition_probabilities()
+We used `labjs` for this project. The datasets you get from `labjs` are in a SQLite file. It's not super fun to process. So, they wrote a function to do that. We included that function here as `processData()`, and you can see that we used it in our data processing files. It's here if you want to use it yourself on `labjs` projects. 
+
+```{r eval = F}
+df <- processData("data.sqlite")
 ```
 
-## Merge Data 
-
-Check out the text package for how to merge word embeddings in R: https://osf.io/preprints/psyarxiv/293kt
-
-https://cran.r-project.org/web/packages/text/vignettes/huggingface_in_r.html 
+- Check out the `text` package for how to merge word embeddings in *R*: https://osf.io/preprints/psyarxiv/293kt
+- https://cran.r-project.org/web/packages/text/vignettes/huggingface_in_r.html 

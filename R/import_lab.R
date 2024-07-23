@@ -1,17 +1,16 @@
-#' Get Dataset
+#' Import Datasets from the Linguistic Annotated Bibliography
 #'
-#' This function allows you to import the current datasets avaliable from
-#' \href{https://github.com/orgs/SemanticPriming/}{Semantic Priming GitHub Group}.
+#' This function allows you to import the current datasets available from
+#' \href{https://github.com/orgs/SemanticPriming/}{Semantic Priming GitHub
+#' Group}. These datasets generally have psycholinguistic variables like
+#' Age of Acquisition, length, neighborhoods, Familiarity, Concretenes,
+#' and more. We will update datasets as we have them. All data belongs
+#' to the person who published them.
 #'
-#' @param corpus Include a two letter code to download the Open Subtitles corpus for
-#' text models. You can view the corpora on
-#' \href{http://opus.nlpl.eu/OpenSubtitles.php}{their website}. Note: these files
-#' can be very large, so they may take up a lot of memory to download. They are
-#' text based files that are read using `readLines`.
 #' @param bibtexID The bibtex ID of the dataset you are trying to load.
 #' You can leave all parameters blank to load just the metadata.
 #' @param citation Include the citation for the dataset you loaded - will only
-#' load if you include a bibtex ID.
+#' load if you include a bibtex ID, use `TRUE` to get the citation.
 #' @param language If you include a bibtex ID, you will get back the language of
 #' the dataset, if you do not include a bibtex ID, it will return a list of
 #' datasets in that language.
@@ -26,37 +25,43 @@
 #' \item{variables}{The variables of the dataset you requested to load}
 #' \item{datasets}{Possible datasets based on your language and variable names}
 #'
+#' @import rio
+#'
 #' @keywords metadata, datasets, linguistic norms
+#'
 #' @export
+#'
 #' @examples
 #'
-#' get_dataset()
-#' get_dataset(bibtexID = "Birchenough2017", citation = TRUE)
-#' get_dataset(language = "English", variables = c("aoa", "freq"))
+#' # import_lab()
+#' # import_lab(bibtexID = "Birchenough2017", citation = TRUE)
+#' # import_lab(language = "English", variables = c("aoa", "freq"))
 
 
-get_dataset <- function(corpus = NULL,
-                        bibtexID = NULL,
+import_lab <- function( bibtexID = NULL,
                         citation = NULL,
                         language = NULL,
                         variables = NULL
                         ) {
 
-  metadata <- load_metadata()
-  variable_return <- list(metadata = metadata)
+  data("labData")
+  labData <- subset(labData, included == "yes")
+  labData$link <- paste0("https://github.com/SemanticPriming/semanticprimeR/releases/download/v0.0.1/",
+                         labData$bibtex, ".csv")
 
-  https://github.com/SemanticPriming/semanticprimeR/releases/download/v0.0.1/Bonin2021.csv
-
-  if (!is.null(corpus)){
-
-      con <- gzcon(url(paste("http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/mono/OpenSubtitles.",
-                                      corpus, ".gz", sep="")))
-      variable_return$subtitle <- readLines(con, encoding = "utf8")
-  }
+  variable_return <- list(metadata = labData)
 
   if (!is.null(bibtexID)) {
-    data_link <- metadata$link[metadata$bibtex == bibtexID]
-    variable_return$loaded_data <- read.csv(url(data_link), stringsAsFactors = F)
+
+    dir.create(paste("lab_data"), showWarnings = F)
+    con <- metadata$link[metadata$bibtex == bibtexID]
+    download.file(
+      con,
+      destfile = paste0('lab_data/', bibtexID, ".csv"),
+      mode = "wb")
+
+    variable_return$loaded_data <- rio::import(paste0('lab_data/', bibtexID, ".csv"),
+                                               stringsAsFactors = F)
 
     if (!is.null(citation)){
 
@@ -115,5 +120,3 @@ get_dataset <- function(corpus = NULL,
 
   return(variable_return)
 }
-
-#' @rdname get_data

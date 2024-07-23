@@ -45,7 +45,7 @@
 #'  \item{"replacement_word"}{The final replacement token.}
 #' }
 #'
-#' @example
+#' @examples
 #' # af_wuggy <- fake_Wuggy(
 #' # wordlist = af_final$sentence, # full valid options in language
 #' # language_hyp = "../inst/latex/hyph-af.tex", # path to hyphenation.tex

@@ -1,4 +1,32 @@
+#' Process labjs SQLite Files
+#'
+#' This function is a helper function to transform labjs
+#' SQLite files into a long data file where each trial
+#' is one row.
+#'
+#' @param database The filepath of the database you want to process.
+#'
+#' @return The experiment data in a long format.
+#'
+#' @import RSQLite dplyr DBI purrr jsonlite readr
+#'
+#' @keywords metadata, datasets, linguistic norms
+#'
+#' @export
+#'
+#' @examples
+#' # df <- processData("filename")
+#'
+
 processData <- function(database) {
+
+  require("DBI")
+  require("RSQLite")
+  require("dplyr")
+  require("purrr")
+  require("jsonlite")
+  require("readr")
+
   con <- dbConnect(
     drv=RSQLite::SQLite(),
     dbname=database

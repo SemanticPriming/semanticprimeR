@@ -18,6 +18,8 @@
 #' @return a dataset of either words by dimensions or the tokens
 #' including the frequency counts.
 #'
+#' @import rio
+#'
 #' @keywords metadata, datasets, linguistic norms
 #' @export
 #' @examples
