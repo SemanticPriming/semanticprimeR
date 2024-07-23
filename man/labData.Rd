@@ -8,25 +8,27 @@
 A data frame of information from the LAB database
 and information on how to load the datasets.
 
-`included`: information about if the data is included in
-the current LAB data archive.
-`bibtex`: the code to use to open the relevant data.
-`author`, `year`, `ref_title`, `ref_journal`, `ref_volume`,
-`ref_page`, `ref_doi`: columns with information about the
-reference for the cited dataset.
-`no1`, `no2`: information about the number of items available
-in the dataset.
-`type1`, `type2`: what type of data (words, pairs, etc.) is
-available in the dataset.
-`ref1`, `ref2`: where the dataset was referenced from (for
-example, did someone add on to the snodgrass norms?)
-`notes_stim`, `data_name`, `nonling`, `language`, `notes_lang`,
-`language_glotto`, `notes_glotto`, `population`, `notes_var`:
+\itemize{
+ \item{included}{information about if the data is included in
+the current LAB data archive.}
+\item{bibtex}{ the code to use to open the relevant data.}
+\item{author, year, ref_title, ref_journal, ref_volume,
+ref_page, ref_doi}{columns with information about the
+reference for the cited dataset.}
+\item{no1, no2}{ information about the number of items available
+in the dataset.}
+\item{type1, type2}{ what type of data (words, pairs, etc.) is
+available in the dataset.}
+\item{ref1, ref2}{ where the dataset was referenced from (for
+example, did someone add on to the snodgrass norms?)}
+\item{notes_stim, data_name, nonling, language, notes_lang,
+language_glotto, notes_glotto, population, notes_var}{
 notes and other information about the language, population,
-or stimuli available in the dataset.
-All other columns are binary variables that indicate if the
+or stimuli available in the dataset.}
+\item{everything else}{All other columns are binary variables that indicate if the
 data contains that type of linguistic information. For example,
-`phonon` indicates phonographic neighborhood values.
+phonon indicates phonographic neighborhood values.}
+}
 }
 \usage{
 data(labData)

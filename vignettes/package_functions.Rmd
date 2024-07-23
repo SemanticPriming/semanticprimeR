@@ -328,8 +328,10 @@ You can also import them directly into *R* with the *rio* package (which is what
 
 ### Import Specific Data
 
+In this example, we import the stimuli dataset for Spanish, which includes the trials, type of trial information, and the cosine calculated from subs2vec. 
+
 ```{r}
-de_words <- import_prime("es_words.csv")
+es_words <- import_prime("es_words.csv")
 head(es_words)
 ```
 
@@ -337,14 +339,20 @@ head(es_words)
 
 ### Load Available Data
 
+To review the available data from the Linguistic Annotated Bibliography, you can use `data("labData")`, which includes information about available datasets overall and which are included in our LAB data release for merging. 
+
 ```{r}
 data("labData")
 head(labData)
 
 # import_lab() also loads this dataset 
+
+# ?labData # use this to learn about the dataset 
 ```
 
 ### Load Filtered Metadata
+
+If you want to find specific types of LAB data, you can use the `language` and/or `variables
 
 ```{r}
 saved <- import_lab(language = "English", variables = c("aoa", "freq"))

@@ -19,11 +19,14 @@
 #' datasets that include that variable (can also be paired with language).
 #' Use the column names from the metadata as your filter.
 #' @return
-#' \item{metadata}{The metadata list of avaliable datasets}
-#' \item{loaded_data}{The dataset you requested to load}
-#' \item{language}{The language of the dataset you requested to load}
-#' \item{variables}{The variables of the dataset you requested to load}
-#' \item{datasets}{Possible datasets based on your language and variable names}
+#' \itemize{
+#'  \item{metadata}{The metadata list of avaliable datasets}
+#'  \item{loaded_data}{The dataset you requested to load}
+#'  \item{language}{The language of the dataset you requested to load}
+#'  \item{variables}{The variables of the dataset you requested to load}
+#'  \item{datasets}{Possible datasets based on your language
+#'  and variable names}
+#' }
 #'
 #' @import rio
 #'
@@ -48,7 +51,7 @@ import_lab <- function( bibtexID = NULL,
   labData <- subset(labData, included == "yes")
   labData$link <- paste0("https://github.com/SemanticPriming/semanticprimeR/releases/download/v0.0.1/",
                          labData$bibtex, ".csv")
-
+  metadata <- labData
   variable_return <- list(metadata = labData)
 
   if (!is.null(bibtexID)) {
