@@ -381,7 +381,7 @@ head(tibble(labData))
 
 ### Load Filtered Metadata
 
-If you want to find specific types of LAB data, you can use the `language` and/or `variables
+If you want to find specific types of LAB data, you can use the `language` and/or `variables`.
 
 ```{r}
 saved <- import_lab(language = "English", variables = c("aoa", "freq"))

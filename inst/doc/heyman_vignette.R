@@ -1,10 +1,10 @@
-## ----setup, include = FALSE------------------------------
+## ----setup, include = FALSE----------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup, include=FALSE-----------------------
+## ----vignette-setup, include=FALSE----
 knitr::opts_chunk$set(echo = TRUE)
 
 # Set a random seed
@@ -18,16 +18,16 @@ library(ggplot2)
 library(reshape)
 library(semanticprimeR)
 
-## --------------------------------------------------------
+## ------------------------------------
 HDHS<- read.csv("data/HDHSAIPE.txt", sep="")
 str(HDHS)
 
-## --------------------------------------------------------
+## ------------------------------------
 metadata <- import("data/HDHSMeta.txt")
 
 flextable(metadata) %>% autofit()
 
-## --------------------------------------------------------
+## ------------------------------------
 # pick only correct answers
 HDHScorrect <- HDHS[HDHS$accTarget==1,] 
 summary_stats <- HDHScorrect %>% #data frame
@@ -53,7 +53,7 @@ describe(summary_stats$samplesize/summary_stats$n)
 
 flextable(head(HDHScorrect)) %>% autofit()
 
-## --------------------------------------------------------
+## ------------------------------------
 SE <- tapply(HDHScorrect$RT, HDHScorrect$Target, function (x) { sd(x)/sqrt(length(x)) })
 min(SE)
 max(SE)
@@ -61,7 +61,7 @@ max(SE)
 cutoff <- quantile(SE, probs = .4)
 cutoff
 
-## --------------------------------------------------------
+## ------------------------------------
 # sequence of sample sizes to try
 nsim <- 10 # small for cran
 samplesize_values <- seq(20, 500, 5)
@@ -113,7 +113,7 @@ final_sample <-
 
 flextable(final_sample %>% head()) %>% autofit()
 
-## --------------------------------------------------------
+## ------------------------------------
 # use semanticprimer cutoff function for prop variance
 cutoff <- calculate_cutoff(population = HDHScorrect, 
                            grouping_items = "Target",

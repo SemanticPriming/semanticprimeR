@@ -1,10 +1,10 @@
-## ----setup, include = FALSE------------------------------
+## ----setup, include = FALSE----------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette_setup, include = FALSE---------------------
+## ----vignette_setup, include = FALSE----
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -96,7 +96,7 @@ item_power <- function(data, # name of data frame
 
 }
 
-## --------------------------------------------------------
+## ------------------------------------
 DF <- import("data/barzykowski_data.xlsx") %>% 
   bind_rows(import("data/barzykowski_data.xlsx", sheet = 2)) %>% 
   bind_rows(import("data/barzykowski_data.xlsx", sheet = 3)) %>% 
@@ -130,15 +130,15 @@ DF <- import("data/barzykowski_data.xlsx") %>%
 
 str(DF)
 
-## --------------------------------------------------------
+## ------------------------------------
 metadata <- import("data/barzykowski_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
 
-## --------------------------------------------------------
+## ------------------------------------
 apply(DF[ , -c(1,2)], 2, sd)
 
-## --------------------------------------------------------
+## ------------------------------------
 # set seed
 set.seed(8548)
 # Function for simulation
@@ -160,7 +160,7 @@ var2 <- item_power(DF, # name of data frame
             sample_increase = 5,
             decile = .4)
 
-## --------------------------------------------------------
+## ------------------------------------
 # individual SEs for how surprising 
 var1$SE
 # var 1 cut off
@@ -175,7 +175,7 @@ var2$cutoff
 cutoff <- mean(var1$cutoff, var2$cutoff)
 cutoff
 
-## --------------------------------------------------------
+## ------------------------------------
 cutoff_personal <- calculate_cutoff(population = DF, 
                            grouping_items = "Cue no",
                            score = "Personal nature",
@@ -193,7 +193,7 @@ final_table_personal <- calculate_correction(
 flextable(final_table_personal) %>% 
   autofit()
 
-## --------------------------------------------------------
+## ------------------------------------
 cutoff_surprising <- calculate_cutoff(population = DF, 
                            grouping_items = "Cue no",
                            score = "How surprising",

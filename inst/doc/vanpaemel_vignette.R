@@ -1,10 +1,10 @@
-## ----setup, include = FALSE------------------------------
+## ----setup, include = FALSE----------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette_setup, include=FALSE-----------------------
+## ----vignette_setup, include=FALSE----
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -17,7 +17,7 @@ library(data.table)
 library(semanticprimeR)
 set.seed(48394)
 
-## ----data read-in----------------------------------------
+## ----data read-in--------------------
 ### for typicality data -- cleaning and processing
 typicality_fnames <- list.files(path = "data/vanpaemel_data",
                                 full.names = TRUE)
@@ -43,7 +43,7 @@ typicality_all_df_v3 <- typicality_all_df_v2 %>%
                     
 head(typicality_all_df_v3)
 
-## --------------------------------------------------------
+## ------------------------------------
 metadata <- import("data/vanpaemel_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
@@ -58,7 +58,7 @@ max(SE)
 
 # comparison type 1: amphibians
 
-## ----subset and restructure------------------------------
+## ----subset and restructure----------
 typicality_data_gp1_sub <- subset(typicality_all_df_v3, compType == 1)
 
 # individual SEs for  comparison type 1
@@ -66,7 +66,7 @@ SE1 <- tapply(typicality_data_gp1_sub$score, typicality_data_gp1_sub$comp_group,
 
 SE1
 
-## ----power Two different comparison types----------------
+## ----power Two different comparison types----
 # sequence of sample sizes to try
 nsim <- 10 # small for cran 
 samplesize_values <- seq(5, 200, 5)
@@ -105,7 +105,7 @@ for (p in 1:nsim){
   
 }
 
-## ----cutoff----------------------------------------------
+## ----cutoff--------------------------
 cutoff <- calculate_cutoff(population = typicality_data_gp1_sub, 
                  grouping_items = "comp_group",
                  score = "score", 
@@ -114,7 +114,7 @@ cutoff <- calculate_cutoff(population = typicality_data_gp1_sub,
 
 cutoff$cutoff
 
-## ----summary analysis part1  comparison type 10----------
+## ----summary analysis part1  comparison type 10----
 ### for response outputs 
 # figure out cut off
 final_sample <- 
@@ -132,7 +132,7 @@ final_sample <-
 
 flextable(final_sample) %>% autofit()
 
-## ----calculate correction--------------------------------
+## ----calculate correction------------
 final_scores <- calculate_correction(proportion_summary = final_sample,
                      pilot_sample_size = length(unique(typicality_data_gp1_sub$participant)),
                      proportion_variability = cutoff$prop_var)
