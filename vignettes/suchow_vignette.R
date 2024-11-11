@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------
+## ----setup, include = FALSE---------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup, include=FALSE----
+## ----vignette-setup, include=FALSE--------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries necessary for this vignette
@@ -16,17 +16,17 @@ library(psych)
 library(semanticprimeR)
 set.seed(4538939)
 
-## ------------------------------------
+## -----------------------------------------------------------
 ## Please set the work directory to the folder containing the scripts and data
 face_data <- import("data/suchow_data.csv.zip")
 str(face_data)
 
-## ------------------------------------
+## -----------------------------------------------------------
 metadata <- import("data/suchow_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
 
-## ------------------------------------
+## -----------------------------------------------------------
 # pick random faces
 faces <- unique(face_data$stimulus)[sample(unique(face_data$stimulus), size = 50)]
 # pick random traits
@@ -36,19 +36,19 @@ face_data <- face_data %>%
   filter(trait %in% traits) %>% 
   filter(stimulus %in% faces)
 
-## ----sd analysis---------------------
+## ----sd analysis--------------------------------------------
 # all SEs 
 SE_full <- tapply(face_data$response, face_data$trait, function (x) { sd(x)/sqrt(length(x)) })
 SE_full
 
-## ----subset and restructure----------
+## ----subset and restructure---------------------------------
 ## smallest variance is trait 4
 face_data_trait4_sub <- subset(face_data, trait == names(which.min(SE_full)))
 
 ## largest is trait 30
 face_data_trait30_sub <- subset(face_data, trait == names(which.max(SE_full)))
 
-## ----compute se for traits-----------
+## ----compute se for traits----------------------------------
 # individual SEs for 4 trait 
 SE1 <- tapply(face_data_trait4_sub$response, face_data_trait4_sub$stimulus, function (x) { sd(x)/sqrt(length(x)) })
 quantile(SE1, probs = .4)
@@ -58,7 +58,7 @@ SE2 <- tapply(face_data_trait30_sub$response, face_data_trait30_sub$stimulus, fu
 
 quantile(SE2, probs = .4)
 
-## ----power Two different traits------
+## ----power Two different traits-----------------------------
 # sequence of sample sizes to try
 nsim <- 10 # small for cran 
 samplesize_values <- seq(25, 100, 5)
@@ -121,7 +121,7 @@ for (p in 1:nsim){
   
 }
 
-## ----cutoff--------------------------
+## ----cutoff-------------------------------------------------
 cutoff_trait4 <- calculate_cutoff(population = face_data_trait4_sub, 
                  grouping_items = "stimulus",
                  score = "response", 
@@ -139,7 +139,7 @@ cutoff_trait30 <- calculate_cutoff(population = face_data_trait30_sub,
 
 cutoff_trait30$cutoff
 
-## ----summary analysis part1----------
+## ----summary analysis part1---------------------------------
 cutoff <- quantile(SE1, probs = .4)
 final_sample <- 
   sim_table %>%
@@ -156,7 +156,7 @@ final_sample <-
 
 flextable(final_sample %>% head()) %>% autofit()
 
-## ----calculate correction------------
+## ----calculate correction-----------------------------------
 final_scores <- calculate_correction(proportion_summary = final_sample,
                      pilot_sample_size = face_data_trait4_sub %>% 
                        group_by(stimulus) %>% 
@@ -168,7 +168,7 @@ final_scores <- calculate_correction(proportion_summary = final_sample,
 
 flextable(final_scores) %>% autofit()
 
-## ----summary analysis part2----------
+## ----summary analysis part2---------------------------------
 cutoff <- quantile(SE2, probs = .4) 
 final_sample2 <- 
   sim_table2 %>%
@@ -185,7 +185,7 @@ final_sample2 <-
 
 flextable(final_sample2 %>% head()) %>% autofit()
 
-## ----calculate correction2-----------
+## ----calculate correction2----------------------------------
 final_scores2 <- calculate_correction(proportion_summary = final_sample2,
                      pilot_sample_size = face_data_trait30_sub %>% 
                        group_by(stimulus) %>% 

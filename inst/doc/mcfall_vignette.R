@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------
+## ----setup, include = FALSE---------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup, include=FALSE----
+## ----vignette-setup, include=FALSE--------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Set a random seed
@@ -19,12 +19,12 @@ library(ggplot2)
 library(reshape)
 library(semanticprimeR)
 
-## ------------------------------------
+## -----------------------------------------------------------
 EAMMi2<- import("data/mcfall_data.sav.zip") %>% 
   select(starts_with("moa1#"), starts_with("moa2#"))
 str(EAMMi2)
 
-## ------------------------------------
+## -----------------------------------------------------------
 EAMMi2metadata <- import("data/mcfall_metadata.csv")
 flextable(EAMMi2metadata) %>% autofit()
 
@@ -36,7 +36,7 @@ EAMMi2long <- EAMMi2 %>% pivot_longer(cols = everything()) %>%
 
 flextable(head(EAMMi2long)) %>% autofit()
 
-## ------------------------------------
+## -----------------------------------------------------------
 SE <- tapply(EAMMi2long$score, EAMMi2long$item, function (x) { sd(x)/sqrt(length(x)) })
 min(SE)
 quantile(SE, probs = .4)
@@ -52,7 +52,7 @@ cutoff_score <- calculate_cutoff(population = EAMMi2long,
                                  maximum = max(EAMMi2long$score))
 cutoff_score$cutoff
 
-## ------------------------------------
+## -----------------------------------------------------------
 # sequence of sample sizes to try
 nsim <- 10 # small for cran
 samplesize_values <- seq(20, 200, 5)
@@ -104,7 +104,7 @@ final_sample <-
 
 flextable(final_sample %>% head()) %>% autofit()
 
-## ------------------------------------
+## -----------------------------------------------------------
 final_table <- calculate_correction(
   proportion_summary = final_sample,
   pilot_sample_size = EAMMi2long %>% group_by(item) %>% 

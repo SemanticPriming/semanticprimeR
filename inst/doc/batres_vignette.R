@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------
+## ----setup, include = FALSE---------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----vignette-setup------------------
+## ----vignette-setup-----------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 # Set a random seed
@@ -99,24 +99,24 @@ item_power <- function(data, # name of data frame
 
 }
 
-## ------------------------------------
+## -----------------------------------------------------------
 DF <- import("data/batres_data.sav")
 
 str(DF)
 
-## ------------------------------------
+## -----------------------------------------------------------
 metadata <- import("data/batres_metadata.xlsx")
 
 flextable(metadata) %>% autofit()
 
-## ------------------------------------
+## -----------------------------------------------------------
 # Reformat the data
 DF_long <- pivot_longer(DF, cols = -c(Participant_Number)) %>% 
   dplyr::rename(item = name, score = value)
 
 flextable(head(DF_long)) %>% autofit()
 
-## ------------------------------------
+## -----------------------------------------------------------
 # Function for simulation
 var1 <- item_power(data = DF_long, # name of data frame
             dv_col = "score", # name of DV column as a character
@@ -127,13 +127,13 @@ var1 <- item_power(data = DF_long, # name of data frame
             sample_increase = 5,
             decile = .4)
 
-## ------------------------------------
+## -----------------------------------------------------------
 # individual SEs
 var1$SE
 
 var1$cutoff
 
-## ------------------------------------
+## -----------------------------------------------------------
 cutoff <- calculate_cutoff(population = DF_long, 
                            grouping_items = "item",
                            score = "score",
@@ -142,7 +142,7 @@ cutoff <- calculate_cutoff(population = DF_long,
 # showing how this is the same as the person calculated version versus semanticprimeR's function
 cutoff$cutoff
 
-## ------------------------------------
+## -----------------------------------------------------------
 final_table <- calculate_correction(
   proportion_summary = var1$final_sample,
   pilot_sample_size = nrow(DF),

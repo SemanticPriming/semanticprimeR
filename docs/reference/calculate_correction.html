@@ -115,21 +115,21 @@ items standard errors.</p></dd>
 <span class="r-in"><span> maximum <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">se_items</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4352858 0.4915068 0.4004931 0.3479262 0.3857665 0.3448875 0.3524351</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.3282730 0.3838859 0.3699218 0.3316625 0.4057157 0.3561490 0.4004931</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.3690314 0.3965310 0.4039281 0.5005260 0.4321001 0.4259664 0.4000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] 0.4701623 0.4285840 0.4167544 0.3479262 0.3101358 0.4121510 0.2910959</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] 0.4565315 0.2982405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4524786 0.4441135 0.4308804 0.4622599 0.3544826 0.4838171 0.3879772</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.4103913 0.3871284 0.4097496 0.4134260 0.3346247 0.4464774 0.3589092</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.4707217 0.4672146 0.3282730 0.3346247 0.3727564 0.3670652 0.3670652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] 0.4071725 0.3973597 0.3776660 0.4558104 0.4639646 0.3111946 0.5083513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] 0.3561490 0.4672146</span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">sd_items</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.05343737</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.05297054</span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">cutoff</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       40% </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3783003 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3876377 </span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">prop_var</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01781246</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01765685</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># step 3 simulate bootstrapped samples</span></span></span>
-<span class="r-in"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="bootstrap_samples.html">bootstrap_samples</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">20</span>, stop <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span><span class="co"># step 3 simulate samples</span></span></span>
+<span class="r-in"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="simulate_samples.html">simulate_samples</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">20</span>, stop <span class="op">=</span> <span class="fl">100</span>,</span></span>
 <span class="r-in"><span> increase <span class="op">=</span> <span class="fl">5</span>, population <span class="op">=</span> <span class="va">pops</span>,</span></span>
 <span class="r-in"><span> replace <span class="op">=</span> <span class="cn">TRUE</span>, grouping_items <span class="op">=</span> <span class="st">"item"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -142,11 +142,11 @@ items standard errors.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    sample_size percent_below</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>          20         0.511</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          25         0.744</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          30         0.898</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>          35         0.971</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>          40         0.995</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>          20         0.457</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          25         0.693</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          30         0.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>          35         0.979</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>          40         0.999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>          45         1    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>          50         1    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>          55         1    </span>
@@ -170,10 +170,10 @@ items standard errors.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   percent_below sample_size corrected_sample_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>          89.8          30                  25.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>          89.8          30                  25.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>          97.1          35                  33.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>          97.1          35                  33.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>          87.3          30                  25.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>          87.3          30                  25.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>          97.9          35                  33.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>          97.9          35                  33.8</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -186,7 +186,7 @@ items standard errors.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

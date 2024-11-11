@@ -1,6 +1,6 @@
-#' Bootstrap Sample from a Population Grouped by Items
+#' Simulate Sample from a Population Grouped by Items
 #'
-#' This function allows you to bootstrap samples across
+#' This function allows you to simulate samples across
 #' various sample sizes when the data (optionally) has
 #' repeated measures items.
 #'
@@ -9,7 +9,7 @@
 #' @param increase Number to increase the sample size with for
 #' each potential sample
 #' @param population The population data set or the pilot dataset
-#' @param replace A TRUE/FALSE value to bootstrap with replacement
+#' @param replace A TRUE/FALSE value to simulate with replacement
 #' @param nsim The number of simulations/samples you want to return
 #' @param grouping_items The names of columns to group your data
 #' by for the simulation, usually this column is the item column
@@ -18,7 +18,7 @@
 #'
 #' @return
 #' \describe{
-#'  \item{samples}{The bootstrapped samples for each tested sample
+#'  \item{samples}{The simulated samples for each tested sample
 #'  size. }
 #' }
 #'
@@ -31,22 +31,22 @@
 #'   sigma_sigma = .2, number_items = 30, number_scores = 20,
 #'   smallest_sigma = .02, min_score = 1, max_score = 7, digits = 0)
 #'
-#' # step 3 simulate bootstrapped samples
-#' samples <- bootstrap_samples(start = 20, stop = 100,
+#' # step 3 simulate samples
+#' samples <- simulate_samples(start = 20, stop = 100,
 #'   increase = 5, population = pops,
 #'   replace = TRUE, grouping_items = NULL)
 #'
 #' # notice just 20 items
 #' samples[[1]]
 #'
-#' samples <- bootstrap_samples(start = 20, stop = 100,
+#' samples <- simulate_samples(start = 20, stop = 100,
 #'   increase = 5, population = pops,
 #'   replace = TRUE, grouping_items = "item")
 #'
 #' # notice 20 rows per item
 #' samples[[1]]
 #'
-bootstrap_samples <- function(
+simulate_samples <- function(
     start = 20,
     stop = 100,
     increase = 5,

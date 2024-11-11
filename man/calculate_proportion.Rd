@@ -49,8 +49,8 @@ cutoff$sd_items
 cutoff$cutoff
 cutoff$prop_var
 
-# step 3 simulate bootstrapped samples
-samples <- bootstrap_samples(start = 20, stop = 100,
+# step 3 simulate samples
+samples <- simulate_samples(start = 20, stop = 100,
  increase = 5, population = pops,
  replace = TRUE, grouping_items = "item")
 

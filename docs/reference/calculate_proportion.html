@@ -116,21 +116,21 @@ below the standard error cutoff score.</p></dd>
 <span class="r-in"><span> maximum <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">se_items</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3732856 0.3741657 0.4507304 0.3086473 0.3469794 0.3718729 0.4827280</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.4672146 0.5155477 0.4222434 0.4103913 0.3692097 0.4259664 0.3524351</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.4784844 0.4723959 0.3933660 0.4000000 0.4284304 0.3830281 0.3940345</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] 0.3026201 0.3589092 0.4328607 0.3900067 0.3879772 0.4095890 0.3857665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] 0.4546543 0.4184873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3831998 0.4039281 0.4405439 0.4604060 0.3015312 0.4638228 0.4723959</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.4004931 0.3332456 0.4861232 0.3574397 0.3900067 0.3991768 0.3423987</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.3925289 0.3515005 0.3634629 0.4806793 0.3661679 0.5175855 0.4436689</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] 0.4259664 0.4070109 0.3913539 0.3938675 0.3620119 0.3439324 0.3032716</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] 0.4222434 0.4638228</span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">sd_items</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.05014582</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.05510047</span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">cutoff</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       40% </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3891949 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3908151 </span>
 <span class="r-in"><span><span class="va">cutoff</span><span class="op">$</span><span class="va">prop_var</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01671527</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01836682</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># step 3 simulate bootstrapped samples</span></span></span>
-<span class="r-in"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="bootstrap_samples.html">bootstrap_samples</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">20</span>, stop <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span><span class="co"># step 3 simulate samples</span></span></span>
+<span class="r-in"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="simulate_samples.html">simulate_samples</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">20</span>, stop <span class="op">=</span> <span class="fl">100</span>,</span></span>
 <span class="r-in"><span> increase <span class="op">=</span> <span class="fl">5</span>, population <span class="op">=</span> <span class="va">pops</span>,</span></span>
 <span class="r-in"><span> replace <span class="op">=</span> <span class="cn">TRUE</span>, grouping_items <span class="op">=</span> <span class="st">"item"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -143,11 +143,11 @@ below the standard error cutoff score.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    sample_size percent_below</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>          20         0.489</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          25         0.734</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          30         0.905</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>          35         0.978</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>          40         0.998</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>          20         0.529</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          25         0.747</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          30         0.903</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>          35         0.98 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>          40         0.999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>          45         1    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>          50         1    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>          55         1    </span>
@@ -171,7 +171,7 @@ below the standard error cutoff score.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

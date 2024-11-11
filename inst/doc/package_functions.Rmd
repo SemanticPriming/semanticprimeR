@@ -74,12 +74,12 @@ cutoff$cutoff # 40% decile score
 cutoff$prop_var # proportion of possible variance 
 ```
 
-### Bootstrap/Simulate Samples
+### Simulate Samples
 
-Next, we use bootstrapping/simulate to pretend we have samples of a starting size (we suggest 20) up to a maximum size we are willing to collect. These samples will be used to determine the number of items that achieve our stopping rule to determine how many participants are needed to accurately measure most items.
+Next, we use simulation to pretend we have samples of a starting size (we suggest 20) up to a maximum size we are willing to collect. These samples will be used to determine the number of items that achieve our stopping rule to determine how many participants are needed to accurately measure most items.
 
 ```{r eval = F}
-samples <- bootstrap_samples(start = 20, # starting sample size
+samples <- simulate_samples(start = 20, # starting sample size
   stop = 400, # stopping sample size
   increase = 5, # increase bootstrapped samples by this amount
   population = df, # population or pilot data

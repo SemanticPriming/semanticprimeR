@@ -1,5 +1,5 @@
-pandoc: 3.2.1
-pkgdown: 2.1.0
+pandoc: '3.3'
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   ambrosini_vignette: ambrosini_vignette.html
@@ -15,7 +15,7 @@ articles:
   suchow_vignette: suchow_vignette.html
   ulloa_vignette: ulloa_vignette.html
   vanpaemel_vignette: vanpaemel_vignette.html
-last_built: 2024-08-19T00:37Z
+last_built: 2024-11-10T23:00Z
 urls:
   reference: https://semanticpriming.github.io/semanticprimeR/reference
   article: https://semanticpriming.github.io/semanticprimeR/articles

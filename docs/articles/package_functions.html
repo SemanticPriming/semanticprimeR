@@ -70,7 +70,7 @@
                         <h4 data-toc-skip class="author">Erin
 Buchanan</h4>
             
-            <h4 data-toc-skip class="date">2024-08-18</h4>
+            <h4 data-toc-skip class="date">2024-11-10</h4>
       
 
       <div class="d-none name"><code>package_functions.Rmd</code></div>
@@ -181,15 +181,15 @@ items.</p>
 <span><span class="co">#&gt; [1] 0.006049832</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="bootstrapsimulate-samples">Bootstrap/Simulate Samples<a class="anchor" aria-label="anchor" href="#bootstrapsimulate-samples"></a>
+<h3 id="simulate-samples">Simulate Samples<a class="anchor" aria-label="anchor" href="#simulate-samples"></a>
 </h3>
-<p>Next, we use bootstrapping/simulate to pretend we have samples of a
-starting size (we suggest 20) up to a maximum size we are willing to
-collect. These samples will be used to determine the number of items
-that achieve our stopping rule to determine how many participants are
-needed to accurately measure most items.</p>
+<p>Next, we use simulation to pretend we have samples of a starting size
+(we suggest 20) up to a maximum size we are willing to collect. These
+samples will be used to determine the number of items that achieve our
+stopping rule to determine how many participants are needed to
+accurately measure most items.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootstrap_samples.html">bootstrap_samples</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">20</span>, <span class="co"># starting sample size</span></span>
+<code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_samples.html">simulate_samples</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">20</span>, <span class="co"># starting sample size</span></span>
 <span>  stop <span class="op">=</span> <span class="fl">400</span>, <span class="co"># stopping sample size</span></span>
 <span>  increase <span class="op">=</span> <span class="fl">5</span>, <span class="co"># increase bootstrapped samples by this amount</span></span>
 <span>  population <span class="op">=</span> <span class="va">df</span>, <span class="co"># population or pilot data</span></span>
@@ -851,7 +851,7 @@ embeddings in <em>R</em>: <a href="https://osf.io/preprints/psyarxiv/293kt" clas
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
