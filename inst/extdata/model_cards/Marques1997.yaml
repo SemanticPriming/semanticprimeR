@@ -1,0 +1,19 @@
+bibtex: Marques1997
+parent_bibtex: ~
+citation:
+  doi: ~
+  source: unknown
+dataset:
+  language_from_columns: portuguese
+  n_rows_csv: 712
+variables:
+  word_columns:
+  - word_portuguese
+  raw_columns:
+  - word_portuguese
+  - typicality_mean
+  - familiar_mean_r
+  - familiar_mean_s
+  flags:
+    familiar: yes
+    typical: yes

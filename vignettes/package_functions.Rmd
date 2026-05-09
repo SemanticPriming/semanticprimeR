@@ -57,6 +57,7 @@ df <- simulate_population(mu = 25, # mean priming in ms
 
 head(df)
 ```
+
 ### Calculate Cutoff
 
 From this dataframe, we can calculate the standard error of the items, which is used to determine if the item has reached the stopping rule (i.e., if the standard error reaches a defined value, it is considered accurately measured, and we can stop sampling it). To get the defined value, we use the 40% decile of the standard errors of the items.

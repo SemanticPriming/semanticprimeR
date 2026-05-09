@@ -1,0 +1,26 @@
+bibtex: DeDeyne2019_R1
+parent_bibtex: DeDeyne2019
+citation:
+  author: Simon De Deyne, Danielle J. Navarro, Amy Perfors, Marc Brysbaert, Gert Storms
+  year: 2019
+  title: The “Small World of Words” English word association norms for over 12,000
+    cue words
+  journal: Behavior Research Methods
+  volume: '51'
+  pages: 987-1006
+  doi: 10.3758/s13428-018-1115-7
+  source: crossref
+dataset:
+  language_from_columns: english_cue, english_response
+  n_rows_csv: 483636
+variables:
+  word_columns:
+  - word_english_cue
+  - word_english_response
+  raw_columns:
+  - word_english_cue
+  - word_english_response
+  - r1
+  - 'n'
+  - r1.strength
+  flags: {}

@@ -1,0 +1,24 @@
+bibtex: Li2024_R123
+parent_bibtex: Li2024
+citation:
+  author: Bing Li, Ziyi Ding, Simon De Deyne, Qing Cai
+  year: 2024
+  title: A large-scale database of Mandarin Chinese word associations from the Small
+    World of Words Project
+  journal: Behavior Research Methods
+  volume: '57'
+  pages: []
+  doi: 10.3758/s13428-024-02513-1
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified_cue, chinese_simplified_response
+  n_rows_csv: 516639
+variables:
+  word_columns:
+  - word_chinese_simplified_cue
+  - word_chinese_simplified_response
+  raw_columns:
+  - word_chinese_simplified_cue
+  - word_chinese_simplified_response
+  - r123.strength
+  flags: {}

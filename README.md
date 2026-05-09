@@ -23,7 +23,12 @@ https://semanticpriming.github.io/semanticprimeR/
 
 Check out our [OSF landing page](https://osf.io/peyqh/) that links all these projects together. 
 
-## Related Manuscripts
+## Related projects
 
-- SPAML Preprint: https://osf.io/q4fjy/
+- SPAML: 
+    - Preprint: https://osf.io/q4fjy/
+    - Published manuscript: https://www.nature.com/articles/s41562-025-02254-x 
+    - GitHub: https://github.com/SemanticPriming/SPAML
+    - Official Dataset: https://zenodo.org/records/15021515 
+
 - Powering Stimuli: coming soon 

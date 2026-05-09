@@ -1,0 +1,39 @@
+bibtex: Valueva2025
+parent_bibtex: ~
+citation:
+  doi: ~
+  source: unknown
+dataset:
+  language_from_columns: russian
+  n_rows_csv: 30849
+variables:
+  word_columns:
+  - word_russian
+  raw_columns:
+  - word_russian
+  - pos
+  - translate_word_english
+  - 'n'
+  - valid_n
+  - percent_known
+  - aoa_mean
+  - aoa_sd
+  - frequency
+  - frequency_zipf
+  - concrete_mean_grigoriev2022
+  - concrete_soloviev2022_1000
+  - concrete_mean_soloviev2022_500
+  - imagine_mean_grigoriev2009
+  - imagine_mean_tsaparina2011
+  - imagine_mean_pashneva2014
+  - imagine_mean_akinina2014
+  - familiar_mean_tsaparina2011
+  - familiar_mean_grigoriev2010
+  - familiar_mean_pashneva2014
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    pos: yes

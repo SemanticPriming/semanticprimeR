@@ -6,7 +6,7 @@ Authors@R: c(person("Erin M.", "Buchanan", role = c("aut", "cre"),
                      email = "buchananlab@gmail.com",
                      comment = c(ORCID = "0000-0002-9689-4189")))
 Depends: R (>= 3.5.0)
-Imports: 
+Imports:
     DBI,
     dplyr,
     jsonlite,
@@ -22,6 +22,7 @@ Imports:
     tidyr,
     tidytext,
     utils,
+    yaml,
     janitor,
     methods
 Suggests: 

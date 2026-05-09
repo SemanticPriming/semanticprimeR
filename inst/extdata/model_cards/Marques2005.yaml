@@ -1,0 +1,18 @@
+bibtex: Marques2005
+parent_bibtex: ~
+citation:
+  doi: ~
+  source: unknown
+dataset:
+  language_from_columns: portuguese
+  n_rows_csv: 250
+variables:
+  word_columns:
+  - word_portuguese
+  raw_columns:
+  - word_portuguese
+  - imagine_mean
+  - concrete_mean
+  flags:
+    concrete: yes
+    imagine: yes

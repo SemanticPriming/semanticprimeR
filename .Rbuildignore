@@ -8,3 +8,5 @@
 ^LICENSE$
 lab_data
 inst/latex
+^\.positai$
+^\.claude$

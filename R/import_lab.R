@@ -1,125 +1,133 @@
 #' Import Datasets from the Linguistic Annotated Bibliography
 #'
-#' This function allows you to import the current datasets available from
+#' Imports datasets available from the
 #' \href{https://github.com/orgs/SemanticPriming/}{Semantic Priming GitHub
-#' Group}. These datasets generally have psycholinguistic variables like
-#' Age of Acquisition, length, neighborhoods, Familiarity, Concretenes,
-#' and more. We will update datasets as we have them. All data belongs
-#' to the person who published them.
+#' Group}. Datasets contain psycholinguistic variables such as Age of
+#' Acquisition, frequency, neighborhood density, familiarity, concreteness,
+#' and more. All data belongs to the original authors.
 #'
-#' @param bibtexID The bibtex ID of the dataset you are trying to load.
-#' You can leave all parameters blank to load just the metadata.
-#' @param citation Include the citation for the dataset you loaded - will only
-#' load if you include a bibtex ID, use `TRUE` to get the citation.
-#' @param language If you include a bibtex ID, you will get back the language of
-#' the dataset, if you do not include a bibtex ID, it will return a list of
-#' datasets in that language.
-#' @param variables If you include a bibtex ID, you will get back the variables
-#' included the dataset, if you do not include a bibtex ID, it will return a list of
-#' datasets that include that variable (can also be paired with language).
-#' Use the column names from the metadata as your filter.
-#' @return
+#' @param bibtexID The bibtex ID of the dataset to load (e.g.
+#'   `"Birchenough2017"`). Leave `NULL` to browse or filter without
+#'   downloading.
+#' @param citation If `TRUE` and a `bibtexID` is provided, also returns the
+#'   formatted citation string from the dataset's model card.
+#' @param language Language name to filter by (e.g. `"english"`). Without a
+#'   `bibtexID`, returns all datasets in that language. With a `bibtexID`,
+#'   returns the detected language of that dataset.
+#' @param variables Character vector of flag category names to filter by
+#'   (e.g. `c("aoa", "freq")`). Without a `bibtexID`, returns datasets that
+#'   contain all of those variable types. With a `bibtexID`, returns which of
+#'   those flags are present in that dataset. Use `import_lab()` with no
+#'   arguments to see all available flag names.
+#'
+#' @return A named list with one or more of:
 #' \describe{
-#'  \item{metadata}{The metadata list of avaliable datasets}
-#'  \item{loaded_data}{The dataset you requested to load}
-#'  \item{language}{The language of the dataset you requested to load}
-#'  \item{variables}{The variables of the dataset you requested to load}
-#'  \item{datasets}{Possible datasets based on your language
-#'  and variable names}
+#'   \item{metadata}{Full index of available datasets (no-argument call)}
+#'   \item{loaded_data}{The downloaded dataset}
+#'   \item{citation}{Formatted citation string}
+#'   \item{language}{Detected language of the requested dataset}
+#'   \item{variables}{Flag categories present in the requested dataset}
+#'   \item{datasets}{Filtered index based on language / variable criteria}
 #' }
 #'
-#' @import rio utils
+#' @importFrom utils read.csv download.file
+#' @import rio
 #'
 #' @keywords metadata, datasets, linguistic norms
 #'
 #' @export
 #'
 #' @examples
-#'
 #' # import_lab()
 #' # import_lab(bibtexID = "Birchenough2017", citation = TRUE)
-#' # import_lab(language = "English", variables = c("aoa", "freq"))
+#' # import_lab(language = "english", variables = c("aoa", "freq"))
 
+LAB_RELEASE_URL <- paste0(
+  "https://github.com/SemanticPriming/semanticprimeR/",
+  "releases/download/v0.0.1/"
+)
 
-import_lab <- function( bibtexID = NULL,
-                        citation = NULL,
-                        language = NULL,
-                        variables = NULL
-                        ) {
+import_lab <- function(bibtexID = NULL,
+                       citation  = NULL,
+                       language  = NULL,
+                       variables = NULL) {
 
-  labData
-  labData <- subset(labData, included == "yes")
-  labData$link <- paste0("https://github.com/SemanticPriming/semanticprimeR/releases/download/v0.0.1/",
-                         labData$bibtex, ".csv")
-  metadata <- labData
-  variable_return <- list()
+  index_path <- system.file(
+    "extdata", "dataset_index.csv",
+    package = "semanticprimeR"
+  )
+  index <- utils::read.csv(index_path, stringsAsFactors = FALSE)
+
+  flag_cols <- setdiff(
+    colnames(index),
+    c("bibtex_id", "parent_bibtex", "doi", "language")
+  )
+
+  result <- list()
 
   if (!is.null(bibtexID)) {
 
-    dir.create(paste("lab_data"), showWarnings = F)
-    con <- metadata$link[metadata$bibtex == bibtexID]
-    download.file(
-      con,
-      destfile = paste0('lab_data/', bibtexID, ".csv"),
-      mode = "wb")
+    # --- Download the dataset ---
+    dir.create("lab_data", showWarnings = FALSE)
+    url  <- paste0(LAB_RELEASE_URL, bibtexID, ".csv")
+    dest <- file.path("lab_data", paste0(bibtexID, ".csv"))
+    utils::download.file(url, destfile = dest, mode = "wb")
+    result$loaded_data <- rio::import(dest, stringsAsFactors = FALSE)
 
-    variable_return$loaded_data <- rio::import(paste0('lab_data/', bibtexID, ".csv"),
-                                               stringsAsFactors = F)
-
-    if (!is.null(citation)){
-
-      variable_return$citation <- paste0(metadata$author[metadata$bibtex == bibtexID], ". (",
-                        metadata$year[metadata$bibtex == bibtexID], "). ",
-                        metadata$ref_title[metadata$bibtex == bibtexID], ". ",
-                        metadata$ref_journal[metadata$bibtex == bibtexID], ", ",
-                        metadata$ref_volume[metadata$bibtex == bibtexID], ", ",
-                        metadata$ref_page[metadata$bibtex == bibtexID], ". doi: ",
-                        metadata$ref_doi[metadata$bibtex == bibtexID]
-      )
+    # --- Citation from model card ---
+    if (isTRUE(citation)) {
+      card <- get_model_card(bibtexID)
+      if (!is.null(card) && !is.null(card$citation)) {
+        cit <- card$citation
+        result$citation <- paste0(
+          cit$author, ". (", cit$year, "). ",
+          cit$title, ". ", cit$journal, ", ",
+          cit$volume, ", ", cit$pages,
+          ". doi: ", cit$doi
+        )
+      }
     }
 
-    if (!is.null(language)){
-      variable_return$language <- metadata$language[metadata$bibtex == bibtexID]
+    # --- Language from index ---
+    if (!is.null(language)) {
+      row <- index[index$bibtex_id == bibtexID, ]
+      result$language <- if (nrow(row) > 0) row$language else NA
     }
 
-    if (!is.null(variables)){
-      temp <- metadata[metadata$bibtex == bibtexID, 25:ncol(metadata)]
-      variable_return$variables <- colnames(temp)[temp == 1]
+    # --- Which requested variable flags are present ---
+    if (!is.null(variables)) {
+      row      <- index[index$bibtex_id == bibtexID, ]
+      avail    <- intersect(variables, flag_cols)
+      if (nrow(row) > 0 && length(avail) > 0) {
+        result$variables <- avail[as.logical(row[1, avail])]
+      }
     }
 
   } else {
 
-    if (!is.null(language) & !is.null(variables)) { #both
+    # --- Browsing / filtering mode ---
+    filtered <- index
 
-      temp <- metadata[ tolower(metadata$language) == tolower(language) , ]
+    if (!is.null(language)) {
+      filtered <- filtered[
+        grepl(language, filtered$language, ignore.case = TRUE), ]
+    }
 
-      for (var in variables){
-        if (var %in% colnames(metadata)){
-          temp <- temp[ temp[ , var] == 1 , ]
-          }
-        }
-
-      variable_return$datasets <- temp
-
-    } else if (!is.null(language)){ #just language
-
-      variable_return$datasets <- metadata[ tolower(metadata$language) == tolower(language) , ]
-
-      } else if (!is.null(variables)){ #just variables
-
-      temp <- metadata
-
-      for (var in variables){
-        if (var %in% colnames(metadata)){
-          temp <- temp[ temp[ , var] == 1 , ]
+    if (!is.null(variables)) {
+      for (var in variables) {
+        if (var %in% colnames(filtered)) {
+          filtered <- filtered[filtered[[var]] == TRUE, ]
         }
       }
+    }
 
-      variable_return$datasets <- temp
-
+    if (is.null(language) && is.null(variables)) {
+      result$metadata <- index
+    } else {
+      result$datasets <- filtered
     }
 
   }
 
-  return(variable_return)
+  return(result)
 }

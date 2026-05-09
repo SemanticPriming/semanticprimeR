@@ -1,0 +1,32 @@
+bibtex: Redondo2007
+parent_bibtex: ~
+citation:
+  author: Jaime Redondo, Isabel Fraga, Isabel Padrón, Montserrat Comesaña
+  year: 2007
+  title: The Spanish adaptation of ANEW (Affective Norms for English Words)
+  journal: Behavior Research Methods
+  volume: '39'
+  pages: 600-605
+  doi: 10.3758/bf03193031
+  source: crossref
+dataset:
+  language_from_columns: italian, english
+  n_rows_csv: 519
+variables:
+  word_columns:
+  - word_italian
+  - word_english
+  raw_columns:
+  - word_italian
+  - word_english
+  - gramm_cat
+  - cfv
+  - imagine_mean
+  - imagine_sd
+  - cwfq
+  - ccfq
+  - cpfq
+  - awfq
+  - asfq
+  flags:
+    imagine: yes

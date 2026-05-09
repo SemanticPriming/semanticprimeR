@@ -1,0 +1,25 @@
+bibtex: Cabana2024_R1
+parent_bibtex: Cabana2024
+citation:
+  author: Álvaro Cabana, Camila Zugarramurdi, Juan C. Valle-Lisboa, Simon De Deyne
+  year: 2023
+  title: The "Small World of Words" free association norms for Rioplatense Spanish
+  journal: Behavior Research Methods
+  volume: '56'
+  pages: 968-985
+  doi: 10.3758/s13428-023-02070-z
+  source: crossref
+dataset:
+  language_from_columns: spanish_cue, spanish_response
+  n_rows_csv: 431933
+variables:
+  word_columns:
+  - word_spanish_cue
+  - word_spanish_response
+  raw_columns:
+  - word_spanish_cue
+  - word_spanish_response
+  - r1
+  - 'n'
+  - r1.strength
+  flags: {}
