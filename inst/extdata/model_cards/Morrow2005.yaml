@@ -12,13 +12,13 @@ citation:
   source: crossref
 dataset:
   language_from_columns: english
-  n_rows_csv: 888
+  n_rows_csv: 889
 variables:
   word_columns:
   - word_english
   raw_columns:
-  - category
   - word_english
+  - category
   - typicality_mean_older
   - typicality_sd_older
   - familiar_mean_older

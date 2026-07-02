@@ -3,6 +3,7 @@ parent_bibtex: ~
 citation:
   doi: ~
   source: unknown
+  data_url: https://aclanthology.org/L16-1413/
 dataset:
   language_from_columns: german
   n_rows_csv: 351617

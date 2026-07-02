@@ -3,6 +3,7 @@ parent_bibtex: ~
 citation:
   doi: ~
   source: unknown
+  data_url: https://sites.google.com/site/revistaportuguesadepsicologia/numeros-publicados/vol-32-1997/resumo-32-35
 dataset:
   language_from_columns: portuguese
   n_rows_csv: 712
@@ -12,8 +13,8 @@ variables:
   raw_columns:
   - word_portuguese
   - typicality_mean
-  - familiar_mean_r
-  - familiar_mean_s
+  - familiar_mean_referent
+  - familiar_mean_meaning
   flags:
     familiar: yes
     typical: yes

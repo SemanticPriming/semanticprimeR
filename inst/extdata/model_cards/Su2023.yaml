@@ -27,7 +27,7 @@ variables:
   - frequency_log
   - number_stroke
   - number_word_forms
-  - number_homophose
+  - number_homophones
   - number_meanings
   - aoa_raw
   - familiar_raw

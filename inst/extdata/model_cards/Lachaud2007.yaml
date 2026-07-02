@@ -3,6 +3,7 @@ parent_bibtex: ~
 citation:
   doi: ~
   source: unknown
+  data_url: https://shs.hal.science/halshs-00419728
 dataset:
   language_from_columns: french
   n_rows_csv: 1225

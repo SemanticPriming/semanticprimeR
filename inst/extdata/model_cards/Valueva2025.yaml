@@ -3,6 +3,7 @@ parent_bibtex: ~
 citation:
   doi: ~
   source: unknown
+  data_url: https://osf.io/56da9/overview
 dataset:
   language_from_columns: russian
   n_rows_csv: 30849

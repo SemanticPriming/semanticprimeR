@@ -18,13 +18,12 @@ variables:
   - word_english_us
   - word_english_gb
   raw_columns:
-  - file_no
   - word_english_us
   - word_english_gb
   - aoa_mean
   - p_n
   - familiar_mean
-  - familiarity_cond
+  - familiar_cond
   - complexity_mean
   - dominance_valid
   - us_uk_match

@@ -3,6 +3,7 @@ parent_bibtex: ~
 citation:
   doi: ~
   source: unknown
+  data_url: https://repositorio.ispa.pt/bitstreams/0d86a1d0-a37a-43c3-9c1a-25dcfca964f9/download
 dataset:
   language_from_columns: portuguese
   n_rows_csv: 250

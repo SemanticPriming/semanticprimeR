@@ -3,6 +3,7 @@ parent_bibtex: ~
 citation:
   doi: ~
   source: unknown
+  data_url: https://www.semanticscholar.org/paper/Affective-Norms-for-English-Words-(ANEW)%3A-Manual-Bradley-Lang/c765eb0a31849361d829b24e173a37bab0919892
 dataset:
   language_from_columns: english
   n_rows_csv: 976

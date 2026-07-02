@@ -1,0 +1,20 @@
+bibtex: Popovic2026_pseudowords
+parent_bibtex: Popovic2026_words
+citation:
+  doi: 10.23668/psycharchives.21378
+  source: doi_unresolved
+dataset:
+  language_from_columns: pseudoword
+  n_rows_csv: 4200
+variables:
+  word_columns:
+  - word_pseudoword
+  raw_columns:
+  - word_pseudoword
+  - accuracy_mean
+  - accuracy_n
+  - rt_mean
+  - rt_n
+  flags:
+    accuracy: yes
+    rt: yes

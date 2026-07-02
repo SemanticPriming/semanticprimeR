@@ -13,7 +13,7 @@ citation:
 dataset:
   language_from_columns: japanese_katana, japanese_romanized, japanese_katana_untimed,
     japanese_romanized_untimed
-  n_rows_csv: 363
+  n_rows_csv: 360
 variables:
   word_columns:
   - word_japanese_katana
@@ -46,6 +46,44 @@ variables:
   - word_japanese_katana_untimed
   - word_japanese_romanized_untimed
   - translate_word_english_untimed
+  - rt_sd_strict
+  - rt_skew_strict
+  - rt_kurtosis_strict
+  - rt_se_strict
+  - rt_min_strict
+  - rt_percentile_5_strict
+  - rt_percentile_10_strict
+  - rt_percentile_20_strict
+  - rt_percentile_25_strict
+  - rt_percentile_30_strict
+  - rt_percentile_40_strict
+  - rt_percentile_50_strict
+  - rt_percentile_60_strict
+  - rt_percentile_70_strict
+  - rt_percentile_75_strict
+  - rt_percentile_80_strict
+  - rt_percentile_90_strict
+  - rt_percentile_95_strict
+  - rt_max_strict
+  - rt_sd_liberal
+  - rt_skew_liberal
+  - rt_kurtosis_liberal
+  - rt_se_liberal
+  - rt_min_liberal
+  - rt_percentile_5_liberal
+  - rt_percentile_10_liberal
+  - rt_percentile_20_liberal
+  - rt_percentile_25_liberal
+  - rt_percentile_30_liberal
+  - rt_percentile_40_liberal
+  - rt_percentile_50_liberal
+  - rt_percentile_60_liberal
+  - rt_percentile_70_liberal
+  - rt_percentile_75_liberal
+  - rt_percentile_80_liberal
+  - rt_percentile_90_liberal
+  - rt_percentile_95_liberal
+  - rt_max_liberal
   flags:
     aoa: yes
     complex: yes
