@@ -3,10 +3,10 @@ LAB_RELEASES_API <- paste0(
   "semanticprimeR/releases"
 )
 
-# Legacy data release, kept as a fallback for when the "latest data-*
-# release" lookup fails (e.g. offline, GitHub API rate limit) or no
-# data-* tagged release exists yet.
-LEGACY_DATA_RELEASE_TAG <- "v0.0.1"
+# Fallback data release, used when the "latest data-* release" lookup
+# fails (e.g. offline, GitHub API rate limit). Update this whenever a new
+# data-* release is cut so offline/rate-limited users still get current data.
+LEGACY_DATA_RELEASE_TAG <- "data-v1.0"
 
 # Resolve the tag of the most recent release whose name starts with
 # "data-" (e.g. "data-v0.0.2"). Falls back to the legacy tag on any
