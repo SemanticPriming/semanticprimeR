@@ -16,9 +16,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r echo = F}
-filelocation <- "/Users/erinbuchanan/GitHub/Research/2_projects/PSA_Projects/SPAML/semanticprimeR"
-```
 
 ## Libraries
 
@@ -93,7 +90,7 @@ save(samples, file = "data/simulatePriming.RData")
 
 ```{r}
 # since that's a slow function, we wrote out the data and read it back in
-load(paste0(filelocation,"/vignettes/data/simulatePriming.Rdata"))
+load("data/simulatePriming.RData")
 head(samples[[1]])
 ```
 
@@ -163,7 +160,7 @@ af_freq <- import_subs(
 ```
 
 ```{r echo = F, message = F}
-af_freq <- import(paste0(filelocation,"/vignettes/subs_count/af/dedup.af.words.unigrams.txt"))
+af_freq <- import("subs_count/af/dedup.af.words.unigrams.txt")
 ```
 
 ```{r}
@@ -311,7 +308,7 @@ You can also use the Wuggy algorithm using `fake_Wuggy()`. *This function is not
 ```{r message=FALSE}
 af_wuggy <- fake_Wuggy(
   wordlist = af_final$sentence, # full valid options in language
-  language_hyp = paste0(filelocation,"/inst/latex/hyph-af.tex"), # path to hyphenation.tex 
+  language_hyp = "../inst/latex/hyph-af.tex", # path to hyphenation.tex
   lang = "af", # two letter language code
   replacewords <- unique(af_top_sim$cue[1:20]) # words you want to create pseudowords for  
 )
@@ -358,7 +355,7 @@ es_words <- import_prime("es_words.csv")
 ```
 
 ```{r echo = F}
-es_words <- import(paste0(filelocation, '/vignettes/procedure_stimuli/es/es_words.csv'))
+es_words <- import("procedure_stimuli/es/es_words.csv")
 ```
 
 ```{r}
@@ -369,15 +366,11 @@ head(es_words)
 
 ### Load Available Data
 
-To review the available data from the Linguistic Annotated Bibliography, you can use `data("labData")`, which includes information about available datasets overall and which are included in our LAB data release for merging. 
+To review the available data from the Linguistic Annotated Bibliography, you can call `import_lab()` with no arguments, which returns the full dataset index describing what is available and which variables/languages each dataset includes.
 
 ```{r}
-data("labData")
+labData <- import_lab()$metadata
 head(tibble(labData))
-
-# import_lab() also loads this dataset 
-
-# ?labData # use this to learn about the dataset 
 ```
 
 ### Load Filtered Metadata
@@ -402,7 +395,7 @@ es_aos <- import_lab(bibtexID = "Alonso2015", citation = TRUE)
 
 ```{r echo = F}
 # save(es_aos, file = "lab_data/es_aos.Rdata")
-load(paste0(filelocation, "/vignettes/lab_data/es_aos.Rdata"))
+load("lab_data/es_aos.Rdata")
 ```
 
 ```{r}
@@ -417,7 +410,7 @@ es_sim <- import_lab(bibtexID = "Cabana2024_R1", citation = TRUE)
 
 ```{r echo = F}
 # save(es_sim, file = "lab_data/es_sim.Rdata")
-load(paste0(filelocation,"/vignettes/lab_data/es_sim.Rdata"))
+load("lab_data/es_sim.Rdata")
 ```
 
 ```{r}
