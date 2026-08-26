@@ -19,7 +19,7 @@ variables:
   raw_columns:
   - word_russian
   - transliteration
-  - translation_word_english
+  - translate_word_english
   - category
   - abstractness_category
   - length

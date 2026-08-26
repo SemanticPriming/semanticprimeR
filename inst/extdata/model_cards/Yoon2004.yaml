@@ -22,7 +22,7 @@ variables:
   - equivalence
   - word_english
   - culture
-  - age
+  - age_group
   - 'n'
   - familiar_mean
   - familiar_sd

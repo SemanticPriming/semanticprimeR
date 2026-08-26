@@ -19,7 +19,8 @@ variables:
   - word_english
   - mean_rt
   - rt_sd
-  - mean_rating
-  - sd_rating
+  - imagine_mean
+  - imagine_sd
   flags:
+    imagine: yes
     rt: yes

@@ -21,7 +21,7 @@ variables:
   - letters
   - frequency_subtlex
   - frequency_subtlex_zipf
-  - valence_rating_subtlex
+  - valence_mean_subtlex
   - cont_total_np1_responses
   - cont_total_np2_responses
   - cont_other_responses

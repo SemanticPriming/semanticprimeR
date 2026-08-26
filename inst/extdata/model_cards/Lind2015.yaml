@@ -23,7 +23,7 @@ variables:
   - imagine_category
   - imagine_mean
   - aoa_subjective_category
-  - aoa_subjective_mean
+  - aoa_mean_subjective
   - frequency_use_category
   - frequency_use
   - phonological_neighbors_category
@@ -39,7 +39,7 @@ variables:
   - grammatical_gender
   - used_plural
   - mass_noun
-  - valence
+  - valence_mean
   - transitivity
   - multi_word_phrase
   flags:

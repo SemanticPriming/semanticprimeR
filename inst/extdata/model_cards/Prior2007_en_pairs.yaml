@@ -27,7 +27,7 @@ variables:
   - word_translations_n
   raw_columns:
   - word_english
-  - translation_spanish
+  - translate_spanish
   - word_frequency_per_million
   - word_length
   - word_class
@@ -36,13 +36,13 @@ variables:
   - word_familiar_mean
   - word_imagine_mean
   - word_translations_n
-  - translation_frequency_per_million
-  - translation_length
-  - translation_class
-  - translation_probability
-  - translation_aoa_mean
-  - translation_concrete_mean
-  - translation_familiar_mean
-  - translation_imagine_mean
+  - translate_frequency_per_million
+  - translate_length
+  - translate_class
+  - translate_probability
+  - translate_aoa_mean
+  - translate_concrete_mean
+  - translate_familiar_mean
+  - translate_imagine_mean
   - cognate_rating
   flags: {}

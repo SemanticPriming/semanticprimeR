@@ -33,15 +33,15 @@ variables:
   - word_japanese
   - reading_kana
   - reading_reverse
-  - familiar_know
-  - familiar_writing
-  - familiar_read
-  - familiar_speak
-  - familiar_listen
-  - familiar_production
-  - familiar_reception
-  - familiar_written
-  - familiar_spoken
+  - familiar_mean_know
+  - familiar_mean_writing
+  - familiar_mean_read
+  - familiar_mean_speak
+  - familiar_mean_listen
+  - familiar_mean_production
+  - familiar_mean_reception
+  - familiar_mean_written
+  - familiar_mean_spoken
   - bias_production_vs_reception
   - bias_written_vs_spoken
   flags:

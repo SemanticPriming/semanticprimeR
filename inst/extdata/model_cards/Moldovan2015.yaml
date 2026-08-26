@@ -11,7 +11,7 @@ citation:
   source: crossref
 dataset:
   language_from_columns: spanish
-  n_rows_csv: 41
+  n_rows_csv: 185
 variables:
   word_columns:
   - word_spanish

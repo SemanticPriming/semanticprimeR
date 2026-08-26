@@ -19,8 +19,8 @@ variables:
   - word_french
   raw_columns:
   - word_french
-  - translation_word_english
-  - translation_word_german
+  - translate_word_english
+  - translate_word_german
   - pos
   - length
   - syllables

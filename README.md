@@ -23,6 +23,17 @@ https://semanticpriming.github.io/semanticprimeR/
 
 Check out our [OSF landing page](https://osf.io/peyqh/) that links all these projects together. 
 
+## Data releases
+
+Datasets are too large to ship inside the R package, so `import_lab()` downloads them from this repo's GitHub releases at runtime instead. Package releases (code, functions, bug fixes) and data releases (new/updated datasets) are independent and tagged separately:
+
+- Data releases are tagged `data-vX.Y.Z` (e.g. `data-v0.0.2`). Each one is an immutable snapshot of `datasets/completed/`, DOI-linked via Zenodo, that `import_lab()` can download from.
+- Package releases keep their normal `vX.Y.Z` tags for code changes.
+- By default, `import_lab()` downloads from the most recent `data-*` release (`release = "latest"`, the default). Pass a specific tag, e.g. `import_lab(bibtexID = "Birchenough2017", release = "data-v0.0.1")`, to pin to an exact snapshot for reproducibility (recommended when citing data in a paper).
+- The very first data release predates this convention and is tagged plainly `v0.0.1` — `import_lab()` falls back to it automatically if no `data-*` release is found or the GitHub API lookup fails (e.g. offline).
+
+**Maintainers:** adding or updating a dataset does *not* require a new package version — cut a new `data-vX.Y.Z` GitHub release (with a matching Zenodo DOI) whenever `datasets/completed/` changes, independent of the package's own release cycle. Since `import_lab()` resolves "latest" dynamically, no code change is needed after a new data release — the pin only needs touching if you want a *default* other than "most recent."
+
 ## Related projects
 
 - SPAML: 

@@ -37,7 +37,7 @@ variables:
   - duration_z
   - frequency_count
   - frequency_context
-  - aoa
+  - aoa_mean
   - n_meanings
   - imagine_z
   - concrete_z

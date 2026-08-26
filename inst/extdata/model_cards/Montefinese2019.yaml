@@ -1,14 +1,13 @@
 bibtex: Montefinese2019
 parent_bibtex: ~
 citation:
-  author: Maria Montefinese
+  author: Maria Montefinese, David Vinson, Gabriella Vigliocco, Ettore Ambrosini
   year: 2019
-  title: 'Semantic representation of abstract and concrete words: a minireview of
-    neural evidence'
-  journal: Journal of Neurophysiology
-  volume: '121'
-  pages: 1585-1587
-  doi: 10.1152/jn.00065.2019
+  title: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)
+  journal: Frontiers in Psychology
+  volume: '10'
+  pages: []
+  doi: 10.3389/fpsyg.2019.00278
   source: crossref
 dataset:
   language_from_columns: italian

@@ -17,7 +17,7 @@ variables:
   - word_dutch
   raw_columns:
   - word_dutch
-  - translation_word_english
+  - translate_word_english
   - arousal_mean
   - arousal_sd
   - valence_mean

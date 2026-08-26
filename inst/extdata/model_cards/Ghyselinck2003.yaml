@@ -13,7 +13,7 @@ citation:
   source: crossref
 dataset:
   language_from_columns: dutch
-  n_rows_csv: 1019730
+  n_rows_csv: 2333
 variables:
   word_columns:
   - word_dutch

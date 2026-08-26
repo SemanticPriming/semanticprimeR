@@ -16,7 +16,7 @@ dataset:
     greek, hebrew, hungarian, icelandic, irish, isixhosa, italian, lithuanian, luxembourgish,
     maltese, polish, russian, south_african_english, serbian, slovak, spanish, swedish,
     turkish
-  n_rows_csv: 250
+  n_rows_csv: 299
 variables:
   word_columns:
   - word_english
@@ -95,5 +95,8 @@ variables:
   - word_swedish
   - aoa_mean_turkish
   - word_turkish
+  - context_english
+  - context_afrikaans
   flags:
     aoa: yes
+    context: yes

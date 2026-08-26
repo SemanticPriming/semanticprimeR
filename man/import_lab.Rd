@@ -4,47 +4,60 @@
 \alias{import_lab}
 \title{Import Datasets from the Linguistic Annotated Bibliography}
 \usage{
-import_lab(bibtexID = NULL, citation = NULL, language = NULL, variables = NULL)
+import_lab(
+  bibtexID = NULL,
+  citation = NULL,
+  language = NULL,
+  variables = NULL,
+  release = "latest"
+)
 }
 \arguments{
-\item{bibtexID}{The bibtex ID of the dataset you are trying to load.
-You can leave all parameters blank to load just the metadata.}
+\item{bibtexID}{The bibtex ID of the dataset to load (e.g.
+`"Birchenough2017"`). Leave `NULL` to browse or filter without
+downloading.}
 
-\item{citation}{Include the citation for the dataset you loaded - will only
-load if you include a bibtex ID, use `TRUE` to get the citation.}
+\item{citation}{If `TRUE` and a `bibtexID` is provided, also returns the
+formatted citation string from the dataset's model card.}
 
-\item{language}{If you include a bibtex ID, you will get back the language of
-the dataset, if you do not include a bibtex ID, it will return a list of
-datasets in that language.}
+\item{language}{Language name to filter by (e.g. `"english"`). Without a
+`bibtexID`, returns all datasets in that language. With a `bibtexID`,
+returns the detected language of that dataset.}
 
-\item{variables}{If you include a bibtex ID, you will get back the variables
-included the dataset, if you do not include a bibtex ID, it will return a list of
-datasets that include that variable (can also be paired with language).
-Use the column names from the metadata as your filter.}
+\item{variables}{Character vector of flag category names to filter by
+(e.g. `c("aoa", "freq")`). Without a `bibtexID`, returns datasets that
+contain all of those variable types. With a `bibtexID`, returns which of
+those flags are present in that dataset. Use `import_lab()` with no
+arguments to see all available flag names.}
+
+\item{release}{Which data release to download from. Defaults to
+`"latest"`, which resolves the most recent GitHub release tagged
+`data-*` (falling back to the legacy `v0.0.1` release if none is found
+or the lookup fails, e.g. when offline). Pass an explicit tag (e.g.
+`"data-v0.0.2"`) to pin to a specific data snapshot for reproducibility.}
 }
 \value{
+A named list with one or more of:
 \describe{
- \item{metadata}{The metadata list of avaliable datasets}
- \item{loaded_data}{The dataset you requested to load}
- \item{language}{The language of the dataset you requested to load}
- \item{variables}{The variables of the dataset you requested to load}
- \item{datasets}{Possible datasets based on your language
- and variable names}
+  \item{metadata}{Full index of available datasets (no-argument call)}
+  \item{loaded_data}{The downloaded dataset}
+  \item{citation}{Formatted citation string}
+  \item{language}{Detected language of the requested dataset}
+  \item{variables}{Flag categories present in the requested dataset}
+  \item{datasets}{Filtered index based on language / variable criteria}
 }
 }
 \description{
-This function allows you to import the current datasets available from
+Imports datasets available from the
 \href{https://github.com/orgs/SemanticPriming/}{Semantic Priming GitHub
-Group}. These datasets generally have psycholinguistic variables like
-Age of Acquisition, length, neighborhoods, Familiarity, Concretenes,
-and more. We will update datasets as we have them. All data belongs
-to the person who published them.
+Group}. Datasets contain psycholinguistic variables such as Age of
+Acquisition, frequency, neighborhood density, familiarity, concreteness,
+and more. All data belongs to the original authors.
 }
 \examples{
-
 # import_lab()
 # import_lab(bibtexID = "Birchenough2017", citation = TRUE)
-# import_lab(language = "English", variables = c("aoa", "freq"))
+# import_lab(language = "english", variables = c("aoa", "freq"))
 }
 \keyword{datasets,}
 \keyword{linguistic}

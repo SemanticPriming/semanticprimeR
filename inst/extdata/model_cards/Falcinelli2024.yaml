@@ -20,7 +20,7 @@ variables:
   - word_confidence_sd
   raw_columns:
   - word_italian
-  - translation_word_english
+  - translate_word_english
   - category
   - concrete_mean
   - concrete_sd
