@@ -12,13 +12,13 @@ citation:
   doi: 10.3758/s13428-016-0767-4
   source: crossref
 dataset:
-  language_from_columns: spanish
+  language_from_columns: portuguese
   n_rows_csv: 3800
 variables:
   word_columns:
-  - word_spanish
+  - word_portuguese
   raw_columns:
-  - word_spanish
+  - word_portuguese
   - translate_word_english
   - imagine_mean
   - imagine_sd

@@ -1,8 +1,16 @@
 bibtex: Popovic2026_pseudowords
 parent_bibtex: Popovic2026_words
 citation:
+  author: Milica Popović Stijačić, Dušica Filipović Đurđević
+  year: 2025
+  title: Perceptual Strength, Concreteness, Imagibility, Context Availability, Age
+    of Acquisition, Familiarity, Emotional valence, and Arousal Ratings for 2100
+    Serbian Nouns and their Effect on Visual Lexical Decision Latencies
+  journal: PsychArchives (preprint, not peer-reviewed)
+  volume: ~
+  pages: ~
   doi: 10.23668/psycharchives.21378
-  source: doi_unresolved
+  source: psycharchives
 dataset:
   language_from_columns: pseudoword
   n_rows_csv: 4200

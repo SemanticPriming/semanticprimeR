@@ -19,7 +19,7 @@ variables:
   - word_spanish
   raw_columns:
   - word_spanish
-  - translte_word_english
+  - translate_word_english
   - color_mean
   - color_sd
   - motion_mean
